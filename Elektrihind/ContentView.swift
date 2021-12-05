@@ -9,23 +9,30 @@ import SwiftUI
 import SwiftUICharts
 
 struct ContentView: View {
-    @State var currentPrice = 0.0
+    @State var currentPriceData: PriceData?
     
     var body: some View {
         ZStack {
             BackgroundView(topColor: .blue, bottomColor: .white)
-            VStack(alignment: .center) {
-                TitleView(title: "Hetke hind")
-                CurrentPriceView(price: currentPrice)
-                
-                LazyHStack {
-                    PageView()
+            ScrollView {
+                RefreshControl(coordinateSpace: .named("RefreshControl")) {
+                    Network().loadCurrentPrice { data in
+                        self.currentPriceData = data
+                    }
                 }
-            }
-            
+                VStack(alignment: .center) {
+                    TitleView(title: "Hetke hind")
+                    CurrentPriceView(priceData: currentPriceData)
+                    
+                    LazyHStack {
+                        PageView()
+                    }
+                }
+                
+            }.coordinateSpace(name: "RefreshControl")
         }.onAppear() {
             Network().loadCurrentPrice { data in
-                self.currentPrice = data.price
+                self.currentPriceData = data
             }
         }
     }
@@ -98,14 +105,15 @@ struct BackgroundView: View {
 }
 
 struct CurrentPriceView: View {
-    var price: Double
+    var priceData: PriceData?
     var body: some View {
         VStack(alignment: .center) {
-            let formattedPrice = String(format: "%.2f", price)
+            let formattedPrice = String(format: "%.2f", priceData?.price ?? 0.0)
             Text("\(formattedPrice)")
                 .font(.system(size: 72, weight: .medium))
             Text("€/MWh")
                 .font(.system(size: 38, weight: .medium))
+        //    Text("\(priceData?.timestamp ?? 0)")
         }
         .frame(height: 150)
         .frame(maxWidth: .infinity)
