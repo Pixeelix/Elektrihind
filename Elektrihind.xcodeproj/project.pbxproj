@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A2607771274FEC37003943DC /* PullToRefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2607770274FEC37003943DC /* PullToRefreshView.swift */; };
 		A2B155B227458EE2004B1B02 /* ElektrihindApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B155B127458EE2004B1B02 /* ElektrihindApp.swift */; };
 		A2B155B427458EE2004B1B02 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B155B327458EE2004B1B02 /* ContentView.swift */; };
 		A2B155B627458EE4004B1B02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B155B527458EE4004B1B02 /* Assets.xcassets */; };
@@ -19,7 +18,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A2607770274FEC37003943DC /* PullToRefreshView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshView.swift; sourceTree = "<group>"; };
 		A2B155AE27458EE2004B1B02 /* Elektrihind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Elektrihind.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2B155B127458EE2004B1B02 /* ElektrihindApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElektrihindApp.swift; sourceTree = "<group>"; };
 		A2B155B327458EE2004B1B02 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -63,7 +61,6 @@
 			children = (
 				A2B155B127458EE2004B1B02 /* ElektrihindApp.swift */,
 				A2B155B327458EE2004B1B02 /* ContentView.swift */,
-				A2607770274FEC37003943DC /* PullToRefreshView.swift */,
 				A2B155BF27459138004B1B02 /* NordPoolPrice.swift */,
 				A2B155C1274599E7004B1B02 /* Network.swift */,
 				A2B155C62745B070004B1B02 /* Extensions.swift */,
@@ -160,7 +157,6 @@
 				A2B155C72745B070004B1B02 /* Extensions.swift in Sources */,
 				A2B155B427458EE2004B1B02 /* ContentView.swift in Sources */,
 				A2B155C027459138004B1B02 /* NordPoolPrice.swift in Sources */,
-				A2607771274FEC37003943DC /* PullToRefreshView.swift in Sources */,
 				A2B155C2274599E7004B1B02 /* Network.swift in Sources */,
 				A2B155B227458EE2004B1B02 /* ElektrihindApp.swift in Sources */,
 			);

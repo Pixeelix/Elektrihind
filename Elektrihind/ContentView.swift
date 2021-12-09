@@ -9,17 +9,16 @@ import SwiftUI
 import SwiftUICharts
 
 struct ContentView: View {
+    @State private var isLoading = false
     @State var currentPriceData: PriceData?
     
     var body: some View {
         ZStack {
             BackgroundView(topColor: .blue, bottomColor: .white)
+            if isLoading {
+                LoadingView()
+            }
             ScrollView {
-                RefreshControl(coordinateSpace: .named("RefreshControl")) {
-                    Network().loadCurrentPrice { data in
-                        self.currentPriceData = data
-                    }
-                }
                 VStack(alignment: .center) {
                     TitleView(title: "Hetke hind")
                     CurrentPriceView(priceData: currentPriceData)
@@ -28,11 +27,12 @@ struct ContentView: View {
                         PageView()
                     }
                 }
-                
-            }.coordinateSpace(name: "RefreshControl")
+            }
         }.onAppear() {
+            isLoading = true
             Network().loadCurrentPrice { data in
                 self.currentPriceData = data
+                isLoading = false
             }
         }
     }
@@ -131,5 +131,18 @@ struct TitleView: View {
             .font(.system(size: 32, weight: .medium, design: .default))
             .foregroundColor(.white)
             .padding()
+    }
+}
+
+struct LoadingView: View {
+    var body: some View {
+        ZStack {
+            Color(.systemBackground)
+                .ignoresSafeArea()
+            
+            ProgressView()
+                .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                .scaleEffect(3)
+        }
     }
 }
