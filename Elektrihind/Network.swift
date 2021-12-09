@@ -45,7 +45,7 @@ class Network: ObservableObject {
         dataTask.resume()
     }
     
-    func loadEstDayData(_ day: Day, completion:@escaping ([Double]) -> ()) {
+    func loadEstDayData(_ day: Day, completion:@escaping ([(String, Double)]) -> ()) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let yesterDay = dateFormatter.string(from: Date().dayBefore)
@@ -59,6 +59,11 @@ class Network: ObservableObject {
             startDate = today
             endDate = tomorrow
         }
+        
+        let testFormatter = DateFormatter()
+        testFormatter.timeZone = TimeZone(abbreviation: "EET") //Set timezone that you want
+        testFormatter.locale = NSLocale.current
+        testFormatter.dateFormat = "HH:mm" //Specify your format that you want
         
         guard let url = URL(string: "https://dashboard.elering.ee/api/nps/price?start=\(startDate)T22:00:00.000Z&end=\(endDate)T21:59:59.999Z") else { fatalError("Missing URL") }
         print(url)
@@ -77,11 +82,14 @@ class Network: ObservableObject {
                     do {
                         let decodedNordPoolData = try
                         JSONDecoder().decode(NordPoolCountriesData.self, from: data)
-                        var estonianDayData: [Double] = []
+                        var estonianDayDataArray: [(String, Double)] = []
                         for data in decodedNordPoolData.data.ee {
-                            estonianDayData.append(data.price)
-                            completion(estonianDayData)
+                            let timeStampDate = Date(timeIntervalSince1970: data.timestamp)
+                            let strTime = testFormatter.string(from: timeStampDate)
+                            let dataPoint = (strTime, data.price / Double(1000))
+                            estonianDayDataArray.append(dataPoint)
                         }
+                        completion(estonianDayDataArray)
                     } catch let error {
                         print("Error decoding: ", error)
                     }

@@ -15,31 +15,87 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             BackgroundView(topColor: .blue, bottomColor: .white)
-            if isLoading {
-                LoadingView()
-            }
-            ScrollView {
                 VStack(alignment: .center) {
-                    TitleView(title: "Hetke hind")
+                    TitleView(title: "Elektrihind")
                     CurrentPriceView(priceData: currentPriceData)
-                    
                     LazyHStack {
                         PageView()
                     }
                 }
+            if isLoading {
+             //   LoadingView()
             }
         }.onAppear() {
             isLoading = true
             Network().loadCurrentPrice { data in
                 self.currentPriceData = data
-                isLoading = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    isLoading = false
+                }
             }
         }
     }
 }
 
+struct TitleView: View {
+    var title: String
+    var body: some View {
+        Text(title)
+            .font(.system(size: 32, weight: .medium, design: .default))
+            .foregroundColor(.white)
+            .padding(EdgeInsets(top: 10, leading: 20, bottom: 20, trailing: 20))
+    }
+}
+
+struct CurrentPriceView: View {
+    var priceData: PriceData?
+    let dateFormatter: DateFormatter
+    
+    init(priceData: PriceData?) {
+        self.priceData = priceData
+        dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "EET") //Set timezone that you want
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = "HH:mm" //Specify your format that you want
+    }
+    
+    var body: some View {
+        VStack(alignment: .center) {
+            if let price = priceData?.price,
+               let timeStamp = priceData?.timestamp {
+                let formattedPrice = String(format: "%.4f", price / 1000)
+                let date = Date(timeIntervalSince1970: timeStamp)
+                let strDate = dateFormatter.string(from: date)
+                
+                HStack(alignment: .top) {
+                    Spacer()
+                    Text(strDate)
+                        .padding(.top, 10)
+                        .padding(.trailing, 10)
+                }
+                .frame(maxWidth: .infinity)
+                
+                VStack {
+                    Text("\(formattedPrice)")
+                        .font(.system(size: 72, weight: .medium))
+                    
+                    Text("€/kWh")
+                        .font(.system(size: 38, weight: .medium))
+                }
+                .offset(x: 0, y: -12)
+            }
+        }
+        .frame(height: 160)
+        .frame(maxWidth: .infinity)
+        .background(.white)
+        .foregroundColor(.blue)
+        .cornerRadius(10)
+        .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+    }
+}
+
 struct PageView: View {
-    @State var estonianDayPrice: [Double] = [8, 2, 4, 6, 12, 9, 2]
+    @State var estonianDayPrice: [(String, Double)] = []
     
     let dateFormatter: DateFormatter
     var todayDate: String {
@@ -63,21 +119,29 @@ struct PageView: View {
             ForEach(0..<2) { i in
                 ZStack {
                     if i == 0 {
-                        LineView(data: estonianDayPrice, title: "Täna", legend: "\(todayDate)", style: myChartStyle)
-                            .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+                        let firstPrie = estonianDayPrice.count > 1 ? estonianDayPrice[0].1 : 0
+                        BarChartView(data: ChartData(values: estonianDayPrice), title: "\(firstPrie)", legend: "Quarterly", style: myChartStyle, form: ChartForm.extraLarge, valueSpecifier: "%.4f")
                             .onAppear() {
                                 Network().loadEstDayData(.today) { data in
                                     self.estonianDayPrice = data
                                 }
                             }
+                        
+                                //                        LineView(data: estonianDayPrice, title: "Täna", legend: "\(todayDate)", style: myChartStyle)
+                                //                            .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+                                //                            .onAppear() {
+                                //                                Network().loadEstDayData(.today) { data in
+                                //                                    self.estonianDayPrice = data
+                                //                                }
+//                            }
                     } else if i == 1 {
-                        LineView(data: estonianDayPrice, title: "Homme", legend: "\(tomorrowDate)", style: myChartStyle)
-                            .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-                            .onAppear() {
-                                Network().loadEstDayData(.tomorrow) { data in
-                                    self.estonianDayPrice = data
-                                }
-                            }
+//                        LineView(data: estonianDayPrice, title: "Homme", legend: "\(tomorrowDate)", style: myChartStyle)
+//                            .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+//                            .onAppear() {
+//                                Network().loadEstDayData(.tomorrow) { data in
+//                                    self.estonianDayPrice = data
+//                                }
+//                            }
                     }
                     
                 }.clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
@@ -85,7 +149,6 @@ struct PageView: View {
         }
         .frame(width: UIScreen.main.bounds.width, height: 410)
         .tabViewStyle(PageTabViewStyle())
-        .background(.white)
     }
 }
 
@@ -104,45 +167,13 @@ struct BackgroundView: View {
     }
 }
 
-struct CurrentPriceView: View {
-    var priceData: PriceData?
-    var body: some View {
-        VStack(alignment: .center) {
-            let formattedPrice = String(format: "%.2f", priceData?.price ?? 0.0)
-            Text("\(formattedPrice)")
-                .font(.system(size: 72, weight: .medium))
-            Text("€/MWh")
-                .font(.system(size: 38, weight: .medium))
-        //    Text("\(priceData?.timestamp ?? 0)")
-        }
-        .frame(height: 150)
-        .frame(maxWidth: .infinity)
-        .background(.white)
-        .foregroundColor(.blue)
-        .cornerRadius(10)
-        .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-    }
-}
-
-struct TitleView: View {
-    var title: String
-    var body: some View {
-        Text(title)
-            .font(.system(size: 32, weight: .medium, design: .default))
-            .foregroundColor(.white)
-            .padding()
-    }
-}
-
 struct LoadingView: View {
     var body: some View {
         ZStack {
-            Color(.systemBackground)
-                .ignoresSafeArea()
-            
-            ProgressView()
-                .progressViewStyle(CircularProgressViewStyle(tint: .blue))
-                .scaleEffect(3)
+            Color.white.ignoresSafeArea()
+            ZStack {
+                LottieView(fileName: "mainPageLoader")
+            }
         }
     }
 }

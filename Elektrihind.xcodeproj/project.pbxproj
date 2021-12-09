@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A260769A27628C3A00B9E64E /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = A260769927628C3A00B9E64E /* Lottie */; };
+		A260769F27628E7400B9E64E /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A260769E27628E7400B9E64E /* LottieView.swift */; };
+		A26076AD2762977C00B9E64E /* mainPageLoader.json in Resources */ = {isa = PBXBuildFile; fileRef = A26076AC2762977C00B9E64E /* mainPageLoader.json */; };
 		A2B155B227458EE2004B1B02 /* ElektrihindApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B155B127458EE2004B1B02 /* ElektrihindApp.swift */; };
 		A2B155B427458EE2004B1B02 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B155B327458EE2004B1B02 /* ContentView.swift */; };
 		A2B155B627458EE4004B1B02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B155B527458EE4004B1B02 /* Assets.xcassets */; };
@@ -18,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A260769E27628E7400B9E64E /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		A26076AC2762977C00B9E64E /* mainPageLoader.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = mainPageLoader.json; path = ../../../Downloads/mainPageLoader.json; sourceTree = "<group>"; };
 		A2B155AE27458EE2004B1B02 /* Elektrihind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Elektrihind.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2B155B127458EE2004B1B02 /* ElektrihindApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElektrihindApp.swift; sourceTree = "<group>"; };
 		A2B155B327458EE2004B1B02 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -34,12 +39,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2B155C52745A846004B1B02 /* SwiftUICharts in Frameworks */,
+				A260769A27628C3A00B9E64E /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A260769B27628D4400B9E64E /* Lottie */ = {
+			isa = PBXGroup;
+			children = (
+				A26076AC2762977C00B9E64E /* mainPageLoader.json */,
+			);
+			path = Lottie;
+			sourceTree = "<group>";
+		};
 		A2B155A527458EE2004B1B02 = {
 			isa = PBXGroup;
 			children = (
@@ -59,11 +73,13 @@
 		A2B155B027458EE2004B1B02 /* Elektrihind */ = {
 			isa = PBXGroup;
 			children = (
+				A260769B27628D4400B9E64E /* Lottie */,
 				A2B155B127458EE2004B1B02 /* ElektrihindApp.swift */,
 				A2B155B327458EE2004B1B02 /* ContentView.swift */,
 				A2B155BF27459138004B1B02 /* NordPoolPrice.swift */,
 				A2B155C1274599E7004B1B02 /* Network.swift */,
 				A2B155C62745B070004B1B02 /* Extensions.swift */,
+				A260769E27628E7400B9E64E /* LottieView.swift */,
 				A2B155B527458EE4004B1B02 /* Assets.xcassets */,
 				A2B155B727458EE4004B1B02 /* Preview Content */,
 			);
@@ -96,6 +112,7 @@
 			name = Elektrihind;
 			packageProductDependencies = (
 				A2B155C42745A846004B1B02 /* SwiftUICharts */,
+				A260769927628C3A00B9E64E /* Lottie */,
 			);
 			productName = Elektrihind;
 			productReference = A2B155AE27458EE2004B1B02 /* Elektrihind.app */;
@@ -127,6 +144,7 @@
 			mainGroup = A2B155A527458EE2004B1B02;
 			packageReferences = (
 				A2B155C32745A846004B1B02 /* XCRemoteSwiftPackageReference "ChartView" */,
+				A260769827628C3A00B9E64E /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = A2B155AF27458EE2004B1B02 /* Products */;
 			projectDirPath = "";
@@ -142,6 +160,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A26076AD2762977C00B9E64E /* mainPageLoader.json in Resources */,
 				A2B155B927458EE4004B1B02 /* Preview Assets.xcassets in Resources */,
 				A2B155B627458EE4004B1B02 /* Assets.xcassets in Resources */,
 			);
@@ -159,6 +178,7 @@
 				A2B155C027459138004B1B02 /* NordPoolPrice.swift in Sources */,
 				A2B155C2274599E7004B1B02 /* Network.swift in Sources */,
 				A2B155B227458EE2004B1B02 /* ElektrihindApp.swift in Sources */,
+				A260769F27628E7400B9E64E /* LottieView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +308,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "\"Elektrihind/Preview Content\"";
 				DEVELOPMENT_TEAM = 39G5236S72;
 				ENABLE_PREVIEWS = YES;
@@ -318,6 +339,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "\"Elektrihind/Preview Content\"";
 				DEVELOPMENT_TEAM = 39G5236S72;
 				ENABLE_PREVIEWS = YES;
@@ -365,6 +387,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A260769827628C3A00B9E64E /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		A2B155C32745A846004B1B02 /* XCRemoteSwiftPackageReference "ChartView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppPear/ChartView";
@@ -376,6 +406,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A260769927628C3A00B9E64E /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A260769827628C3A00B9E64E /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
 		A2B155C42745A846004B1B02 /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A2B155C32745A846004B1B02 /* XCRemoteSwiftPackageReference "ChartView" */;

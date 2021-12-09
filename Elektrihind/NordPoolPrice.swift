@@ -21,6 +21,6 @@ struct Countries: Decodable {
 }
 
 struct PriceData: Decodable {
-    let timestamp: Int
+    let timestamp: Double
     let price: Double
 }
