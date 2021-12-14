@@ -9,29 +9,26 @@ import SwiftUI
 import SwiftUICharts
 
 struct ContentView: View {
-    @State private var isLoading = false
-    @State var currentPriceData: PriceData?
+    @State private var tabBarSelection = 0
     
     var body: some View {
         ZStack {
-            BackgroundView(topColor: .blue, bottomColor: .white)
-                VStack(alignment: .center) {
-                    TitleView(title: "Elektrihind")
-                    CurrentPriceView(priceData: currentPriceData)
-                    LazyHStack {
-                        PageView()
-                    }
+            BackgroundView(topColor: Color("backgroundTop"), bottomColor: Color("backgroundBottom"))
+            VStack {
+                TabView(selection: $tabBarSelection) {
+                    TodayView()
+                        .tag(0)
+                    TomorrowView()
+                        .tag(1)
+//                    Text("Hea teada")
+//                        .tag(2)
+                    SettingsView()
+                        .tag(2)
                 }
-            if isLoading {
-             //   LoadingView()
-            }
-        }.onAppear() {
-            isLoading = true
-            Network().loadCurrentPrice { data in
-                self.currentPriceData = data
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    isLoading = false
-                }
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                
+                TabBarView(selection: $tabBarSelection)
+                    .background(Color("tabBarBackground"))
             }
         }
     }
@@ -50,6 +47,7 @@ struct TitleView: View {
 struct CurrentPriceView: View {
     var priceData: PriceData?
     let dateFormatter: DateFormatter
+    private let numberFormater = NumberFormatter()
     
     init(priceData: PriceData?) {
         self.priceData = priceData
@@ -57,13 +55,18 @@ struct CurrentPriceView: View {
         dateFormatter.timeZone = TimeZone(abbreviation: "EET") //Set timezone that you want
         dateFormatter.locale = NSLocale.current
         dateFormatter.dateFormat = "HH:mm" //Specify your format that you want
+        
+        numberFormater.decimalSeparator = ","
+        numberFormater.maximumIntegerDigits = 4
+        numberFormater.minimumFractionDigits = 4
     }
     
     var body: some View {
         VStack(alignment: .center) {
             if let price = priceData?.price,
-               let timeStamp = priceData?.timestamp {
-                let formattedPrice = String(format: "%.4f", price / 1000)
+               let timeStamp = priceData?.timestamp,
+               let formattedPrice = numberFormater.string(from: NSNumber(value: price / 1000)) {
+                
                 let date = Date(timeIntervalSince1970: timeStamp)
                 let strDate = dateFormatter.string(from: date)
                 
@@ -76,7 +79,7 @@ struct CurrentPriceView: View {
                 .frame(maxWidth: .infinity)
                 
                 VStack {
-                    Text("\(formattedPrice)")
+                    Text(formattedPrice)
                         .font(.system(size: 72, weight: .medium))
                     
                     Text("€/kWh")
@@ -87,16 +90,55 @@ struct CurrentPriceView: View {
         }
         .frame(height: 160)
         .frame(maxWidth: .infinity)
-        .background(.white)
-        .foregroundColor(.blue)
-        .cornerRadius(10)
-        .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+        .background(Color("contentBoxBackground"))
+        .foregroundColor(Color("blueWhiteText"))
+        .cornerRadius(20)
+        .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
     }
 }
 
-struct PageView: View {
-    @State var estonianDayPrice: [(String, Double)] = []
+struct NextDayMinMaxRange: View {
+    private var minPrice: String = ""
+    private var maxPrice: String = ""
     
+    private let numberFormater = NumberFormatter()
+    
+    init(data: [(String, Double)]) {
+        numberFormater.decimalSeparator = ","
+        numberFormater.maximumIntegerDigits = 4
+        numberFormater.minimumFractionDigits = 4
+        
+        var pricesArray: [Double] = []
+        for dataPoint in data {
+            pricesArray.append(dataPoint.1)
+        }
+        
+        minPrice = numberFormater.string(from: NSNumber(value: pricesArray.min() ?? 0)) ?? ""
+        maxPrice = numberFormater.string(from: NSNumber(value: pricesArray.max() ?? 1)) ?? ""
+    }
+    
+    var body: some View {
+        VStack(alignment: .center) {
+            VStack {
+                Text("\(minPrice) - \(maxPrice)")
+                    .font(.system(size: 42, weight: .medium))
+                
+                Text("€/kWh")
+                    .font(.system(size: 38, weight: .medium))
+            }
+        }
+        .frame(height: 160)
+        .frame(maxWidth: .infinity)
+        .background(Color("contentBoxBackground"))
+        .foregroundColor(Color("blueWhiteText"))
+        .cornerRadius(20)
+        .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
+    }
+}
+
+struct ChartView: View {
+    private var day: Day = .today
+    private var data: [(String, Double)]
     let dateFormatter: DateFormatter
     var todayDate: String {
         return dateFormatter.string(from: Date())
@@ -104,58 +146,25 @@ struct PageView: View {
     var tomorrowDate: String {
         return dateFormatter.string(from: Date().dayAfter)
     }
-    let myChartStyle = ChartStyle(backgroundColor: .white, accentColor: .blue, gradientColor: GradientColor(start: .blue, end: .blue), textColor: .blue, legendTextColor: .gray, dropShadowColor: .gray)
+    let myCustomStyle = ChartStyle(backgroundColor: .white, accentColor: .blue, secondGradientColor: .blue, textColor: .blue, legendTextColor: .gray, dropShadowColor: .clear)
+    let myCustomDarkModeStyle = ChartStyle(backgroundColor: .gray, accentColor: .white, secondGradientColor: .white, textColor: .white, legendTextColor: .white, dropShadowColor: .clear)
     
-    init() {
+    init(day: Day, data: [(String, Double)]) {
+        self.day = day
+        self.data = data
         dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMMM"
+        myCustomStyle.darkModeStyle = myCustomDarkModeStyle
         
         UIPageControl.appearance().currentPageIndicatorTintColor = .blue
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.2)
     }
     
     var body: some View {
-        TabView {
-            ForEach(0..<2) { i in
-                ZStack {
-                    if i == 0 {
-                        let firstPrie = estonianDayPrice.count > 1 ? estonianDayPrice[0].1 : 0
-                        BarChartView(data: ChartData(values: estonianDayPrice), title: "\(firstPrie)", legend: "Quarterly", style: myChartStyle, form: ChartForm.extraLarge, valueSpecifier: "%.4f")
-                            .onAppear() {
-                                Network().loadEstDayData(.today) { data in
-                                    self.estonianDayPrice = data
-                                }
-                            }
-                        
-                                //                        LineView(data: estonianDayPrice, title: "Täna", legend: "\(todayDate)", style: myChartStyle)
-                                //                            .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-                                //                            .onAppear() {
-                                //                                Network().loadEstDayData(.today) { data in
-                                //                                    self.estonianDayPrice = data
-                                //                                }
-//                            }
-                    } else if i == 1 {
-//                        LineView(data: estonianDayPrice, title: "Homme", legend: "\(tomorrowDate)", style: myChartStyle)
-//                            .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-//                            .onAppear() {
-//                                Network().loadEstDayData(.tomorrow) { data in
-//                                    self.estonianDayPrice = data
-//                                }
-//                            }
-                    }
-                    
-                }.clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-            }
+        let title = day == .tomorrow ? tomorrowDate : todayDate
+        VStack {
+            BarChartView(data: ChartData(values: data), title: title, legend: "Quarterly", style: myCustomStyle, form: ChartForm.extraLarge, valueSpecifier: "%.4f €/kWh", animatedToBack: false)
         }
-        .frame(width: UIScreen.main.bounds.width, height: 410)
-        .tabViewStyle(PageTabViewStyle())
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-            .previewInterfaceOrientation(.portraitUpsideDown)
     }
 }
 
@@ -175,5 +184,13 @@ struct LoadingView: View {
                 LottieView(fileName: "mainPageLoader")
             }
         }
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ForEach(ColorScheme.allCases, id: \.self) {
+                    ContentView().preferredColorScheme($0)
+               }
     }
 }
