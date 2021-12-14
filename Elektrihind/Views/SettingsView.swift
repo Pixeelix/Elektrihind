@@ -8,24 +8,39 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @State private var selectedStrength = "Mild"
-    let strengths = ["Mild", "Medium", "Mature"]
+    @EnvironmentObject private var selectedUnit: Globals
+    let unitsArray = ["€/kWh", "€/MWh", "sent/kWh"]
     
-    var body: some View {
-        Text("Seaded")
+    init(){
+        UITableView.appearance().backgroundColor = .clear
     }
     
-    //           NavigationView {
-    //               Form {
-    //                   Section {
-    //                       Picker("Strength", selection: $selectedStrength) {
-    //                           ForEach(strengths, id: \.self) {
-    //                               Text($0)
-    //                           }
-    //                       }
-    //                   }
-    //               }
-    //           }
+    var body: some View {
+        NavigationView {
+            ZStack {
+                LinearGradient(gradient: Gradient(colors: [Color("backgroundTop"), Color("backgroundBottom")]), startPoint: .topLeading, endPoint: .bottomTrailing).edgesIgnoringSafeArea(.all)
+                Form {
+                    Section {
+                        Picker("Ühik", selection: $selectedUnit.unit) {
+                            ForEach(unitsArray, id: \.self) {
+                                Text($0)
+                            }
+                        }
+                    }
+                }
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitle("Seaded")
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    VStack(spacing: 10) {
+                        Text("")
+                        TitleView(title: "Seaded")
+                    }
+                }
+            }
+        }.navigationBarTitle("Favorites")
+    }
 }
 
 struct SettingsView_Previews: PreviewProvider {

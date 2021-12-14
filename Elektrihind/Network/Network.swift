@@ -86,7 +86,7 @@ class Network: ObservableObject {
                         for data in decodedNordPoolData.data.ee {
                             let timeStampDate = Date(timeIntervalSince1970: data.timestamp)
                             let strTime = testFormatter.string(from: timeStampDate)
-                            let dataPoint = (strTime, data.price / Double(1000))
+                            let dataPoint = (strTime, data.price)
                             estonianDayDataArray.append(dataPoint)
                         }
                         completion(estonianDayDataArray)

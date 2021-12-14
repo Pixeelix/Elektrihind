@@ -19,7 +19,7 @@ struct TomorrowView: View {
                 VStack(alignment: .center) {
                     TitleView(title: "Homne hind")
                     
-                    Text("Homne hinnainfo on saadaval alates 14:00")
+                    Text("Homne hinnainfo on saadaval alates 15:00")
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
                         .font(.system(size: 18, weight: .medium, design: .default))
                         .foregroundColor(.white)
@@ -43,7 +43,7 @@ struct TomorrowView: View {
                     isLoading = false
                 }
             }
-            Network().loadEstDayData(.tomorrow) { data in
+            Network().loadEstDayData(.today) { data in
                 missingData = data.count <= 2
                 self.priceData = data
             }

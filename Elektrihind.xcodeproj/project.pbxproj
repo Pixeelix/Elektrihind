@@ -7,13 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A211D96D276916AD00C18916 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = A211D96C276916AD00C18916 /* SwiftUICharts */; };
 		A22579F22767F74600F8E3AB /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22579F12767F74600F8E3AB /* TodayView.swift */; };
 		A22579F42767F76E00F8E3AB /* TomorrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22579F32767F76E00F8E3AB /* TomorrowView.swift */; };
 		A25AC1C72767FBC800C9610F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25AC1C62767FBC800C9610F /* SettingsView.swift */; };
 		A25AC1C92768009C00C9610F /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25AC1C82768009C00C9610F /* Globals.swift */; };
-		A260769A27628C3A00B9E64E /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = A260769927628C3A00B9E64E /* Lottie */; };
-		A260769F27628E7400B9E64E /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A260769E27628E7400B9E64E /* LottieView.swift */; };
-		A26076AD2762977C00B9E64E /* mainPageLoader.json in Resources */ = {isa = PBXBuildFile; fileRef = A26076AC2762977C00B9E64E /* mainPageLoader.json */; };
 		A2B155B227458EE2004B1B02 /* ElektrihindApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B155B127458EE2004B1B02 /* ElektrihindApp.swift */; };
 		A2B155B427458EE2004B1B02 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B155B327458EE2004B1B02 /* ContentView.swift */; };
 		A2B155B627458EE4004B1B02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B155B527458EE4004B1B02 /* Assets.xcassets */; };
@@ -21,18 +19,16 @@
 		A2B155C027459138004B1B02 /* NordPoolPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B155BF27459138004B1B02 /* NordPoolPrice.swift */; };
 		A2B155C2274599E7004B1B02 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B155C1274599E7004B1B02 /* Network.swift */; };
 		A2B155C72745B070004B1B02 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B155C62745B070004B1B02 /* Extensions.swift */; };
-		A2F9DFBB27653B8A006E4730 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = A2F9DFBA27653B8A006E4730 /* SwiftUICharts */; };
 		A2F9DFBD27653EFB006E4730 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F9DFBC27653EFB006E4730 /* TabBarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A211D96B2769169F00C18916 /* ChartView */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ChartView; path = ../../ChartView; sourceTree = "<group>"; };
 		A22579F12767F74600F8E3AB /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
 		A22579F32767F76E00F8E3AB /* TomorrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TomorrowView.swift; sourceTree = "<group>"; };
 		A233FEE427669DE100FEDA9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A25AC1C62767FBC800C9610F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A25AC1C82768009C00C9610F /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
-		A260769E27628E7400B9E64E /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
-		A26076AC2762977C00B9E64E /* mainPageLoader.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = mainPageLoader.json; path = ../../../Downloads/mainPageLoader.json; sourceTree = "<group>"; };
 		A2B155AE27458EE2004B1B02 /* Elektrihind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Elektrihind.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2B155B127458EE2004B1B02 /* ElektrihindApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElektrihindApp.swift; sourceTree = "<group>"; };
 		A2B155B327458EE2004B1B02 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -41,7 +37,6 @@
 		A2B155BF27459138004B1B02 /* NordPoolPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordPoolPrice.swift; sourceTree = "<group>"; };
 		A2B155C1274599E7004B1B02 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		A2B155C62745B070004B1B02 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		A2F9DFB827653B69006E4730 /* ChartView */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ChartView; path = ../Documents/ChartView; sourceTree = "<group>"; };
 		A2F9DFBC27653EFB006E4730 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -50,8 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A260769A27628C3A00B9E64E /* Lottie in Frameworks */,
-				A2F9DFBB27653B8A006E4730 /* SwiftUICharts in Frameworks */,
+				A211D96D276916AD00C18916 /* SwiftUICharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,18 +80,9 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		A260769B27628D4400B9E64E /* Lottie */ = {
-			isa = PBXGroup;
-			children = (
-				A26076AC2762977C00B9E64E /* mainPageLoader.json */,
-			);
-			path = Lottie;
-			sourceTree = "<group>";
-		};
 		A2B155A527458EE2004B1B02 = {
 			isa = PBXGroup;
 			children = (
-				A2F9DFB827653B69006E4730 /* ChartView */,
 				A2B155B027458EE2004B1B02 /* Elektrihind */,
 				A2B155AF27458EE2004B1B02 /* Products */,
 				A2F9DFB927653B8A006E4730 /* Frameworks */,
@@ -115,15 +100,14 @@
 		A2B155B027458EE2004B1B02 /* Elektrihind */ = {
 			isa = PBXGroup;
 			children = (
+				A211D96B2769169F00C18916 /* ChartView */,
 				A233FEE427669DE100FEDA9C /* Info.plist */,
-				A260769B27628D4400B9E64E /* Lottie */,
 				A2B155B127458EE2004B1B02 /* ElektrihindApp.swift */,
 				A2B155B327458EE2004B1B02 /* ContentView.swift */,
 				A22579F52767F79700F8E3AB /* Views */,
 				A22579F62767F7B200F8E3AB /* Network */,
 				A22579F72767F7C300F8E3AB /* Models */,
 				A2B155C62745B070004B1B02 /* Extensions.swift */,
-				A260769E27628E7400B9E64E /* LottieView.swift */,
 				A2B155B527458EE4004B1B02 /* Assets.xcassets */,
 				A2B155B727458EE4004B1B02 /* Preview Content */,
 			);
@@ -162,8 +146,7 @@
 			);
 			name = Elektrihind;
 			packageProductDependencies = (
-				A260769927628C3A00B9E64E /* Lottie */,
-				A2F9DFBA27653B8A006E4730 /* SwiftUICharts */,
+				A211D96C276916AD00C18916 /* SwiftUICharts */,
 			);
 			productName = Elektrihind;
 			productReference = A2B155AE27458EE2004B1B02 /* Elektrihind.app */;
@@ -194,7 +177,6 @@
 			);
 			mainGroup = A2B155A527458EE2004B1B02;
 			packageReferences = (
-				A260769827628C3A00B9E64E /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = A2B155AF27458EE2004B1B02 /* Products */;
 			projectDirPath = "";
@@ -210,7 +192,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A26076AD2762977C00B9E64E /* mainPageLoader.json in Resources */,
 				A2B155B927458EE4004B1B02 /* Preview Assets.xcassets in Resources */,
 				A2B155B627458EE4004B1B02 /* Assets.xcassets in Resources */,
 			);
@@ -232,7 +213,6 @@
 				A25AC1C72767FBC800C9610F /* SettingsView.swift in Sources */,
 				A2B155B227458EE2004B1B02 /* ElektrihindApp.swift in Sources */,
 				A22579F22767F74600F8E3AB /* TodayView.swift in Sources */,
-				A260769F27628E7400B9E64E /* LottieView.swift in Sources */,
 				A22579F42767F76E00F8E3AB /* TomorrowView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -443,24 +423,8 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		A260769827628C3A00B9E64E /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/airbnb/lottie-ios";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		A260769927628C3A00B9E64E /* Lottie */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A260769827628C3A00B9E64E /* XCRemoteSwiftPackageReference "lottie-ios" */;
-			productName = Lottie;
-		};
-		A2F9DFBA27653B8A006E4730 /* SwiftUICharts */ = {
+		A211D96C276916AD00C18916 /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftUICharts;
 		};

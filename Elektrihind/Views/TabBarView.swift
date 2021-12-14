@@ -16,12 +16,6 @@ struct TabBarView: View {
             ForEach(tabs.indices) { index in
                 GeometryReader { geometry in
                     VStack(spacing: 4) {
-                        if selection == index {
-//                            Color(.label)
-//                                .frame(height: 2)
-//                                .offset(y: -8)
-//                                .matchedGeometryEffect(id: "currentTab", in: currentTab)
-                        }
                         if tabs[selection].label == "Täna" && tabs[index].label == "Täna" {
                             Image(systemName: tabs[index].image)
                                 .frame(height: 20)

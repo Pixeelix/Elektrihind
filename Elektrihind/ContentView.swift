@@ -11,26 +11,29 @@ import SwiftUICharts
 struct ContentView: View {
     @State private var tabBarSelection = 0
     
+    init() {
+        UITabBar.appearance().backgroundColor = UIColor(named: "tabBarBackground")
+    }
+    
     var body: some View {
-        ZStack {
-            BackgroundView(topColor: Color("backgroundTop"), bottomColor: Color("backgroundBottom"))
-            VStack {
-                TabView(selection: $tabBarSelection) {
-                    TodayView()
-                        .tag(0)
-                    TomorrowView()
-                        .tag(1)
-//                    Text("Hea teada")
-//                        .tag(2)
-                    SettingsView()
-                        .tag(2)
-                }
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                
-                TabBarView(selection: $tabBarSelection)
-                    .background(Color("tabBarBackground"))
-            }
+        TabView(selection: $tabBarSelection) {
+            TodayView()
+                .tag(0)
+                .background(backGroundColor().edgesIgnoringSafeArea(.all))
+            TomorrowView()
+                .tag(1)
+                .background(backGroundColor().edgesIgnoringSafeArea(.all))
+            //                    Text("Hea teada")
+            //                        .tag(2)
+            SettingsView()
+                .tag(2)
+                .background(backGroundColor().edgesIgnoringSafeArea(.all))
         }
+        .overlay(TabBarView(selection: $tabBarSelection), alignment: .bottom)
+    }
+    
+    func backGroundColor() -> LinearGradient {
+       return LinearGradient(gradient: Gradient(colors: [Color("backgroundTop"), Color("backgroundBottom")]), startPoint: .topLeading, endPoint: .bottomTrailing)
     }
 }
 
@@ -48,6 +51,8 @@ struct CurrentPriceView: View {
     var priceData: PriceData?
     let dateFormatter: DateFormatter
     private let numberFormater = NumberFormatter()
+    let unit = Globals().unit
+    private var divider: Double = 1
     
     init(priceData: PriceData?) {
         self.priceData = priceData
@@ -58,15 +63,24 @@ struct CurrentPriceView: View {
         
         numberFormater.decimalSeparator = ","
         numberFormater.maximumIntegerDigits = 4
-        numberFormater.minimumFractionDigits = 4
+        
+        if unit == "€/kWh" {
+            divider = 1000
+            numberFormater.minimumFractionDigits = 4
+        } else if unit == "€/MWh" {
+            divider = 1
+            numberFormater.minimumFractionDigits = 1
+        } else if unit == "sent/kWh" {
+            divider = 10
+            numberFormater.minimumFractionDigits = 2
+        }
     }
     
     var body: some View {
         VStack(alignment: .center) {
             if let price = priceData?.price,
                let timeStamp = priceData?.timestamp,
-               let formattedPrice = numberFormater.string(from: NSNumber(value: price / 1000)) {
-                
+               let formattedPrice = numberFormater.string(from: NSNumber(value: price / divider)){
                 let date = Date(timeIntervalSince1970: timeStamp)
                 let strDate = dateFormatter.string(from: date)
                 
@@ -82,7 +96,7 @@ struct CurrentPriceView: View {
                     Text(formattedPrice)
                         .font(.system(size: 72, weight: .medium))
                     
-                    Text("€/kWh")
+                    Text(Globals().unit)
                         .font(.system(size: 38, weight: .medium))
                 }
                 .offset(x: 0, y: -12)
@@ -98,6 +112,8 @@ struct CurrentPriceView: View {
 }
 
 struct NextDayMinMaxRange: View {
+    let unit = Globals().unit
+    private var divider: Double = 1
     private var minPrice: String = ""
     private var maxPrice: String = ""
     
@@ -106,15 +122,25 @@ struct NextDayMinMaxRange: View {
     init(data: [(String, Double)]) {
         numberFormater.decimalSeparator = ","
         numberFormater.maximumIntegerDigits = 4
-        numberFormater.minimumFractionDigits = 4
+        
+        if unit == "€/kWh" {
+            divider = 1000
+            numberFormater.minimumFractionDigits = 4
+        } else if unit == "€/MWh" {
+            divider = 1
+            numberFormater.minimumFractionDigits = 1
+        } else if unit == "sent/kWh" {
+            divider = 10
+            numberFormater.minimumFractionDigits = 2
+        }
         
         var pricesArray: [Double] = []
         for dataPoint in data {
             pricesArray.append(dataPoint.1)
         }
         
-        minPrice = numberFormater.string(from: NSNumber(value: pricesArray.min() ?? 0)) ?? ""
-        maxPrice = numberFormater.string(from: NSNumber(value: pricesArray.max() ?? 1)) ?? ""
+        minPrice = numberFormater.string(from: NSNumber(value: pricesArray.min() ?? 0 / divider)) ?? ""
+        maxPrice = numberFormater.string(from: NSNumber(value: pricesArray.max() ?? 0 / divider)) ?? ""
     }
     
     var body: some View {
@@ -123,7 +149,7 @@ struct NextDayMinMaxRange: View {
                 Text("\(minPrice) - \(maxPrice)")
                     .font(.system(size: 42, weight: .medium))
                 
-                Text("€/kWh")
+                Text(Globals().unit)
                     .font(.system(size: 38, weight: .medium))
             }
         }
@@ -163,26 +189,7 @@ struct ChartView: View {
     var body: some View {
         let title = day == .tomorrow ? tomorrowDate : todayDate
         VStack {
-            BarChartView(data: ChartData(values: data), title: title, legend: "Quarterly", style: myCustomStyle, form: ChartForm.extraLarge, valueSpecifier: "%.4f €/kWh", animatedToBack: false)
-        }
-    }
-}
-
-struct BackgroundView: View {
-    var topColor: Color
-    var bottomColor: Color
-    var body: some View {
-        LinearGradient(gradient: Gradient(colors: [topColor, bottomColor]), startPoint: .topLeading, endPoint: .bottomTrailing).edgesIgnoringSafeArea(.all)
-    }
-}
-
-struct LoadingView: View {
-    var body: some View {
-        ZStack {
-            Color.white.ignoresSafeArea()
-            ZStack {
-                LottieView(fileName: "mainPageLoader")
-            }
+            BarChartView(data: ChartData(values: data), title: title, legend: "Quarterly", style: myCustomStyle, form: ChartForm.extraLarge, valueSpecifier: "%.4f \(Globals().unit)", animatedToBack: false)
         }
     }
 }
@@ -190,7 +197,7 @@ struct LoadingView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(ColorScheme.allCases, id: \.self) {
-                    ContentView().preferredColorScheme($0)
-               }
+            ContentView().preferredColorScheme($0)
+        }
     }
 }
