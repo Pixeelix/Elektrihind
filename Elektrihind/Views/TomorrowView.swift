@@ -43,7 +43,7 @@ struct TomorrowView: View {
                     isLoading = false
                 }
             }
-            Network().loadEstDayData(.today) { data in
+            Network().loadEstDayData(.tomorrow) { data in
                 missingData = data.count <= 2
                 self.priceData = data
             }

@@ -50,9 +50,9 @@ struct TitleView: View {
 struct CurrentPriceView: View {
     var priceData: PriceData?
     let dateFormatter: DateFormatter
-    private let numberFormater = NumberFormatter()
-    let unit = Globals().unit
-    private var divider: Double = 1
+    private let unit = Globals().unit
+    private let numberFormatter = Globals().numberFormatter
+    private let divider: Double = Globals().divider
     
     init(priceData: PriceData?) {
         self.priceData = priceData
@@ -60,27 +60,13 @@ struct CurrentPriceView: View {
         dateFormatter.timeZone = TimeZone(abbreviation: "EET") //Set timezone that you want
         dateFormatter.locale = NSLocale.current
         dateFormatter.dateFormat = "HH:mm" //Specify your format that you want
-        
-        numberFormater.decimalSeparator = ","
-        numberFormater.maximumIntegerDigits = 4
-        
-        if unit == "€/kWh" {
-            divider = 1000
-            numberFormater.minimumFractionDigits = 4
-        } else if unit == "€/MWh" {
-            divider = 1
-            numberFormater.minimumFractionDigits = 1
-        } else if unit == "sent/kWh" {
-            divider = 10
-            numberFormater.minimumFractionDigits = 2
-        }
     }
     
     var body: some View {
         VStack(alignment: .center) {
             if let price = priceData?.price,
                let timeStamp = priceData?.timestamp,
-               let formattedPrice = numberFormater.string(from: NSNumber(value: price / divider)){
+               let formattedPrice = numberFormatter.string(from: NSNumber(value: price / divider)){
                 let date = Date(timeIntervalSince1970: timeStamp)
                 let strDate = dateFormatter.string(from: date)
                 
@@ -112,35 +98,21 @@ struct CurrentPriceView: View {
 }
 
 struct NextDayMinMaxRange: View {
-    let unit = Globals().unit
-    private var divider: Double = 1
+    private let unit = Globals().unit
+    private let numberFormatter = Globals().numberFormatter
+    private let divider: Double = Globals().divider
+    
     private var minPrice: String = ""
     private var maxPrice: String = ""
     
-    private let numberFormater = NumberFormatter()
-    
     init(data: [(String, Double)]) {
-        numberFormater.decimalSeparator = ","
-        numberFormater.maximumIntegerDigits = 4
-        
-        if unit == "€/kWh" {
-            divider = 1000
-            numberFormater.minimumFractionDigits = 4
-        } else if unit == "€/MWh" {
-            divider = 1
-            numberFormater.minimumFractionDigits = 1
-        } else if unit == "sent/kWh" {
-            divider = 10
-            numberFormater.minimumFractionDigits = 2
-        }
-        
         var pricesArray: [Double] = []
         for dataPoint in data {
             pricesArray.append(dataPoint.1)
         }
         
-        minPrice = numberFormater.string(from: NSNumber(value: pricesArray.min() ?? 0 / divider)) ?? ""
-        maxPrice = numberFormater.string(from: NSNumber(value: pricesArray.max() ?? 0 / divider)) ?? ""
+        minPrice = numberFormatter.string(from: NSNumber(value: pricesArray.min() ?? 0 / divider)) ?? ""
+        maxPrice = numberFormatter.string(from: NSNumber(value: pricesArray.max() ?? 0 / divider)) ?? ""
     }
     
     var body: some View {
@@ -163,6 +135,7 @@ struct NextDayMinMaxRange: View {
 }
 
 struct ChartView: View {
+    private let minFractionDigits = Globals().minFractionDigits
     private var day: Day = .today
     private var data: [(String, Double)]
     let dateFormatter: DateFormatter
@@ -189,7 +162,7 @@ struct ChartView: View {
     var body: some View {
         let title = day == .tomorrow ? tomorrowDate : todayDate
         VStack {
-            BarChartView(data: ChartData(values: data), title: title, legend: "Quarterly", style: myCustomStyle, form: ChartForm.extraLarge, valueSpecifier: "%.4f \(Globals().unit)", animatedToBack: false)
+            BarChartView(data: ChartData(values: data), title: title, legend: "Quarterly", style: myCustomStyle, form: ChartForm.extraLarge, valueSpecifier: "%.\(minFractionDigits)f \(Globals().unit)", animatedToBack: false)
         }
     }
 }

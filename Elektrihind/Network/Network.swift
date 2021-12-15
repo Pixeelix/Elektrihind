@@ -13,8 +13,11 @@ enum Day {
 }
 
 class Network: ObservableObject {
+    private let unit = Globals().unit
+    private let divider: Double = Globals().divider
     
     func loadCurrentPrice(completion:@escaping (PriceData) -> ()) {
+
         guard let url = URL(string: "https://dashboard.elering.ee/api/nps/price/EE/current") else { fatalError("Missing URL") }
         let urlRequest = URLRequest(url: url)
         
@@ -64,7 +67,7 @@ class Network: ObservableObject {
         testFormatter.timeZone = TimeZone(abbreviation: "EET") //Set timezone that you want
         testFormatter.locale = NSLocale.current
         testFormatter.dateFormat = "HH:mm" //Specify your format that you want
-        
+
         guard let url = URL(string: "https://dashboard.elering.ee/api/nps/price?start=\(startDate)T22:00:00.000Z&end=\(endDate)T21:59:59.999Z") else { fatalError("Missing URL") }
         print(url)
         let urlRequest = URLRequest(url: url)
@@ -86,7 +89,7 @@ class Network: ObservableObject {
                         for data in decodedNordPoolData.data.ee {
                             let timeStampDate = Date(timeIntervalSince1970: data.timestamp)
                             let strTime = testFormatter.string(from: timeStampDate)
-                            let dataPoint = (strTime, data.price)
+                            let dataPoint = (strTime, data.price / self.divider)
                             estonianDayDataArray.append(dataPoint)
                         }
                         completion(estonianDayDataArray)

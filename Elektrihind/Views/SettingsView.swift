@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject private var selectedUnit: Globals
-    let unitsArray = ["€/kWh", "€/MWh", "sent/kWh"]
+    let unitsArray = ["€/kWh", "€/MWh", "senti/kWh"]
     
     init(){
         UITableView.appearance().backgroundColor = .clear

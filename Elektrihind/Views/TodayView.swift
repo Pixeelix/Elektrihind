@@ -34,10 +34,6 @@ struct TodayView: View {
                 self.priceData = data
             }
         }
-        
-        //            if isLoading {
-        //                LoadingView()
-        //            }
     }
 }
 
