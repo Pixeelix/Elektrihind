@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A211D96D276916AD00C18916 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = A211D96C276916AD00C18916 /* SwiftUICharts */; };
+		A211D9E12769D3C600C18916 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = A211D9E02769D3C600C18916 /* SwiftUICharts */; };
 		A22579F22767F74600F8E3AB /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22579F12767F74600F8E3AB /* TodayView.swift */; };
 		A22579F42767F76E00F8E3AB /* TomorrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22579F32767F76E00F8E3AB /* TomorrowView.swift */; };
 		A25AC1C72767FBC800C9610F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25AC1C62767FBC800C9610F /* SettingsView.swift */; };
@@ -23,7 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A211D96B2769169F00C18916 /* ChartView */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ChartView; path = ../../ChartView; sourceTree = "<group>"; };
+		A211D9DF2769D3BD00C18916 /* ChartView */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ChartView; sourceTree = "<group>"; };
 		A22579F12767F74600F8E3AB /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
 		A22579F32767F76E00F8E3AB /* TomorrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TomorrowView.swift; sourceTree = "<group>"; };
 		A233FEE427669DE100FEDA9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -45,7 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A211D96D276916AD00C18916 /* SwiftUICharts in Frameworks */,
+				A211D9E12769D3C600C18916 /* SwiftUICharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +83,7 @@
 		A2B155A527458EE2004B1B02 = {
 			isa = PBXGroup;
 			children = (
+				A211D9DF2769D3BD00C18916 /* ChartView */,
 				A2B155B027458EE2004B1B02 /* Elektrihind */,
 				A2B155AF27458EE2004B1B02 /* Products */,
 				A2F9DFB927653B8A006E4730 /* Frameworks */,
@@ -100,7 +101,6 @@
 		A2B155B027458EE2004B1B02 /* Elektrihind */ = {
 			isa = PBXGroup;
 			children = (
-				A211D96B2769169F00C18916 /* ChartView */,
 				A233FEE427669DE100FEDA9C /* Info.plist */,
 				A2B155B127458EE2004B1B02 /* ElektrihindApp.swift */,
 				A2B155B327458EE2004B1B02 /* ContentView.swift */,
@@ -146,7 +146,7 @@
 			);
 			name = Elektrihind;
 			packageProductDependencies = (
-				A211D96C276916AD00C18916 /* SwiftUICharts */,
+				A211D9E02769D3C600C18916 /* SwiftUICharts */,
 			);
 			productName = Elektrihind;
 			productReference = A2B155AE27458EE2004B1B02 /* Elektrihind.app */;
@@ -424,7 +424,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A211D96C276916AD00C18916 /* SwiftUICharts */ = {
+		A211D9E02769D3C600C18916 /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftUICharts;
 		};
