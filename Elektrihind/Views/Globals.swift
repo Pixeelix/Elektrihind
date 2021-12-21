@@ -7,13 +7,26 @@
 
 import Foundation
 
+enum Language: String {
+    case estonian = "et"
+    case english = "en"
+    case russian = "ru"
+    
+    static let allLanguages = [estonian, english, russian]
+}
+
 class Globals: ObservableObject {
     @Published var divider: Double = 1
     @Published var minFractionDigits: Int = 1
     @Published var numberFormatter = NumberFormatter()
+    @Published var language: Language = .estonian {
+        didSet {
+            saveLanguage()
+        }
+    }
     @Published var unit: String = "€/kWh" {
         didSet {
-            saveSettings()
+            saveUnit()
             numberFormatter.decimalSeparator = ","
             numberFormatter.maximumIntegerDigits = 4
             if unit == "€/kWh" {
@@ -32,14 +45,19 @@ class Globals: ObservableObject {
     
     init() {
         getSavedSettings()
-        
     }
     
     func getSavedSettings() {
+        let languageString = UserDefaults.standard.string(forKey: "language") ?? "et"
+        language = Language(rawValue: languageString) ?? .estonian
         unit = UserDefaults.standard.string(forKey: "unit") ?? unit
     }
     
-    func saveSettings() {
+    func saveLanguage() {
+        UserDefaults.standard.set(language.rawValue, forKey: "language")
+    }
+    
+    func saveUnit() {
         UserDefaults.standard.set(unit, forKey: "unit")
     }
 }

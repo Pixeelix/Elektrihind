@@ -1,0 +1,10 @@
+/* 
+  Localizable.strings
+  Elektrihind
+
+  Created by Martin Pihooja on 21.12.2021.
+  
+*/
+"TODAY_PRICE" = "Today price";
+"settings_language" = "Language";
+"SETTINGS_TITLE" = "Settings";

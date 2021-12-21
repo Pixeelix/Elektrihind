@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TodayView: View {
+    
     @State private var isLoading = false
     @State private var currentPriceData: PriceData?
     @State var priceData: [(String, Double)] = []
@@ -15,7 +16,7 @@ struct TodayView: View {
     var body: some View {
         HStack(alignment: .top) {
             VStack(alignment: .center) {
-                TitleView(title: "Tänane hind")
+                TitleView(title: "TODAY_PRICE".localized(Globals().language))
                 CurrentPriceView(priceData: currentPriceData)
                     .padding(.bottom, 50)
                 ChartView(day: .today, data: priceData)

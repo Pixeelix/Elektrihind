@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @EnvironmentObject private var selectedUnit: Globals
+    @EnvironmentObject private var globals: Globals
     let unitsArray = ["€/kWh", "€/MWh", "senti/kWh"]
     
     init(){
@@ -21,7 +21,12 @@ struct SettingsView: View {
                 LinearGradient(gradient: Gradient(colors: [Color("backgroundTop"), Color("backgroundBottom")]), startPoint: .topLeading, endPoint: .bottomTrailing).edgesIgnoringSafeArea(.all)
                 Form {
                     Section {
-                        Picker("Ühik", selection: $selectedUnit.unit) {
+                        Picker("Keel", selection: $globals.language) {
+                            ForEach(Language.allLanguages, id: \.self) {
+                                Text($0.rawValue)
+                            }
+                        }
+                        Picker("Ühik", selection: $globals.unit) {
                             ForEach(unitsArray, id: \.self) {
                                 Text($0)
                             }
@@ -35,7 +40,7 @@ struct SettingsView: View {
                 ToolbarItem(placement: .principal) {
                     VStack(spacing: 10) {
                         Text("")
-                        TitleView(title: "Seaded")
+                        TitleView(title: "SETTINGS_TITLE".localized(Globals().language))
                     }
                 }
             }
@@ -43,8 +48,9 @@ struct SettingsView: View {
     }
 }
 
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView()
+    struct SettingsView_Previews: PreviewProvider {
+        static var previews: some View {
+            SettingsView()
+        }
     }
-}
+    
