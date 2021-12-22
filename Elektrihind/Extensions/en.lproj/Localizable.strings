@@ -1,10 +1,15 @@
-/* 
+/*
   Localizable.strings
   Elektrihind
 
   Created by Martin Pihooja on 21.12.2021.
   
 */
-"TODAY_PRICE" = "Today price";
-"settings_language" = "Language";
-"SETTINGS_TITLE" = "Settings";
+"TITLE_LANGUAGE" = "Language";
+"TITLE_TODAYS_PRICE" = "Today's price";
+"TITLE_TOMORROWS_PRICE" = "Tomorrows's price";
+"TITLE_SETTINGS" = "Settings";
+"LABLE_TODAY" = "Today";
+"LABLE_TOMORROW" = "Tomorrow";
+"LABLE_SETTINGS" = "Settings";
+"TITLE_MEASURE" = "Measure";

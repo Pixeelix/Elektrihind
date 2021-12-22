@@ -10,9 +10,12 @@ import Foundation
 enum Language: String {
     case estonian = "et"
     case english = "en"
-    case russian = "ru"
     
-    static let allLanguages = [estonian, english, russian]
+    static let allLanguages = [estonian, english]
+}
+
+func localizedString(_ key: String) -> String {
+    return key.localized(Globals().language)
 }
 
 class Globals: ObservableObject {

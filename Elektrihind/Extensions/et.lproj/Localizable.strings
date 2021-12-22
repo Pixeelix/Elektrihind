@@ -5,6 +5,11 @@
   Created by Martin Pihooja on 21.12.2021.
   
 */
-"TODAY_PRICE" = "Tänane hind";
-"settings_language" = "keel";
-"SETTINGS_TITLE" = "Seaded";
+"TITLE_LANGUAGE" = "Keel";
+"TITLE_TODAYS_PRICE" = "Tänane hind";
+"TITLE_TOMORROWS_PRICE" = "Homne hind";
+"TITLE_SETTINGS" = "Seaded";
+"LABLE_TODAY" = "Täna";
+"LABLE_TOMORROW" = "Homme";
+"LABLE_SETTINGS" = "Seaded";
+"TITLE_MEASURE" = "Mõõtühik";

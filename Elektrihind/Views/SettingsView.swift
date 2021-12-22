@@ -21,12 +21,12 @@ struct SettingsView: View {
                 LinearGradient(gradient: Gradient(colors: [Color("backgroundTop"), Color("backgroundBottom")]), startPoint: .topLeading, endPoint: .bottomTrailing).edgesIgnoringSafeArea(.all)
                 Form {
                     Section {
-                        Picker("Keel", selection: $globals.language) {
+                        Picker(localizedString("TITLE_LANGUAGE"), selection: $globals.language) {
                             ForEach(Language.allLanguages, id: \.self) {
                                 Text($0.rawValue)
                             }
                         }
-                        Picker("Ühik", selection: $globals.unit) {
+                        Picker(localizedString("TITLE_MEASURE"), selection: $globals.unit) {
                             ForEach(unitsArray, id: \.self) {
                                 Text($0)
                             }
@@ -40,7 +40,7 @@ struct SettingsView: View {
                 ToolbarItem(placement: .principal) {
                     VStack(spacing: 10) {
                         Text("")
-                        TitleView(title: "SETTINGS_TITLE".localized(Globals().language))
+                        TitleView(title: "TITLE_SETTINGS".localized(Globals().language))
                     }
                 }
             }

@@ -7,20 +7,32 @@
 
 import SwiftUI
 
+struct Tab {
+    let image: String
+    let label: String
+}
+
 struct TabBarView: View {
     @Binding var selection: Int
     @Namespace private var currentTab
+    
+    @State var tabs = [ 
+        Tab(image: "bolt.fill", label: localizedString("LABLE_TODAY")),
+        Tab(image: "clock.fill", label: localizedString("LABLE_TOMORROW")),
+        //Tab(image: "leaf.fill", label: "Hea teada"),
+        Tab(image: "gearshape.fill", label: localizedString("LABLE_SETTINGS")),
+    ]
     
     var body: some View {
         HStack(alignment: .bottom) {
             ForEach(tabs.indices) { index in
                 GeometryReader { geometry in
                     VStack(spacing: 4) {
-                        if tabs[selection].label == "Täna" && tabs[index].label == "Täna" {
+                        if tabs[selection].label == localizedString("LABLE_TODAY") && tabs[index].label == localizedString("LABLE_TODAY") {
                             Image(systemName: tabs[index].image)
                                 .frame(height: 20)
                                 .foregroundColor(Color.orange)
-                        } else if tabs[selection].label == "Homme" && tabs[index].label == "Homme" {
+                        } else if tabs[selection].label == localizedString("LABLE_TOMORROW") && tabs[index].label == localizedString("LABLE_TOMORROW") {
                             Image(systemName: tabs[index].image)
                                 .frame(height: 20)
                                 .foregroundColor(Color.mint)
@@ -29,7 +41,7 @@ struct TabBarView: View {
                                 .frame(height: 20)
                                 .rotationEffect(.degrees(25))
                                 .foregroundColor(Color.green)
-                        } else if tabs[selection].label == "Seaded" && tabs[index].label == "Seaded" {
+                        } else if tabs[selection].label == localizedString("LABLE_SETTINGS") && tabs[index].label == localizedString("LABLE_SETTINGS") {
                             Image(systemName: tabs[index].image)
                                 .frame(height: 20)
                                 .foregroundColor(Color.brown)
@@ -64,16 +76,4 @@ struct TabBarView_Previews: PreviewProvider {
             .previewLayout(.sizeThatFits)
     }
 }
-
-struct Tab {
-    let image: String
-    let label: String
-}
-
-let tabs = [
-    Tab(image: "bolt.fill", label: "Täna"),
-    Tab(image: "clock.fill", label: "Homme"),
-    //Tab(image: "leaf.fill", label: "Hea teada"),
-    Tab(image: "gearshape.fill", label: "Seaded"),
-]
 
