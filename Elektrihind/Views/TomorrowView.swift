@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct TomorrowView: View {
-    @State private var isLoading = false
     @State private var currentPriceData: PriceData?
     @State var priceData: [(String, Double)] = []
     @State var missingData = true
+    @State var dataLastLoadedHour: Int? = nil
+    let currentHour = Calendar.current.component(.hour, from: Date())
     
     var body: some View {
         HStack(alignment: .top) {
@@ -36,16 +37,18 @@ struct TomorrowView: View {
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)
         .onAppear() {
-            isLoading = true
-            Network().loadCurrentPrice { data in
-                self.currentPriceData = data
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    isLoading = false
+            if let dataLastLoadedHour = dataLastLoadedHour,
+               dataLastLoadedHour == currentHour {
+                return
+            } else {
+                Network().loadCurrentPrice { data in
+                    self.currentPriceData = data
                 }
-            }
-            Network().loadEstDayData(.tomorrow) { data in
-                missingData = data.count <= 2
-                self.priceData = data
+                Network().loadEstDayData(.tomorrow) { data in
+                    missingData = data.count <= 2
+                    self.priceData = data
+                }
+                self.dataLastLoadedHour = currentHour
             }
         }
     }
