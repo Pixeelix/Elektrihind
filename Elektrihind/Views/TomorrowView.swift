@@ -12,7 +12,6 @@ struct TomorrowView: View {
     @State var priceData: [(String, Double)] = []
     @State var missingData = true
     @State var dataLastLoadedHour: Int? = nil
-    let currentHour = Calendar.current.component(.hour, from: Date())
     
     var body: some View {
         HStack(alignment: .top) {
@@ -38,7 +37,7 @@ struct TomorrowView: View {
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)
         .onAppear() {
             if let dataLastLoadedHour = dataLastLoadedHour,
-               dataLastLoadedHour == currentHour {
+               dataLastLoadedHour == Calendar.current.component(.hour, from: Date()) {
                 return
             } else {
                 Network().loadCurrentPrice { data in
@@ -48,7 +47,7 @@ struct TomorrowView: View {
                     missingData = data.count <= 2
                     self.priceData = data
                 }
-                self.dataLastLoadedHour = currentHour
+                self.dataLastLoadedHour = Calendar.current.component(.hour, from: Date())
             }
         }
     }
