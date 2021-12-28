@@ -23,8 +23,9 @@ struct ContentView: View {
             TomorrowView()
                 .tag(1)
                 .background(backGroundColor().edgesIgnoringSafeArea(.all))
-            //                    Text("Hea teada")
-            //                        .tag(2)
+//          Text("Hea teada")
+//              .tag(2)
+//              .background(backGroundColor().edgesIgnoringSafeArea(.all))
             SettingsView()
                 .tag(2)
                 .background(backGroundColor().edgesIgnoringSafeArea(.all))
@@ -57,9 +58,9 @@ struct CurrentPriceView: View {
     init(priceData: PriceData?) {
         self.priceData = priceData
         dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "EET") //Set timezone that you want
+        dateFormatter.timeZone = TimeZone(abbreviation: "EET")
         dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = "HH:mm" //Specify your format that you want
+        dateFormatter.dateFormat = "HH:mm"
     }
     
     var body: some View {
