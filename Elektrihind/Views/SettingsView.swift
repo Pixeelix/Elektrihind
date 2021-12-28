@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @EnvironmentObject private var selectedUnit: Globals
+    @EnvironmentObject var shared: Globals
     let unitsArray = ["€/kWh", "€/MWh", "senti/kWh"]
     
     init(){
@@ -21,7 +21,7 @@ struct SettingsView: View {
                 LinearGradient(gradient: Gradient(colors: [Color("backgroundTop"), Color("backgroundBottom")]), startPoint: .topLeading, endPoint: .bottomTrailing).edgesIgnoringSafeArea(.all)
                 Form {
                     Section {
-                        Picker("Ühik", selection: $selectedUnit.unit) {
+                        Picker("Ühik", selection: $shared.unit) {
                             ForEach(unitsArray, id: \.self) {
                                 Text($0)
                             }

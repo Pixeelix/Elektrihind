@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TodayView: View {
-    @State private var currentPriceData: PriceData?
+    @EnvironmentObject var shared: Globals
     @State var priceData: [(String, Double)] = []
     @State var dataLastLoadedHour: Int? = nil
     
@@ -16,7 +16,7 @@ struct TodayView: View {
         HStack(alignment: .top) {
             VStack(alignment: .center) {
                 TitleView(title: "Tänane hind")
-                CurrentPriceView(priceData: currentPriceData)
+                CurrentPriceView()
                     .padding(.bottom, 50)
                 ChartView(day: .today, data: priceData)
             }
@@ -28,9 +28,9 @@ struct TodayView: View {
                 return
             } else {
                 Network().loadCurrentPrice { data in
-                    self.currentPriceData = data
+                    shared.currentPrice = data
                 }
-                Network().loadEstDayData(.today) { data in
+                Network().loadFullDayData(.today) { data in
                     self.priceData = data
                 }
                 self.dataLastLoadedHour = Calendar.current.component(.hour, from: Date())

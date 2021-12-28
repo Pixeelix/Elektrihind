@@ -8,6 +8,8 @@
 import Foundation
 
 class Globals: ObservableObject {
+    @Published var currentPrice: PriceData?
+    @Published var todayFullDayData: Array<PriceData> = []
     @Published var divider: Double = 1
     @Published var minFractionDigits: Int = 1
     @Published var numberFormatter = NumberFormatter()
@@ -28,11 +30,6 @@ class Globals: ObservableObject {
             }
             numberFormatter.minimumFractionDigits = minFractionDigits
         }
-    }
-    
-    init() {
-        getSavedSettings()
-        
     }
     
     func getSavedSettings() {

@@ -23,7 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A211D9DF2769D3BD00C18916 /* ChartView */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ChartView; sourceTree = "<group>"; };
+		A20ABC08277B678900470604 /* ChartView */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ChartView; sourceTree = "<group>"; };
 		A22579F12767F74600F8E3AB /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
 		A22579F32767F76E00F8E3AB /* TomorrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TomorrowView.swift; sourceTree = "<group>"; };
 		A233FEE427669DE100FEDA9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -83,7 +83,7 @@
 		A2B155A527458EE2004B1B02 = {
 			isa = PBXGroup;
 			children = (
-				A211D9DF2769D3BD00C18916 /* ChartView */,
+				A20ABC08277B678900470604 /* ChartView */,
 				A2B155B027458EE2004B1B02 /* Elektrihind */,
 				A2B155AF27458EE2004B1B02 /* Products */,
 				A2F9DFB927653B8A006E4730 /* Frameworks */,

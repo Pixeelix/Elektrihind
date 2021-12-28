@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftUICharts
 
 struct ContentView: View {
+    @StateObject var shared = Globals()
     @State private var tabBarSelection = 0
     
     init() {
@@ -23,11 +24,15 @@ struct ContentView: View {
             TomorrowView()
                 .tag(1)
                 .background(backGroundColor().edgesIgnoringSafeArea(.all))
-            //                    Text("Hea teada")
-            //                        .tag(2)
+//          Text("Hea teada")
+//              .tag(2)
             SettingsView()
                 .tag(2)
                 .background(backGroundColor().edgesIgnoringSafeArea(.all))
+        }
+        .environmentObject(shared)
+        .onAppear() {
+            shared.getSavedSettings()
         }
         .overlay(TabBarView(selection: $tabBarSelection), alignment: .bottom)
     }
@@ -48,15 +53,10 @@ struct TitleView: View {
 }
 
 struct CurrentPriceView: View {
-    var priceData: PriceData?
-    let dateFormatter: DateFormatter
-    private let unit = Globals().unit
-    private let numberFormatter = Globals().numberFormatter
-    private let divider: Double = Globals().divider
+    let dateFormatter = DateFormatter()
+    @EnvironmentObject var shared: Globals
     
-    init(priceData: PriceData?) {
-        self.priceData = priceData
-        dateFormatter = DateFormatter()
+    init() {
         dateFormatter.timeZone = TimeZone(abbreviation: "EET") //Set timezone that you want
         dateFormatter.locale = NSLocale.current
         dateFormatter.dateFormat = "HH:mm" //Specify your format that you want
@@ -64,9 +64,9 @@ struct CurrentPriceView: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            if let price = priceData?.price,
-               let timeStamp = priceData?.timestamp,
-               let formattedPrice = numberFormatter.string(from: NSNumber(value: price / divider)){
+            if let price = shared.currentPrice?.price,
+               let timeStamp = shared.currentPrice?.timestamp,
+               let formattedPrice = shared.numberFormatter.string(from: NSNumber(value: price / shared.divider)){
                 let date = Date(timeIntervalSince1970: timeStamp)
                 let strDate = dateFormatter.string(from: date)
                 
@@ -82,7 +82,7 @@ struct CurrentPriceView: View {
                     Text(formattedPrice)
                         .font(.system(size: 72, weight: .medium))
                     
-                    Text(Globals().unit)
+                    Text(shared.unit)
                         .font(.system(size: 38, weight: .medium))
                 }
                 .offset(x: 0, y: -12)

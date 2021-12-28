@@ -36,7 +36,6 @@ class Network: ObservableObject {
                         let decodedNordPoolData = try
                         JSONDecoder().decode(NordPoolCurrentData.self, from: data)
                         if let currentEstPrice = decodedNordPoolData.data.first {
-                            print(currentEstPrice)
                             completion(currentEstPrice)
                         }
                     } catch let error {
@@ -48,7 +47,7 @@ class Network: ObservableObject {
         dataTask.resume()
     }
     
-    func loadEstDayData(_ day: Day, completion:@escaping ([(String, Double)]) -> ()) {
+    func loadFullDayData(_ day: Day, completion:@escaping ([PriceData]) -> ()) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let yesterDay = dateFormatter.string(from: Date().dayBefore)
@@ -85,14 +84,16 @@ class Network: ObservableObject {
                     do {
                         let decodedNordPoolData = try
                         JSONDecoder().decode(NordPoolCountriesData.self, from: data)
-                        var estonianDayDataArray: [(String, Double)] = []
+                     //   var estonianDayDataArray: [(String, Double)] = []
+                        var fullDayData = [PriceData]()
                         for data in decodedNordPoolData.data.ee {
-                            let timeStampDate = Date(timeIntervalSince1970: data.timestamp)
-                            let strTime = testFormatter.string(from: timeStampDate)
-                            let dataPoint = (strTime, data.price / self.divider)
-                            estonianDayDataArray.append(dataPoint)
+                            fullDayData.append(data)
+//                            let timeStampDate = Date(timeIntervalSince1970: data.timestamp)
+//                            let strTime = testFormatter.string(from: timeStampDate)
+//                            let dataPoint = (strTime, data.price / self.divider)
+//                            estonianDayDataArray.append(dataPoint)
                         }
-                        completion(estonianDayDataArray)
+                        completion(fullDayData)
                     } catch let error {
                         print("Error decoding: ", error)
                     }
