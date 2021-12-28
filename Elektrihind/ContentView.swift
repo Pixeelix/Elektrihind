@@ -99,30 +99,15 @@ struct CurrentPriceView: View {
 }
 
 struct NextDayMinMaxRange: View {
-    private let unit = Globals().unit
-    private let numberFormatter = Globals().numberFormatter
-    private let divider: Double = Globals().divider
-    
-    private var minPrice: String = ""
-    private var maxPrice: String = ""
-    
-    init(data: [(String, Double)]) {
-        var pricesArray: [Double] = []
-        for dataPoint in data {
-            pricesArray.append(dataPoint.1)
-        }
-        
-        minPrice = numberFormatter.string(from: NSNumber(value: pricesArray.min() ?? 0 / divider)) ?? ""
-        maxPrice = numberFormatter.string(from: NSNumber(value: pricesArray.max() ?? 0 / divider)) ?? ""
-    }
+    @EnvironmentObject var shared: Globals
     
     var body: some View {
         VStack(alignment: .center) {
             VStack {
-                Text("\(minPrice) - \(maxPrice)")
+                Text("\(shared.minNextDayPrice) - \(shared.maxNextDayPrice)")
                     .font(.system(size: 42, weight: .medium))
                 
-                Text(Globals().unit)
+                Text(shared.unit)
                     .font(.system(size: 38, weight: .medium))
             }
         }
@@ -136,26 +121,24 @@ struct NextDayMinMaxRange: View {
 }
 
 struct ChartView: View {
-    private let minFractionDigits = Globals().minFractionDigits
+    @EnvironmentObject var shared: Globals
     private var day: Day = .today
-    private var data: [(String, Double)]
-    let dateFormatter: DateFormatter
     var todayDate: String {
-        return dateFormatter.string(from: Date())
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMMM"
+        return formatter.string(from: Date())
     }
     var tomorrowDate: String {
-        return dateFormatter.string(from: Date().dayAfter)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMMM"
+        return formatter.string(from: Date().dayAfter)
     }
     let myCustomStyle = ChartStyle(backgroundColor: .white, accentColor: .blue, secondGradientColor: .blue, textColor: .blue, legendTextColor: .gray, dropShadowColor: .clear)
     let myCustomDarkModeStyle = ChartStyle(backgroundColor: .gray, accentColor: .white, secondGradientColor: .white, textColor: .white, legendTextColor: .white, dropShadowColor: .clear)
     
-    init(day: Day, data: [(String, Double)]) {
+    init(day: Day) {
         self.day = day
-        self.data = data
-        dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMMM"
         myCustomStyle.darkModeStyle = myCustomDarkModeStyle
-        
         UIPageControl.appearance().currentPageIndicatorTintColor = .blue
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.2)
     }
@@ -163,7 +146,7 @@ struct ChartView: View {
     var body: some View {
         let title = day == .tomorrow ? tomorrowDate : todayDate
         VStack {
-            BarChartView(data: ChartData(values: data), title: title, legend: "Quarterly", style: myCustomStyle, form: ChartForm.extraLarge, valueSpecifier: "%.\(minFractionDigits)f \(Globals().unit)", animatedToBack: false)
+            BarChartView(data: ChartData(values: shared.todayFullDayChartData), title: title, legend: "Quarterly", style: myCustomStyle, form: ChartForm.extraLarge, valueSpecifier: "%.\(shared.minFractionDigits)f \(shared.unit)", animatedToBack: false)
         }
     }
 }

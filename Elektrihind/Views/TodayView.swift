@@ -9,7 +9,6 @@ import SwiftUI
 
 struct TodayView: View {
     @EnvironmentObject var shared: Globals
-    @State var priceData: [(String, Double)] = []
     @State var dataLastLoadedHour: Int? = nil
     
     var body: some View {
@@ -18,7 +17,7 @@ struct TodayView: View {
                 TitleView(title: "Tänane hind")
                 CurrentPriceView()
                     .padding(.bottom, 50)
-                ChartView(day: .today, data: priceData)
+                ChartView(day: .today)
             }
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)
@@ -31,7 +30,7 @@ struct TodayView: View {
                     shared.currentPrice = data
                 }
                 Network().loadFullDayData(.today) { data in
-                    self.priceData = data
+                    shared.todayFullDayData = data
                 }
                 self.dataLastLoadedHour = Calendar.current.component(.hour, from: Date())
             }

@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct TomorrowView: View {
-    @State private var currentPriceData: PriceData?
-    @State var priceData: [(String, Double)] = []
+    @EnvironmentObject var shared: Globals
     @State var missingData = true
     @State var dataLastLoadedHour: Int? = nil
     
@@ -28,9 +27,9 @@ struct TomorrowView: View {
             } else {
                 VStack(alignment: .center) {
                     TitleView(title: "Homne hind")
-                    NextDayMinMaxRange(data: priceData)
+                    NextDayMinMaxRange()
                         .padding(.bottom, 50)
-                    ChartView(day: .tomorrow, data: priceData)
+                  //  ChartView(day: .tomorrow, data: priceData)
                 }
             }
         }
@@ -40,12 +39,9 @@ struct TomorrowView: View {
                dataLastLoadedHour == Calendar.current.component(.hour, from: Date()) {
                 return
             } else {
-                Network().loadCurrentPrice { data in
-                    self.currentPriceData = data
-                }
                 Network().loadFullDayData(.tomorrow) { data in
                     missingData = data.count <= 2
-                    self.priceData = data
+                    shared.nextdayFullDayData = data
                 }
                 self.dataLastLoadedHour = Calendar.current.component(.hour, from: Date())
             }
