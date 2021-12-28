@@ -13,6 +13,10 @@ struct SettingsView: View {
     
     init(){
         UITableView.appearance().backgroundColor = .clear
+        UINavigationBar.appearance().barTintColor = .clear
+        UINavigationBar.appearance().backgroundColor = .clear
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+        UINavigationBar.appearance().shadowImage = UIImage()
     }
     
     var body: some View {
@@ -39,7 +43,7 @@ struct SettingsView: View {
                     }
                 }
             }
-        }.navigationBarTitle("Favorites")
+        }
     }
 }
 
