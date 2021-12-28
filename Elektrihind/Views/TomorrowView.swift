@@ -29,7 +29,7 @@ struct TomorrowView: View {
                     TitleView(title: "Homne hind")
                     NextDayMinMaxRange()
                         .padding(.bottom, 50)
-                  //  ChartView(day: .tomorrow, data: priceData)
+                    ChartView(day: .tomorrow)
                 }
             }
         }
@@ -41,7 +41,7 @@ struct TomorrowView: View {
             } else {
                 Network().loadFullDayData(.tomorrow) { data in
                     missingData = data.count <= 2
-                    shared.nextdayFullDayData = data
+                    shared.tomorrowFullDayData = data
                 }
                 self.dataLastLoadedHour = Calendar.current.component(.hour, from: Date())
             }

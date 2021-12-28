@@ -11,19 +11,21 @@ class Globals: ObservableObject {
     @Published var currentPrice: PriceData?
     @Published var todayFullDayData: [PriceData] = [] {
         didSet {
-            updateFullDayData()
+            updateFullDayChartData()
         }
     }
     @Published var todayFullDayChartData: [(String, Double)] = []
-    @Published var nextdayFullDayData: [PriceData] = [] {
+    @Published var tomorrowFullDayData: [PriceData] = [] {
         didSet {
-            nextDayPricesArray.removeAll()
-            for dataPoint in nextdayFullDayData {
-                nextDayPricesArray.append(dataPoint.price)
+            tomorrowPricesArray.removeAll()
+            for dataPoint in tomorrowFullDayData {
+                tomorrowPricesArray.append(dataPoint.price)
             }
+            updateNextDayChartData()
         }
     }
-    @Published var nextDayPricesArray: [Double] = []
+    @Published var tomorrowFullDayChartData: [(String, Double)] = []
+    @Published var tomorrowPricesArray: [Double] = []
     @Published var minNextDayPrice: String = ""
     @Published var maxNextDayPrice: String = ""
     @Published var divider: Double = 1
@@ -47,7 +49,8 @@ class Globals: ObservableObject {
             }
             self.numberFormatter = formatter
             self.minFractionDigits = formatter.minimumFractionDigits
-            updateFullDayData()
+            updateFullDayChartData()
+            updateNextDayChartData()
             calculateMinMaxValues()
         }
     }
@@ -60,7 +63,7 @@ class Globals: ObservableObject {
         UserDefaults.standard.set(unit, forKey: "unit")
     }
     
-    func updateFullDayData() {
+    func updateFullDayChartData() {
         todayFullDayChartData.removeAll()
         let formatter = DateFormatter()
         formatter.timeZone = TimeZone(abbreviation: "EET")
@@ -74,8 +77,22 @@ class Globals: ObservableObject {
         }
     }
     
+    func updateNextDayChartData() {
+        tomorrowFullDayChartData.removeAll()
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone(abbreviation: "EET")
+        formatter.locale = NSLocale.current
+        formatter.dateFormat = "HH:mm"
+        for data in tomorrowFullDayData {
+            let timeStampDate = Date(timeIntervalSince1970: data.timestamp)
+            let strTime = formatter.string(from: timeStampDate)
+            let dataPoint = (strTime, data.price / divider)
+            tomorrowFullDayChartData.append(dataPoint)
+        }
+    }
+    
     func calculateMinMaxValues() {
-        minNextDayPrice = numberFormatter.string(from: NSNumber(value: nextDayPricesArray.min() ?? 0 / divider)) ?? ""
-        maxNextDayPrice = numberFormatter.string(from: NSNumber(value: nextDayPricesArray.max() ?? 0 / divider)) ?? ""
+        minNextDayPrice = numberFormatter.string(from: NSNumber(value: tomorrowPricesArray.min() ?? 0 / divider)) ?? ""
+        maxNextDayPrice = numberFormatter.string(from: NSNumber(value: tomorrowPricesArray.max() ?? 0 / divider)) ?? ""
     }
 }

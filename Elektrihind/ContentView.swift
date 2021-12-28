@@ -146,7 +146,11 @@ struct ChartView: View {
     var body: some View {
         let title = day == .tomorrow ? tomorrowDate : todayDate
         VStack {
-            BarChartView(data: ChartData(values: shared.todayFullDayChartData), title: title, legend: "Quarterly", style: myCustomStyle, form: ChartForm.extraLarge, valueSpecifier: "%.\(shared.minFractionDigits)f \(shared.unit)", animatedToBack: false)
+            if day == .today {
+                BarChartView(data: ChartData(values: shared.todayFullDayChartData), title: title, legend: "Quarterly", style: myCustomStyle, form: ChartForm.extraLarge, valueSpecifier: "%.\(shared.minFractionDigits)f \(shared.unit)", animatedToBack: false)
+            } else if day == .tomorrow {
+                BarChartView(data: ChartData(values: shared.todayFullDayChartData), title: title, legend: "Quarterly", style: myCustomStyle, form: ChartForm.extraLarge, valueSpecifier: "%.\(shared.minFractionDigits)f \(shared.unit)", animatedToBack: false)
+            }
         }
     }
 }
