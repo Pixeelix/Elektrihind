@@ -10,6 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     @EnvironmentObject var shared: Globals
     let unitsArray = ["€/kWh", "€/MWh", "senti/kWh"]
+    let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
     
     init(){
         UITableView.appearance().backgroundColor = .clear
@@ -24,14 +25,22 @@ struct SettingsView: View {
             ZStack {
                 LinearGradient(gradient: Gradient(colors: [Color("backgroundTop"), Color("backgroundBottom")]), startPoint: .topLeading, endPoint: .bottomTrailing).edgesIgnoringSafeArea(.all)
                 Form {
-                    Section {
+                    Section (header: Text("Üldine")){
                         Picker("Ühik", selection: $shared.unit) {
                             ForEach(unitsArray, id: \.self) {
                                 Text($0)
                             }
                         }
                     }
+                    Section(header: Text("Rakenduse info")) {
+                        HStack {
+                            Text("Versioon")
+                            Spacer()
+                            Text(appVersion ?? "")
+                        }
+                    }
                 }
+               
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarTitle("Seaded")
