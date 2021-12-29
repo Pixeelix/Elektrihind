@@ -149,7 +149,7 @@ struct ChartView: View {
             if day == .today {
                 BarChartView(data: ChartData(values: shared.todayFullDayChartData), title: title, legend: "Quarterly", style: myCustomStyle, form: ChartForm.extraLarge, valueSpecifier: "%.\(shared.minFractionDigits)f \(shared.unit)", animatedToBack: false)
             } else if day == .tomorrow {
-                BarChartView(data: ChartData(values: shared.todayFullDayChartData), title: title, legend: "Quarterly", style: myCustomStyle, form: ChartForm.extraLarge, valueSpecifier: "%.\(shared.minFractionDigits)f \(shared.unit)", animatedToBack: false)
+                BarChartView(data: ChartData(values: shared.tomorrowFullDayChartData), title: title, legend: "Quarterly", style: myCustomStyle, form: ChartForm.extraLarge, valueSpecifier: "%.\(shared.minFractionDigits)f \(shared.unit)", animatedToBack: false)
             }
         }
     }

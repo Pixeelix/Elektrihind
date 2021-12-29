@@ -17,15 +17,11 @@ class Globals: ObservableObject {
     @Published var todayFullDayChartData: [(String, Double)] = []
     @Published var tomorrowFullDayData: [PriceData] = [] {
         didSet {
-            tomorrowPricesArray.removeAll()
-            for dataPoint in tomorrowFullDayData {
-                tomorrowPricesArray.append(dataPoint.price)
-            }
             updateNextDayChartData()
+            calculateMinMaxValues()
         }
     }
     @Published var tomorrowFullDayChartData: [(String, Double)] = []
-    @Published var tomorrowPricesArray: [Double] = []
     @Published var minNextDayPrice: String = ""
     @Published var maxNextDayPrice: String = ""
     @Published var divider: Double = 1
@@ -92,7 +88,16 @@ class Globals: ObservableObject {
     }
     
     func calculateMinMaxValues() {
-        minNextDayPrice = numberFormatter.string(from: NSNumber(value: tomorrowPricesArray.min() ?? 0 / divider)) ?? ""
-        maxNextDayPrice = numberFormatter.string(from: NSNumber(value: tomorrowPricesArray.max() ?? 0 / divider)) ?? ""
+        var pricesArray = [Double]()
+        for dataPoint in tomorrowFullDayData {
+            pricesArray.append(dataPoint.price)
+        }
+        if let minNumberValue = pricesArray.min(),
+           let maxNumberValue = pricesArray.max() {
+            let minNumber = numberFormatter.string(from: NSNumber(value: minNumberValue / divider))
+            let maxNumber = numberFormatter.string(from: NSNumber(value: maxNumberValue / divider))
+            minNextDayPrice = minNumber ?? ""
+            maxNextDayPrice = maxNumber ?? ""
+        }
     }
 }

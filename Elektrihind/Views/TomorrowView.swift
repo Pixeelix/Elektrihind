@@ -17,7 +17,6 @@ struct TomorrowView: View {
             if missingData {
                 VStack(alignment: .center) {
                     TitleView(title: "Homne hind")
-                    
                     Text("Homne hinnainfo on saadaval alates 15:00")
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
                         .font(.system(size: 18, weight: .medium, design: .default))
