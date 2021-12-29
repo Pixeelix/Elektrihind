@@ -22,20 +22,28 @@ struct TodayView: View {
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)
         .onAppear() {
-            if let dataLastLoadedHour = dataLastLoadedHour,
-               dataLastLoadedHour == Calendar.current.component(.hour, from: Date()) {
-                return
-            } else {
-                Network().loadCurrentPrice { data in
-                    shared.currentPrice = data
-                }
-                Network().loadFullDayData(.today) { data in
-                    shared.todayFullDayData = data
-                }
-                self.dataLastLoadedHour = Calendar.current.component(.hour, from: Date())
-            }
+            loadDataIfNeeded()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+            loadDataIfNeeded()
         }
     }
+    
+    func loadDataIfNeeded() {
+        if let dataLastLoadedHour = dataLastLoadedHour,
+           dataLastLoadedHour == Calendar.current.component(.hour, from: Date()) {
+            return
+        } else {
+            Network().loadCurrentPrice { data in
+                shared.currentPrice = data
+            }
+            Network().loadFullDayData(.today) { data in
+                shared.todayFullDayData = data
+            }
+            self.dataLastLoadedHour = Calendar.current.component(.hour, from: Date())
+        }
+    }
+    
 }
 
 struct TodayView_Previews: PreviewProvider {

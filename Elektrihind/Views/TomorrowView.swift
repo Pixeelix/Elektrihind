@@ -35,16 +35,23 @@ struct TomorrowView: View {
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)
         .onAppear() {
-            if let dataLastLoadedHour = dataLastLoadedHour,
-               dataLastLoadedHour == Calendar.current.component(.hour, from: Date()) {
-                return
-            } else {
-                Network().loadFullDayData(.tomorrow) { data in
-                    missingData = data.count <= 2
-                    shared.tomorrowFullDayData = data
-                }
-                self.dataLastLoadedHour = Calendar.current.component(.hour, from: Date())
+            loadDataIfNeeded()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+            loadDataIfNeeded()
+        }
+    }
+    
+    func loadDataIfNeeded() {
+        if let dataLastLoadedHour = dataLastLoadedHour,
+           dataLastLoadedHour == Calendar.current.component(.hour, from: Date()) {
+            return
+        } else {
+            Network().loadFullDayData(.tomorrow) { data in
+                missingData = data.count <= 2
+                shared.tomorrowFullDayData = data
             }
+            self.dataLastLoadedHour = Calendar.current.component(.hour, from: Date())
         }
     }
 }
