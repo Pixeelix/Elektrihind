@@ -35,7 +35,7 @@ struct TabBarView: View {
                         } else if tabs[selection].label == localizedString("LABLE_TOMORROW") && tabs[index].label == localizedString("LABLE_TOMORROW") {
                             Image(systemName: tabs[index].image)
                                 .frame(height: 20)
-                                .foregroundColor(Color.mint)
+                                .foregroundColor(Color(red: 102/255, green: 212/255, blue: 207/255))
                         } else if tabs[selection].label == "Hea teada" && tabs[index].label == "Hea teada" {
                             Image(systemName: tabs[index].image)
                                 .frame(height: 20)
@@ -44,7 +44,7 @@ struct TabBarView: View {
                         } else if tabs[selection].label == localizedString("LABLE_SETTINGS") && tabs[index].label == localizedString("LABLE_SETTINGS") {
                             Image(systemName: tabs[index].image)
                                 .frame(height: 20)
-                                .foregroundColor(Color.brown)
+                                .foregroundColor(Color(red: 172/255, green: 142/255, blue: 104/255))
                         } else {
                             Image(systemName: tabs[index].image)
                                 .frame(height: 20)

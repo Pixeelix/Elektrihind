@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftUICharts
 
 struct ContentView: View {
+    @StateObject var shared = Globals()
     @State private var tabBarSelection = 0
     
     init() {
@@ -23,11 +24,16 @@ struct ContentView: View {
             TomorrowView()
                 .tag(1)
                 .background(backGroundColor().edgesIgnoringSafeArea(.all))
-            //                    Text("Hea teada")
-            //                        .tag(2)
+//          Text("Hea teada")
+//              .tag(2)
+//              .background(backGroundColor().edgesIgnoringSafeArea(.all))
             SettingsView()
                 .tag(2)
                 .background(backGroundColor().edgesIgnoringSafeArea(.all))
+        }
+        .environmentObject(shared)
+        .onAppear() {
+            shared.getSavedSettings()
         }
         .overlay(TabBarView(selection: $tabBarSelection), alignment: .bottom)
     }
@@ -48,25 +54,20 @@ struct TitleView: View {
 }
 
 struct CurrentPriceView: View {
-    var priceData: PriceData?
-    let dateFormatter: DateFormatter
-    private let unit = Globals().unit
-    private let numberFormatter = Globals().numberFormatter
-    private let divider: Double = Globals().divider
+    let dateFormatter = DateFormatter()
+    @EnvironmentObject var shared: Globals
     
-    init(priceData: PriceData?) {
-        self.priceData = priceData
-        dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "EET") //Set timezone that you want
+    init() {
+        dateFormatter.timeZone = TimeZone(abbreviation: "EET")
         dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = "HH:mm" //Specify your format that you want
+        dateFormatter.dateFormat = "HH:mm"
     }
     
     var body: some View {
         VStack(alignment: .center) {
-            if let price = priceData?.price,
-               let timeStamp = priceData?.timestamp,
-               let formattedPrice = numberFormatter.string(from: NSNumber(value: price / divider)){
+            if let price = shared.currentPrice?.price,
+               let timeStamp = shared.currentPrice?.timestamp,
+               let formattedPrice = shared.numberFormatter.string(from: NSNumber(value: price / shared.divider)){
                 let date = Date(timeIntervalSince1970: timeStamp)
                 let strDate = dateFormatter.string(from: date)
                 
@@ -82,7 +83,7 @@ struct CurrentPriceView: View {
                     Text(formattedPrice)
                         .font(.system(size: 72, weight: .medium))
                     
-                    Text(Globals().unit)
+                    Text(shared.unit)
                         .font(.system(size: 38, weight: .medium))
                 }
                 .offset(x: 0, y: -12)
@@ -98,30 +99,15 @@ struct CurrentPriceView: View {
 }
 
 struct NextDayMinMaxRange: View {
-    private let unit = Globals().unit
-    private let numberFormatter = Globals().numberFormatter
-    private let divider: Double = Globals().divider
-    
-    private var minPrice: String = ""
-    private var maxPrice: String = ""
-    
-    init(data: [(String, Double)]) {
-        var pricesArray: [Double] = []
-        for dataPoint in data {
-            pricesArray.append(dataPoint.1)
-        }
-        
-        minPrice = numberFormatter.string(from: NSNumber(value: pricesArray.min() ?? 0 / divider)) ?? ""
-        maxPrice = numberFormatter.string(from: NSNumber(value: pricesArray.max() ?? 0 / divider)) ?? ""
-    }
+    @EnvironmentObject var shared: Globals
     
     var body: some View {
         VStack(alignment: .center) {
             VStack {
-                Text("\(minPrice) - \(maxPrice)")
+                Text("\(shared.minNextDayPrice) - \(shared.maxNextDayPrice)")
                     .font(.system(size: 42, weight: .medium))
                 
-                Text(Globals().unit)
+                Text(shared.unit)
                     .font(.system(size: 38, weight: .medium))
             }
         }
@@ -135,26 +121,24 @@ struct NextDayMinMaxRange: View {
 }
 
 struct ChartView: View {
-    private let minFractionDigits = Globals().minFractionDigits
+    @EnvironmentObject var shared: Globals
     private var day: Day = .today
-    private var data: [(String, Double)]
-    let dateFormatter: DateFormatter
     var todayDate: String {
-        return dateFormatter.string(from: Date())
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMMM"
+        return formatter.string(from: Date())
     }
     var tomorrowDate: String {
-        return dateFormatter.string(from: Date().dayAfter)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMMM"
+        return formatter.string(from: Date().dayAfter)
     }
     let myCustomStyle = ChartStyle(backgroundColor: .white, accentColor: .blue, secondGradientColor: .blue, textColor: .blue, legendTextColor: .gray, dropShadowColor: .clear)
     let myCustomDarkModeStyle = ChartStyle(backgroundColor: .gray, accentColor: .white, secondGradientColor: .white, textColor: .white, legendTextColor: .white, dropShadowColor: .clear)
     
-    init(day: Day, data: [(String, Double)]) {
+    init(day: Day) {
         self.day = day
-        self.data = data
-        dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMMM"
         myCustomStyle.darkModeStyle = myCustomDarkModeStyle
-        
         UIPageControl.appearance().currentPageIndicatorTintColor = .blue
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.2)
     }
@@ -162,7 +146,11 @@ struct ChartView: View {
     var body: some View {
         let title = day == .tomorrow ? tomorrowDate : todayDate
         VStack {
-            BarChartView(data: ChartData(values: data), title: title, legend: "Quarterly", style: myCustomStyle, form: ChartForm.extraLarge, valueSpecifier: "%.\(minFractionDigits)f \(Globals().unit)", animatedToBack: false)
+            if day == .today {
+                BarChartView(data: ChartData(values: shared.todayFullDayChartData), title: title, legend: "Quarterly", style: myCustomStyle, form: ChartForm.extraLarge, valueSpecifier: "%.\(shared.minFractionDigits)f \(shared.unit)", animatedToBack: false)
+            } else if day == .tomorrow {
+                BarChartView(data: ChartData(values: shared.tomorrowFullDayChartData), title: title, legend: "Quarterly", style: myCustomStyle, form: ChartForm.extraLarge, valueSpecifier: "%.\(shared.minFractionDigits)f \(shared.unit)", animatedToBack: false)
+            }
         }
     }
 }

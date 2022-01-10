@@ -8,17 +8,15 @@
 import SwiftUI
 
 struct TomorrowView: View {
-    @State private var isLoading = false
-    @State private var currentPriceData: PriceData?
-    @State var priceData: [(String, Double)] = []
+    @EnvironmentObject var shared: Globals
     @State var missingData = true
+    @State var dataLastLoadedHour: Int? = nil
     
     var body: some View {
         HStack(alignment: .top) {
             if missingData {
                 VStack(alignment: .center) {
                     TitleView(title: localizedString("TITLE_TOMORROWS_PRICE"))
-                    
                     Text("Homne hinnainfo on saadaval alates 15:00")
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
                         .font(.system(size: 18, weight: .medium, design: .default))
@@ -28,25 +26,31 @@ struct TomorrowView: View {
             } else {
                 VStack(alignment: .center) {
                     TitleView(title: localizedString("TITLE_TOMORROWS_PRICE"))
-                    NextDayMinMaxRange(data: priceData)
+                    NextDayMinMaxRange()
                         .padding(.bottom, 50)
-                    ChartView(day: .tomorrow, data: priceData)
+                    ChartView(day: .tomorrow)
                 }
             }
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)
         .onAppear() {
-            isLoading = true
-            Network().loadCurrentPrice { data in
-                self.currentPriceData = data
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    isLoading = false
-                }
-            }
-            Network().loadEstDayData(.tomorrow) { data in
+            loadDataIfNeeded()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+            loadDataIfNeeded()
+        }
+    }
+    
+    func loadDataIfNeeded() {
+        if let dataLastLoadedHour = dataLastLoadedHour,
+           dataLastLoadedHour == Calendar.current.component(.hour, from: Date()) {
+            return
+        } else {
+            Network().loadFullDayData(.tomorrow) { data in
                 missingData = data.count <= 2
-                self.priceData = data
+                shared.tomorrowFullDayData = data
             }
+            self.dataLastLoadedHour = Calendar.current.component(.hour, from: Date())
         }
     }
 }
