@@ -17,10 +17,11 @@ struct TomorrowView: View {
             if missingData {
                 VStack(alignment: .center) {
                     TitleView(title: shared.localizedString("TITLE_TOMORROWS_PRICE"))
-                    Text("Homne hinnainfo on saadaval alates 15:00")
+                    Text(shared.localizedString("TEXT_TOMORROWS_PRICE_WILL_APEAR"))
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
                         .font(.system(size: 18, weight: .medium, design: .default))
                         .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
                         .padding(EdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10))
                 }
             } else {

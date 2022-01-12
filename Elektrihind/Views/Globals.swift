@@ -45,13 +45,13 @@ class Globals: ObservableObject {
             let formatter = NumberFormatter()
             formatter.decimalSeparator = ","
             formatter.maximumIntegerDigits = 4
-            if unit == "€/kWh" {
+            if unit == localizedString("€/kWh") {
                 divider = 1000
                 formatter.minimumFractionDigits = 4
-            } else if unit == "€/MWh" {
+            } else if unit == localizedString("€/MWh") {
                 divider = 1
                 formatter.minimumFractionDigits = 1
-            } else if unit == "senti/kWh" {
+            } else if unit == localizedString("cent/kWh"){
                 divider = 10
                 formatter.minimumFractionDigits = 1
             }

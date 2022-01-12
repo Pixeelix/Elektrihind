@@ -10,17 +10,18 @@ import SwiftUI
 struct Tab {
     let image: String
     let label: String
+    let index: Int
 }
 
 struct TabBarView: View {
     @Binding var selection: Int
-    @Namespace private var currentTab
+    @EnvironmentObject var shared: Globals
     
-    @State var tabs = [ 
-        Tab(image: "bolt.fill", label: "Täna"),
-        Tab(image: "clock.fill", label: "Homme"),
-        //Tab(image: "leaf.fill", label: "Hea teada"),
-        Tab(image: "gearshape.fill", label: "Seaded"),
+    let tabs = [
+        Tab(image: "bolt.fill", label: "LABEL_TODAY", index: 0),
+        Tab(image: "clock.fill", label: "LABEL_TOMORROW", index: 1),
+        //Tab(image: "leaf.fill", label: "Hea teada", index: 2),
+        Tab(image: "gearshape.fill", label: "LABEL_SETTINGS", index: 3),
     ]
     
     var body: some View {
@@ -28,20 +29,20 @@ struct TabBarView: View {
             ForEach(tabs.indices) { index in
                 GeometryReader { geometry in
                     VStack(spacing: 4) {
-                        if tabs[selection].label == "Täna" && tabs[index].label == "Täna" {
+                        if tabs[selection].index == 0 && tabs[index].index == 0  {
                             Image(systemName: tabs[index].image)
                                 .frame(height: 20)
                                 .foregroundColor(Color.orange)
-                        } else if tabs[selection].label == "Homme" && tabs[index].label == "Homme" {
+                        } else if tabs[selection].index == 1 && tabs[index].index == 1 {
                             Image(systemName: tabs[index].image)
                                 .frame(height: 20)
                                 .foregroundColor(Color(red: 102/255, green: 212/255, blue: 207/255))
-                        } else if tabs[selection].label == "Hea teada" && tabs[index].label == "Hea teada" {
+                        } else if tabs[selection].index == 2 && tabs[index].index == 2 {
                             Image(systemName: tabs[index].image)
                                 .frame(height: 20)
                                 .rotationEffect(.degrees(25))
                                 .foregroundColor(Color.green)
-                        } else if tabs[selection].label == "Seaded" && tabs[index].label == "Seaded" {
+                        } else if tabs[selection].index == 3 && tabs[index].index == 3 {
                             Image(systemName: tabs[index].image)
                                 .frame(height: 20)
                                 .foregroundColor(Color(red: 172/255, green: 142/255, blue: 104/255))
@@ -50,7 +51,7 @@ struct TabBarView: View {
                                 .frame(height: 20)
                                 .rotationEffect(.degrees(0))
                         }
-                        Text(tabs[index].label)
+                        Text(shared.localizedString(tabs[index].label))
                             .font(.caption2)
                             .fixedSize()
                     }
@@ -76,4 +77,3 @@ struct TabBarView_Previews: PreviewProvider {
             .previewLayout(.sizeThatFits)
     }
 }
-

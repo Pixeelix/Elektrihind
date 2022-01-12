@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var shared: Globals
-    let unitsArray = ["€/kWh", "€/MWh", "senti/kWh"]
+    let unitsArray = ["€/kWh", "€/MWh", "cent/kWh"]
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
     
     init(){
@@ -25,21 +25,21 @@ struct SettingsView: View {
             ZStack {
                 LinearGradient(gradient: Gradient(colors: [Color("backgroundTop"), Color("backgroundBottom")]), startPoint: .topLeading, endPoint: .bottomTrailing).edgesIgnoringSafeArea(.all)
                 Form {
-                    Section (header: Text("Üldine")){
+                    Section (header: Text(shared.localizedString("TITLE_GENERAL"))){
                         Picker(shared.localizedString("TITLE_LANGUAGE"), selection: $shared.language) {
                             ForEach(Language.allLanguages, id: \.self) {
                                 Text($0.rawValue)
                             }
                         }
-                        Picker("Ühik", selection: $shared.unit) {
+                        Picker(shared.localizedString("TITLE_UNIT"), selection: $shared.unit) {
                             ForEach(unitsArray, id: \.self) {
-                                Text($0)
+                                Text(shared.localizedString($0))
                             }
                         }
                     }
-                    Section(header: Text("Rakenduse info")) {
+                    Section(header: Text(shared.localizedString("TITLE_APP_INFO"))) {
                         HStack {
-                            Text("Versioon")
+                            Text(shared.localizedString("TITLE_VERSION"))
                             Spacer()
                             Text(appVersion ?? "")
                         }
@@ -48,12 +48,12 @@ struct SettingsView: View {
                
             }
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarTitle("Seaded")
+            .navigationBarTitle(shared.localizedString("LABEL_SETTINGS"))
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     VStack(spacing: 10) {
                         Text("")
-                        TitleView(title: shared.localizedString("LABLE_SETTINGS"))
+                        TitleView(title: shared.localizedString("LABEL_SETTINGS"))
                     }
                 }
             }

@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftUICharts
 
 struct ContentView: View {
-    @StateObject var shared = Globals()
+    @EnvironmentObject var shared: Globals
     @State private var tabBarSelection = 0
     
     init() {
@@ -31,7 +31,6 @@ struct ContentView: View {
                 .tag(2)
                 .background(backGroundColor().edgesIgnoringSafeArea(.all))
         }
-        .environmentObject(shared)
         .onAppear() {
             shared.getSavedSettings()
         }
