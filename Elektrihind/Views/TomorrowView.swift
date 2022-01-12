@@ -16,7 +16,7 @@ struct TomorrowView: View {
         HStack(alignment: .top) {
             if missingData {
                 VStack(alignment: .center) {
-                    TitleView(title: localizedString("TITLE_TOMORROWS_PRICE"))
+                    TitleView(title: shared.localizedString("TITLE_TOMORROWS_PRICE"))
                     Text("Homne hinnainfo on saadaval alates 15:00")
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
                         .font(.system(size: 18, weight: .medium, design: .default))
@@ -25,7 +25,7 @@ struct TomorrowView: View {
                 }
             } else {
                 VStack(alignment: .center) {
-                    TitleView(title: localizedString("TITLE_TOMORROWS_PRICE"))
+                    TitleView(title: shared.localizedString("TITLE_TOMORROWS_PRICE"))
                     NextDayMinMaxRange()
                         .padding(.bottom, 50)
                     ChartView(day: .tomorrow)

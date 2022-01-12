@@ -26,7 +26,7 @@ struct SettingsView: View {
                 LinearGradient(gradient: Gradient(colors: [Color("backgroundTop"), Color("backgroundBottom")]), startPoint: .topLeading, endPoint: .bottomTrailing).edgesIgnoringSafeArea(.all)
                 Form {
                     Section (header: Text("Üldine")){
-                        Picker(localizedString("TITLE_LANGUAGE"), selection: $shared.language) {
+                        Picker(shared.localizedString("TITLE_LANGUAGE"), selection: $shared.language) {
                             ForEach(Language.allLanguages, id: \.self) {
                                 Text($0.rawValue)
                             }
@@ -53,7 +53,7 @@ struct SettingsView: View {
                 ToolbarItem(placement: .principal) {
                     VStack(spacing: 10) {
                         Text("")
-                        TitleView(title: "TITLE_SETTINGS".localized(Globals().language))
+                        TitleView(title: shared.localizedString("LABLE_SETTINGS"))
                     }
                 }
             }

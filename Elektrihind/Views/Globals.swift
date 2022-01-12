@@ -14,11 +14,6 @@ enum Language: String {
     static let allLanguages = [estonian, english]
 }
 
-func localizedString(_ key: String) -> String {
-    return key.localized(Globals().language)
-    
-}
-
 class Globals: ObservableObject {
     @Published var currentPrice: PriceData?
     @Published var todayFullDayData: [PriceData] = [] {
@@ -72,6 +67,10 @@ class Globals: ObservableObject {
         let languageString = UserDefaults.standard.string(forKey: "language") ?? "et"
         language = Language(rawValue: languageString) ?? .estonian
         unit = UserDefaults.standard.string(forKey: "unit") ?? unit
+    }
+    
+    func localizedString(_ key: String) -> String {
+        return key.localized(language)
     }
     
     func saveLanguage() {

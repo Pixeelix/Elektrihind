@@ -14,7 +14,7 @@ struct TodayView: View {
     var body: some View {
         HStack(alignment: .top) {
             VStack(alignment: .center) {
-                TitleView(title: localizedString("TITLE_TODAYS_PRICE"))
+                TitleView(title: shared.localizedString("TITLE_TODAYS_PRICE"))
                 CurrentPriceView()
                     .padding(.bottom, 50)
                 ChartView(day: .today)

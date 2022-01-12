@@ -17,10 +17,10 @@ struct TabBarView: View {
     @Namespace private var currentTab
     
     @State var tabs = [ 
-        Tab(image: "bolt.fill", label: localizedString("LABLE_TODAY")),
-        Tab(image: "clock.fill", label: localizedString("LABLE_TOMORROW")),
+        Tab(image: "bolt.fill", label: "Täna"),
+        Tab(image: "clock.fill", label: "Homme"),
         //Tab(image: "leaf.fill", label: "Hea teada"),
-        Tab(image: "gearshape.fill", label: localizedString("LABLE_SETTINGS")),
+        Tab(image: "gearshape.fill", label: "Seaded"),
     ]
     
     var body: some View {
@@ -28,11 +28,11 @@ struct TabBarView: View {
             ForEach(tabs.indices) { index in
                 GeometryReader { geometry in
                     VStack(spacing: 4) {
-                        if tabs[selection].label == localizedString("LABLE_TODAY") && tabs[index].label == localizedString("LABLE_TODAY") {
+                        if tabs[selection].label == "Täna" && tabs[index].label == "Täna" {
                             Image(systemName: tabs[index].image)
                                 .frame(height: 20)
                                 .foregroundColor(Color.orange)
-                        } else if tabs[selection].label == localizedString("LABLE_TOMORROW") && tabs[index].label == localizedString("LABLE_TOMORROW") {
+                        } else if tabs[selection].label == "Homme" && tabs[index].label == "Homme" {
                             Image(systemName: tabs[index].image)
                                 .frame(height: 20)
                                 .foregroundColor(Color(red: 102/255, green: 212/255, blue: 207/255))
@@ -41,7 +41,7 @@ struct TabBarView: View {
                                 .frame(height: 20)
                                 .rotationEffect(.degrees(25))
                                 .foregroundColor(Color.green)
-                        } else if tabs[selection].label == localizedString("LABLE_SETTINGS") && tabs[index].label == localizedString("LABLE_SETTINGS") {
+                        } else if tabs[selection].label == "Seaded" && tabs[index].label == "Seaded" {
                             Image(systemName: tabs[index].image)
                                 .frame(height: 20)
                                 .foregroundColor(Color(red: 172/255, green: 142/255, blue: 104/255))
