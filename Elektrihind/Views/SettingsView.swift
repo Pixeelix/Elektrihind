@@ -45,15 +45,15 @@ struct SettingsView: View {
                         }
                     }
                 }
-               
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarTitle(shared.localizedString("LABEL_SETTINGS"))
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    VStack(spacing: 10) {
-                        Text("")
+                    VStack() {
+                        Spacer()
                         TitleView(title: shared.localizedString("LABEL_SETTINGS"))
+                            .padding(.top, 11)
                     }
                 }
             }
