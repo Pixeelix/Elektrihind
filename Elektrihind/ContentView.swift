@@ -82,7 +82,7 @@ struct CurrentPriceView: View {
                     Text(formattedPrice)
                         .font(.system(size: 72, weight: .medium))
                     
-                    Text(shared.unit)
+                    Text(shared.localizedString(shared.unit))
                         .font(.system(size: 38, weight: .medium))
                 }
                 .offset(x: 0, y: -12)
@@ -106,7 +106,7 @@ struct NextDayMinMaxRange: View {
                 Text("\(shared.minNextDayPrice) - \(shared.maxNextDayPrice)")
                     .font(.system(size: 42, weight: .medium))
                 
-                Text(shared.unit)
+                Text(shared.localizedString(shared.unit))
                     .font(.system(size: 38, weight: .medium))
             }
         }
@@ -148,9 +148,9 @@ struct ChartView: View {
         let title = day == .tomorrow ? tomorrowDate : todayDate
         VStack {
             if day == .today {
-                BarChartView(data: ChartData(values: shared.todayFullDayChartData), title: title, legend: "Quarterly", style: myCustomStyle, form: ChartForm.extraLarge, valueSpecifier: "%.\(shared.minFractionDigits)f \(shared.unit)", animatedToBack: false)
+                BarChartView(data: ChartData(values: shared.todayFullDayChartData), title: title, legend: "Quarterly", style: myCustomStyle, form: ChartForm.extraLarge, valueSpecifier: "%.\(shared.minFractionDigits)f \(shared.localizedString(shared.unit))", animatedToBack: false)
             } else if day == .tomorrow {
-                BarChartView(data: ChartData(values: shared.tomorrowFullDayChartData), title: title, legend: "Quarterly", style: myCustomStyle, form: ChartForm.extraLarge, valueSpecifier: "%.\(shared.minFractionDigits)f \(shared.unit)", animatedToBack: false)
+                BarChartView(data: ChartData(values: shared.tomorrowFullDayChartData), title: title, legend: "Quarterly", style: myCustomStyle, form: ChartForm.extraLarge, valueSpecifier: "%.\(shared.minFractionDigits)f \(shared.localizedString(shared.unit))", animatedToBack: false)
             }
         }
     }
