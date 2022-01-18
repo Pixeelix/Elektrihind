@@ -12,6 +12,16 @@ enum Language: String {
     case english = "en"
     
     static let allLanguages = [estonian, english]
+    var fullName: String {
+      get {
+        switch self {
+        case .estonian:
+            return "Eesti"
+          case .english:
+            return "English"
+        }
+      }
+    }
 }
 
 class Globals: ObservableObject {

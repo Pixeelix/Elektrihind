@@ -27,8 +27,8 @@ struct SettingsView: View {
                 Form {
                     Section (header: Text(shared.localizedString("TITLE_GENERAL"))){
                         Picker(shared.localizedString("TITLE_LANGUAGE"), selection: $shared.language) {
-                            ForEach(Language.allLanguages, id: \.self) {
-                                Text($0.rawValue)
+                            ForEach(Language.allLanguages, id: \.self) { language in
+                                Text(language.fullName)
                             }
                         }
                         Picker(shared.localizedString("TITLE_UNIT"), selection: $shared.unit) {
@@ -61,9 +61,9 @@ struct SettingsView: View {
     }
 }
 
-    struct SettingsView_Previews: PreviewProvider {
-        static var previews: some View {
-            SettingsView()
-        }
+struct SettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SettingsView()
     }
-    
+}
+

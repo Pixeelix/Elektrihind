@@ -6,8 +6,8 @@
   
 */
 "TITLE_LANGUAGE" = "Language";
-"TITLE_TODAYS_PRICE" = "Today's price";
-"TITLE_TOMORROWS_PRICE" = "Tomorrows's price";
+"TITLE_TODAYS_PRICE" = "Price today";
+"TITLE_TOMORROWS_PRICE" = "Price tomorrow";
 "TITLE_SETTINGS" = "Settings";
 "LABEL_TODAY" = "Today";
 "LABEL_TOMORROW" = "Tomorrow";

@@ -125,11 +125,13 @@ struct ChartView: View {
     var todayDate: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd MMMM"
+        formatter.locale = shared.language == .english ? Locale(identifier: "en_US") : Locale(identifier: "et_EE")
         return formatter.string(from: Date())
     }
     var tomorrowDate: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd MMMM"
+        formatter.locale = shared.language == .english ? Locale(identifier: "en_US") : Locale(identifier: "et_EE")
         return formatter.string(from: Date().dayAfter)
     }
     let myCustomStyle = ChartStyle(backgroundColor: .white, accentColor: .blue, secondGradientColor: .blue, textColor: .blue, legendTextColor: .gray, dropShadowColor: .clear)
