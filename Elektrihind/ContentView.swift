@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftUICharts
 
 struct ContentView: View {
     @EnvironmentObject var shared: Globals
@@ -65,8 +64,9 @@ struct CurrentPriceView: View {
     var body: some View {
         VStack(alignment: .center) {
             if let price = shared.currentPrice?.price,
+               let priceWithTax = shared.includeTax ? price * 1.2 : price,
                let timeStamp = shared.currentPrice?.timestamp,
-               let formattedPrice = shared.numberFormatter.string(from: NSNumber(value: price / shared.divider)){
+               let formattedPrice = shared.numberFormatter.string(from: NSNumber(value: priceWithTax / shared.divider)) {
                 let date = Date(timeIntervalSince1970: timeStamp)
                 let strDate = dateFormatter.string(from: date)
                 

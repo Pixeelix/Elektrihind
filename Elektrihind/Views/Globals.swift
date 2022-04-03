@@ -44,6 +44,14 @@ class Globals: ObservableObject {
     @Published var divider: Double = 1
     @Published var minFractionDigits: Int = 1
     @Published var numberFormatter = NumberFormatter()
+    @Published var includeTax: Bool = false {
+        didSet {
+            saveTaxValue()
+            updateFullDayChartData()
+            updateNextDayChartData()
+            calculateMinMaxValues()
+        }
+    }
     @Published var language: Language = .estonian {
         didSet {
             saveLanguage()
@@ -77,6 +85,7 @@ class Globals: ObservableObject {
         let languageString = UserDefaults.standard.string(forKey: "language") ?? "et"
         language = Language(rawValue: languageString) ?? .estonian
         unit = UserDefaults.standard.string(forKey: "unit") ?? unit
+        includeTax = UserDefaults.standard.bool(forKey: "includeTax")
     }
     
     func localizedString(_ key: String) -> String {
@@ -92,6 +101,10 @@ class Globals: ObservableObject {
         UserDefaults.standard.set(unit, forKey: "unit")
     }
     
+    func saveTaxValue() {
+        UserDefaults.standard.set(includeTax, forKey: "includeTax")
+    }
+    
     func updateFullDayChartData() {
         todayFullDayChartData.removeAll()
         let formatter = DateFormatter()
@@ -101,7 +114,8 @@ class Globals: ObservableObject {
         for data in todayFullDayData {
             let timeStampDate = Date(timeIntervalSince1970: data.timestamp)
             let strTime = formatter.string(from: timeStampDate)
-            let dataPoint = (strTime, data.price / divider)
+            let price = includeTax ? (data.price / divider) * 1.2 : data.price / divider
+            let dataPoint = (strTime, price)
             todayFullDayChartData.append(dataPoint)
         }
     }
@@ -115,7 +129,8 @@ class Globals: ObservableObject {
         for data in tomorrowFullDayData {
             let timeStampDate = Date(timeIntervalSince1970: data.timestamp)
             let strTime = formatter.string(from: timeStampDate)
-            let dataPoint = (strTime, data.price / divider)
+            let price = includeTax ? (data.price / divider) * 1.2 : data.price / divider
+            let dataPoint = (strTime, price)
             tomorrowFullDayChartData.append(dataPoint)
         }
     }
@@ -123,7 +138,8 @@ class Globals: ObservableObject {
     func calculateMinMaxValues() {
         var pricesArray = [Double]()
         for dataPoint in tomorrowFullDayData {
-            pricesArray.append(dataPoint.price)
+            let price = includeTax ? dataPoint.price * 1.2 : dataPoint.price
+            pricesArray.append(price)
         }
         if let minNumberValue = pricesArray.min(),
            let maxNumberValue = pricesArray.max() {

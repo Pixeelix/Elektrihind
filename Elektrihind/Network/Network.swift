@@ -15,6 +15,7 @@ enum Day {
 class Network: ObservableObject {
     private let unit = Globals().unit
     private let divider: Double = Globals().divider
+    private let taxStatus = Globals().includeTax
     
     func loadCurrentPrice(completion:@escaping (PriceData) -> ()) {
 
