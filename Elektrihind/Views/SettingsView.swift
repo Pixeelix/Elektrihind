@@ -36,6 +36,9 @@ struct SettingsView: View {
                                 Text(shared.localizedString($0))
                             }
                         }
+                        Toggle(isOn: $shared.includeTax) {
+                            Text(shared.localizedString("TITLE_INCLUDE_TAX"))
+                        }
                     }
                     Section(header: Text(shared.localizedString("TITLE_APP_INFO"))) {
                         HStack {
