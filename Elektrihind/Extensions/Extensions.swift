@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension Date {
     static var yesterday: Date { return Date().dayBefore }
@@ -43,5 +44,10 @@ extension String {
     private func localized(bundle: Bundle) -> String {
         return NSLocalizedString(self, tableName: nil, bundle: bundle, value: "", comment: "")
     }
+}
+
+extension UIScreen {
+    static let screenWidth = UIScreen.main.bounds.size.width
+    static let isSmallScreen = screenWidth < 375
 }
 

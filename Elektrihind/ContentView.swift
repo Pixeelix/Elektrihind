@@ -62,7 +62,7 @@ struct CurrentPriceView: View {
     }
     
     var body: some View {
-        VStack(alignment: .center) {
+        VStack(alignment: .center, spacing: 0) {
             if let price = shared.currentPrice?.price,
                let priceWithTax = shared.includeTax ? price * 1.2 : price,
                let timeStamp = shared.currentPrice?.timestamp,
@@ -73,27 +73,32 @@ struct CurrentPriceView: View {
                 HStack(alignment: .top) {
                     Spacer()
                     Text(strDate)
-                        .padding(.top, 10)
-                        .padding(.trailing, 10)
+                        .font(.system(size: 300))
+                        .minimumScaleFactor(0.01)
                 }
-                .frame(maxWidth: .infinity)
+                .frame(height: 22)
+                .padding(.top, 8)
+                .padding(.trailing, 10)
                 
                 VStack {
                     Text(formattedPrice)
-                        .font(.system(size: 72, weight: .medium))
-                    
-                    Text(shared.localizedString(shared.unit))
-                        .font(.system(size: 38, weight: .medium))
+                        .font(.system(size: 300, weight: .medium))
+                        .minimumScaleFactor(0.01)
                 }
-                .offset(x: 0, y: -12)
+                .frame(height: UIScreen.isSmallScreen ? 56 : 82)
+                .padding(.top, -12)
+                
+                VStack {
+                    Text(shared.localizedString(shared.unit))
+                        .font(.system(size: 24, weight: .medium))
+                }
+               Spacer()
             }
         }
-        .frame(height: 160)
-        .frame(maxWidth: .infinity)
+        .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.isSmallScreen ? 120 : 140)
         .background(Color("contentBoxBackground"))
         .foregroundColor(Color("blueWhiteText"))
         .cornerRadius(20)
-        .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
     }
 }
 
@@ -101,17 +106,22 @@ struct NextDayMinMaxRange: View {
     @EnvironmentObject var shared: Globals
     
     var body: some View {
-        VStack(alignment: .center) {
+        VStack(alignment: .center, spacing: 0) {
             VStack {
                 Text("\(shared.minNextDayPrice) - \(shared.maxNextDayPrice)")
-                    .font(.system(size: 42, weight: .medium))
-                
+                    .font(.system(size: 300, weight: .medium))
+                    .minimumScaleFactor(0.01)
+                    .lineLimit(1)
+            }
+            .frame(height: UIScreen.isSmallScreen ? 42 : 68)
+            .padding(.horizontal, 30)
+            
+            VStack {
                 Text(shared.localizedString(shared.unit))
-                    .font(.system(size: 38, weight: .medium))
+                    .font(.system(size: 24, weight: .medium))
             }
         }
-        .frame(height: 160)
-        .frame(maxWidth: .infinity)
+        .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.isSmallScreen ? 120 : 140)
         .background(Color("contentBoxBackground"))
         .foregroundColor(Color("blueWhiteText"))
         .cornerRadius(20)

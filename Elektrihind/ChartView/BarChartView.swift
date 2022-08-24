@@ -98,20 +98,37 @@ public struct BarChartView : View {
 //                              title: .constant(self.getCurrentValue()!.0))
 //                        .offset(x: self.getLabelViewOffset(touchLocation: self.touchLocation), y: -6)
 //                        .foregroundColor(self.colorScheme == .dark ? self.darkModeStyle.legendTextColor : self.style.legendTextColor)
-                    let timesArray = ["00:00", "04:00", "08:00", "12:00", "16:00", "20:00", "23:00" ]
+                    let timesArray = ["00:00", "04:00", "08:00", "12:00", "16:00", "20:00", "23:00"]
+                    let shotTimesArray = ["00:00", "08:00", "12:00", "18:00", "23:00"]
+                    if !UIScreen.isSmallScreen {
                     HStack {
-                        ForEach(timesArray, id: \.self) {
-                            Text($0)
-                                .scaledToFit()
-                                .minimumScaleFactor(0.01)
-                                .font(.system(size: 12, weight: .semibold, design: .default))
-                                .foregroundColor(Color("grayWhiteText"))
-                                .frame(maxWidth: .infinity)
-                        }
+                            ForEach(timesArray, id: \.self) {
+                                Text($0)
+                                    .scaledToFit()
+                                    .minimumScaleFactor(0.01)
+                                    .font(.system(size: 12, weight: .semibold, design: .default))
+                                    .foregroundColor(Color("grayWhiteText"))
+                                    .frame(maxWidth: .infinity)
+                            }
                     }
                     .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 20)
                     .offset(y: -5)
+                    } else {
+                        HStack {
+                                ForEach(shotTimesArray, id: \.self) {
+                                    Text($0)
+                                        .scaledToFit()
+                                        .minimumScaleFactor(0.01)
+                                        .font(.system(size: 12, weight: .semibold, design: .default))
+                                        .foregroundColor(Color("grayWhiteText"))
+                                        .frame(maxWidth: .infinity)
+                                }
+                        }
+                        .padding(EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5))
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 20)
+                        .offset(y: -5)
+                    }
                 }
                 
             }

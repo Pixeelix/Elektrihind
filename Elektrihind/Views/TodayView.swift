@@ -9,14 +9,14 @@ import SwiftUI
 
 struct TodayView: View {
     @EnvironmentObject var shared: Globals
-    @State var dataLastLoadedHour: Int? = nil
+    @State var dataLastLoaded: Date? = nil
     
     var body: some View {
         HStack(alignment: .top) {
             VStack(alignment: .center) {
                 TitleView(title: shared.localizedString("TITLE_TODAYS_PRICE"))
                 CurrentPriceView()
-                    .padding(.bottom, 50)
+                    .padding(.bottom, UIScreen.isSmallScreen ? 30 : 50)
                 ChartView(day: .today)
             }
         }
@@ -30,8 +30,8 @@ struct TodayView: View {
     }
     
     func loadDataIfNeeded() {
-        if let dataLastLoadedHour = dataLastLoadedHour,
-           dataLastLoadedHour == Calendar.current.component(.hour, from: Date()) {
+        if let dataLastLoaded = dataLastLoaded,
+           dataLastLoaded.addingTimeInterval(3600) > Date() {
             return
         } else {
             Network().loadCurrentPrice { data in
@@ -40,7 +40,7 @@ struct TodayView: View {
             Network().loadFullDayData(.today) { data in
                 shared.todayFullDayData = data
             }
-            self.dataLastLoadedHour = Calendar.current.component(.hour, from: Date())
+            self.dataLastLoaded = Date()
         }
     }
     

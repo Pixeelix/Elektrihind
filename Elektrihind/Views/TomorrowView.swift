@@ -10,7 +10,7 @@ import SwiftUI
 struct TomorrowView: View {
     @EnvironmentObject var shared: Globals
     @State var missingData = true
-    @State var dataLastLoadedHour: Int? = nil
+    @State var dataLastLoaded: Date? = nil
     
     var body: some View {
         HStack(alignment: .top) {
@@ -28,7 +28,7 @@ struct TomorrowView: View {
                 VStack(alignment: .center) {
                     TitleView(title: shared.localizedString("TITLE_TOMORROWS_PRICE"))
                     NextDayMinMaxRange()
-                        .padding(.bottom, 50)
+                        .padding(.bottom, UIScreen.isSmallScreen ? 30 : 50)
                     ChartView(day: .tomorrow)
                 }
             }
@@ -43,15 +43,15 @@ struct TomorrowView: View {
     }
     
     func loadDataIfNeeded() {
-        if let dataLastLoadedHour = dataLastLoadedHour,
-           dataLastLoadedHour == Calendar.current.component(.hour, from: Date()) {
+        if let dataLastLoaded = dataLastLoaded,
+           dataLastLoaded.addingTimeInterval(3600) > Date() {
             return
         } else {
             Network().loadFullDayData(.tomorrow) { data in
                 missingData = data.count <= 2
                 shared.tomorrowFullDayData = data
             }
-            self.dataLastLoadedHour = Calendar.current.component(.hour, from: Date())
+            self.dataLastLoaded = Date()
         }
     }
 }
