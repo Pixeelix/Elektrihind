@@ -141,7 +141,7 @@ public struct ChartForm {
     public static let small = CGSize(width:180, height:120)
     public static let medium = CGSize(width:180, height:240)
     public static let large = CGSize(width:360, height:120)
-    public static let extraLarge = CGSize(width:360, height:300)
+    public static let extraLarge = CGSize(width: UIScreen.isSmallScreen ? 300 : 350, height: UIScreen.isSmallScreen ? 250 : 300)
     public static let detail = CGSize(width:180, height:120)
     #endif
 }
