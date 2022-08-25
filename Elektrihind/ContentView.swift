@@ -10,30 +10,72 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var shared: Globals
     @State private var tabBarSelection = 0
+    @ObservedObject var networkManager = NetworkManager()
     
     init() {
         UITabBar.appearance().backgroundColor = UIColor(named: "tabBarBackground")
     }
     
     var body: some View {
-        TabView(selection: $tabBarSelection) {
-            TodayView()
-                .tag(0)
-                .background(backGroundColor().edgesIgnoringSafeArea(.all))
-            TomorrowView()
-                .tag(1)
-                .background(backGroundColor().edgesIgnoringSafeArea(.all))
-//          Text("Hea teada")
-//              .tag(2)
-//              .background(backGroundColor().edgesIgnoringSafeArea(.all))
-            SettingsView()
-                .tag(2)
-                .background(backGroundColor().edgesIgnoringSafeArea(.all))
+        if networkManager.isConnected {
+            TabView(selection: $tabBarSelection) {
+                TodayView()
+                    .tag(0)
+                    .background(backGroundColor().edgesIgnoringSafeArea(.all))
+                TomorrowView()
+                    .tag(1)
+                    .background(backGroundColor().edgesIgnoringSafeArea(.all))
+    //          Text("Hea teada")
+    //              .tag(2)
+    //              .background(backGroundColor().edgesIgnoringSafeArea(.all))
+                SettingsView()
+                    .tag(2)
+                    .background(backGroundColor().edgesIgnoringSafeArea(.all))
+            }
+            .onAppear() {
+                shared.getSavedSettings()
+            }
+            .overlay(TabBarView(selection: $tabBarSelection), alignment: .bottom)
+        } else {
+            ZStack {
+                backGroundColor().ignoresSafeArea()
+                
+                VStack {
+                    Image(systemName: "wifi.slash")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 200, height: 200)
+                        .foregroundColor(.white)
+                    
+                    Text(shared.localizedString("TEXT_CONNECTION_LOST"))
+                        .font(.system(size: 20))
+                        .foregroundColor(.white)
+                        .padding()
+                    
+                    Button {
+                        self.settingsOpener()
+                    } label: {
+                        Text(shared.localizedString("TITLE_OPEN_SETTINGS"))
+                            .padding()
+                            .font(.headline)
+                            .foregroundColor(Color("blueGrayText"))
+                    }
+                    .frame(width: 160)
+                    .background(Color.white)
+                    .clipShape(Capsule())
+                    .padding()
+                }
+            }
         }
-        .onAppear() {
-            shared.getSavedSettings()
+       
+    }
+    
+    private func settingsOpener(){
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
         }
-        .overlay(TabBarView(selection: $tabBarSelection), alignment: .bottom)
     }
     
     func backGroundColor() -> LinearGradient {

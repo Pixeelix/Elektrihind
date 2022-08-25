@@ -6,10 +6,26 @@
 //
 
 import Foundation
+import Network
 
 enum Day {
     case today
     case tomorrow
+}
+
+class NetworkManager: ObservableObject {
+    let monitor = NWPathMonitor()
+    let queue = DispatchQueue(label: "NetworkManager")
+    @Published var isConnected = true
+    
+    init() {
+        monitor.pathUpdateHandler = { path in
+            DispatchQueue.main.sync {
+                self.isConnected = path.status == .satisfied
+            }
+        }
+        monitor.start(queue: queue)
+    }
 }
 
 class Network: ObservableObject {
