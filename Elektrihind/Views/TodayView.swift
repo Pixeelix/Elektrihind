@@ -30,18 +30,29 @@ struct TodayView: View {
     }
     
     func loadDataIfNeeded() {
-        if let dataLastLoaded = dataLastLoaded,
-           dataLastLoaded.addingTimeInterval(3600) > Date() {
-            return
+        if let dataLastLoaded = dataLastLoaded {
+            let lastLoadedHour = Calendar.current.component(.hour, from: Date())
+            let currentHour = Calendar.current.component(.hour, from: dataLastLoaded)
+            
+            if lastLoadedHour != currentHour ||
+                dataLastLoaded.addingTimeInterval(3600) < Date() {
+               loadData()
+            } else {
+                return
+            }
         } else {
-            Network().loadCurrentPrice { data in
-                shared.currentPrice = data
-            }
-            Network().loadFullDayData(.today) { data in
-                shared.todayFullDayData = data
-            }
-            self.dataLastLoaded = Date()
+            loadData()
         }
+    }
+    
+    func loadData() {
+        Network().loadCurrentPrice { data in
+            shared.currentPrice = data
+        }
+        Network().loadFullDayData(.today) { data in
+            shared.todayFullDayData = data
+        }
+        self.dataLastLoaded = Date()
     }
     
 }
