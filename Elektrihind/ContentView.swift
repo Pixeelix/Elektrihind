@@ -71,7 +71,7 @@ struct ContentView: View {
     }
     
     private func settingsOpener(){
-        if let url = URL(string: UIApplication.openSettingsURLString) {
+        if let url = URL(string: "App-prefs:") {
             if UIApplication.shared.canOpenURL(url) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
