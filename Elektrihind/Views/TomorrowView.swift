@@ -41,18 +41,28 @@ struct TomorrowView: View {
             loadDataIfNeeded()
         }
     }
-    
     func loadDataIfNeeded() {
-        if let dataLastLoaded = dataLastLoaded,
-           dataLastLoaded.addingTimeInterval(3600) > Date() {
-            return
-        } else {
-            Network().loadFullDayData(.tomorrow) { data in
-                missingData = data.count <= 2
-                shared.tomorrowFullDayData = data
+        if let dataLastLoaded = dataLastLoaded {
+            let lastLoadedHour = Calendar.current.component(.hour, from: Date())
+            let currentHour = Calendar.current.component(.hour, from: dataLastLoaded)
+            
+            if lastLoadedHour != currentHour ||
+                dataLastLoaded.addingTimeInterval(3600) < Date() {
+               loadData()
+            } else {
+                return
             }
-            self.dataLastLoaded = Date()
+        } else {
+            loadData()
         }
+    }
+    
+    func loadData() {
+        Network().loadFullDayData(.tomorrow) { data in
+            missingData = data.count <= 2
+            shared.tomorrowFullDayData = data
+        }
+        self.dataLastLoaded = Date()
     }
 }
 
