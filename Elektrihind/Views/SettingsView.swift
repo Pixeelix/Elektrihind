@@ -21,36 +21,41 @@ struct SettingsView: View {
     }
     
     var body: some View {
-//        if #available(iOS 16.0, *) {
-//            VStack(alignment: .center) {
-//
-//                TitleView(title: shared.localizedString("LABEL_SETTINGS"))
-//
-//                Form {
-//                    Section (header: Text(shared.localizedString("TITLE_GENERAL"))){
-//                        Picker(shared.localizedString("TITLE_LANGUAGE"), selection: $shared.language) {
-//                            ForEach(Language.allLanguages, id: \.self) { language in
-//                                Text(language.fullName)
-//                            }
-//                        }
-//                        Picker(shared.localizedString("TITLE_UNIT"), selection: $shared.unit) {
-//                            ForEach(unitsArray, id: \.self) {
-//                                Text(shared.localizedString($0))
-//                            }
-//                        }
-//                        Toggle(isOn: $shared.includeTax) {
-//                            Text(shared.localizedString("TITLE_INCLUDE_TAX"))
-//                        }
-//                    }
-//                    Section(header: Text(shared.localizedString("TITLE_APP_INFO"))) {
-//                        HStack {
-//                            Text(shared.localizedString("TITLE_VERSION"))
-//                            Spacer()
-//                            Text(appVersion ?? "")
-//                        }
-//                    }
-//                }.scrollContentBackground(.hidden)
-//            }} else {
+        if #available(iOS 16.0, *) {
+            VStack(alignment: .center) {
+                
+                TitleView(title: shared.localizedString("LABEL_SETTINGS"))
+                
+                Form {
+                    Section (header: Text(shared.localizedString("TITLE_GENERAL"))){
+                        Picker(shared.localizedString("TITLE_LANGUAGE"), selection: $shared.language) {
+                            ForEach(Language.allLanguages, id: \.self) { language in
+                                Text(language.fullName)
+                            }
+                        }
+                        Picker(shared.localizedString("TITLE_UNIT"), selection: $shared.unit) {
+                            ForEach(unitsArray, id: \.self) {
+                                Text(shared.localizedString($0))
+                            }
+                        }
+                        Toggle(isOn: $shared.includeTax) {
+                            Text(shared.localizedString("TITLE_INCLUDE_TAX"))
+                        }
+                    }
+                    Section(header: Text(shared.localizedString("TITLE_APP_INFO"))) {
+                        HStack {
+                            Text(shared.localizedString("TITLE_VERSION"))
+                            Spacer()
+                            Text(appVersion ?? "")
+                        }
+                    }
+                    Section(header: Text(shared.localizedString("TITLE_PAY_ATTENTION"))) {
+                        HStack {
+                            Text(shared.localizedString("TEXT_INFORMATION_ABOUT_APP"))
+                        }
+                    }
+                }.scrollContentBackground(.hidden)
+            }} else {
                 NavigationView {
                     ZStack {
                         LinearGradient(gradient: Gradient(colors: [Color("backgroundTop"), Color("backgroundBottom")]), startPoint: .topLeading, endPoint: .bottomTrailing).edgesIgnoringSafeArea(.all)
@@ -77,6 +82,11 @@ struct SettingsView: View {
                                     Text(appVersion ?? "")
                                 }
                             }
+                            Section(header: Text(shared.localizedString("TITLE_PAY_ATTENTION"))) {
+                                HStack {
+                                    Text(shared.localizedString("TEXT_INFORMATION_ABOUT_APP"))
+                                }
+                            }
                         }
                     }
                     .navigationBarTitleDisplayMode(.inline)
@@ -92,7 +102,7 @@ struct SettingsView: View {
                     }
                 }
             }
-  //  }
+    }
 }
 
 struct SettingsView_Previews: PreviewProvider {

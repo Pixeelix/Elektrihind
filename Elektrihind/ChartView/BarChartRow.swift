@@ -9,9 +9,9 @@ import SwiftUI
 
 public struct BarChartRow : View {
     var data: [Double]
+    var day: Day
     var accentColor: Color
     var gradient: GradientColor?
-    
     var maxValue: Double {
         guard let max = data.max() else {
             return 1
@@ -27,8 +27,9 @@ public struct BarChartRow : View {
                                  index: i,
                                  width: Float(geometry.frame(in: .local).width - 22),
                                  numberOfDataPoints: self.data.count,
+                                 day: day,
                                  accentColor: self.accentColor,
-                                 gradient: self.gradient,
+                                 originalGradient: self.gradient,
                                  touchLocation: self.$touchLocation)
                         .scaleEffect(self.touchLocation > CGFloat(i)/CGFloat(self.data.count) && self.touchLocation < CGFloat(i+1)/CGFloat(self.data.count) ? CGSize(width: 1.4, height: 1.1) : CGSize(width: 1, height: 1), anchor: .bottom)
                         .animation(.spring())
@@ -48,8 +49,8 @@ public struct BarChartRow : View {
 struct ChartRow_Previews : PreviewProvider {
     static var previews: some View {
         Group {
-            BarChartRow(data: [0], accentColor: Colors.OrangeStart, touchLocation: .constant(-1))
-            BarChartRow(data: [8,23,54,32,12,37,7], accentColor: Colors.OrangeStart, touchLocation: .constant(-1))
+            BarChartRow(data: [0], day: .today, accentColor: Colors.OrangeStart, touchLocation: .constant(-1))
+            BarChartRow(data: [8,23,54,32,12,37,7], day: .today, accentColor: Colors.OrangeStart, touchLocation: .constant(-1))
         }
     }
 }

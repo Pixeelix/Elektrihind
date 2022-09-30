@@ -7,8 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A214594C28E5DD4C00FDB205 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A214594B28E5DD4C00FDB205 /* TitleView.swift */; };
+		A214594E28E5DD9B00FDB205 /* CurrentPriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A214594D28E5DD9B00FDB205 /* CurrentPriceView.swift */; };
+		A214595028E5DDCA00FDB205 /* MinMaxRangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A214594F28E5DDCA00FDB205 /* MinMaxRangeView.swift */; };
+		A214595228E5DE0B00FDB205 /* TomorrowChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A214595128E5DE0B00FDB205 /* TomorrowChartView.swift */; };
 		A22579F22767F74600F8E3AB /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22579F12767F74600F8E3AB /* TodayView.swift */; };
 		A22579F42767F76E00F8E3AB /* TomorrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22579F32767F76E00F8E3AB /* TomorrowView.swift */; };
+		A24A964928E63EC300B74E14 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A24A964828E63EC300B74E14 /* LaunchScreen.storyboard */; };
+		A24A964B28E6460300B74E14 /* TodayChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24A964A28E6460300B74E14 /* TodayChartView.swift */; };
 		A25AC1C72767FBC800C9610F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25AC1C62767FBC800C9610F /* SettingsView.swift */; };
 		A25AC1C92768009C00C9610F /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25AC1C82768009C00C9610F /* Globals.swift */; };
 		A2B155B227458EE2004B1B02 /* ElektrihindApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B155B127458EE2004B1B02 /* ElektrihindApp.swift */; };
@@ -28,9 +34,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A214594B28E5DD4C00FDB205 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
+		A214594D28E5DD9B00FDB205 /* CurrentPriceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPriceView.swift; sourceTree = "<group>"; };
+		A214594F28E5DDCA00FDB205 /* MinMaxRangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinMaxRangeView.swift; sourceTree = "<group>"; };
+		A214595128E5DE0B00FDB205 /* TomorrowChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TomorrowChartView.swift; sourceTree = "<group>"; };
 		A22579F12767F74600F8E3AB /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
 		A22579F32767F76E00F8E3AB /* TomorrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TomorrowView.swift; sourceTree = "<group>"; };
 		A233FEE427669DE100FEDA9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A24A964828E63EC300B74E14 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A24A964A28E6460300B74E14 /* TodayChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayChartView.swift; sourceTree = "<group>"; };
 		A25AC1C62767FBC800C9610F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A25AC1C82768009C00C9610F /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		A2B155AE27458EE2004B1B02 /* Elektrihind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Elektrihind.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,10 +78,15 @@
 			isa = PBXGroup;
 			children = (
 				A22579F12767F74600F8E3AB /* TodayView.swift */,
+				A24A964A28E6460300B74E14 /* TodayChartView.swift */,
 				A22579F32767F76E00F8E3AB /* TomorrowView.swift */,
+				A214595128E5DE0B00FDB205 /* TomorrowChartView.swift */,
 				A25AC1C62767FBC800C9610F /* SettingsView.swift */,
-				A25AC1C82768009C00C9610F /* Globals.swift */,
 				A2F9DFBC27653EFB006E4730 /* TabBarView.swift */,
+				A214594B28E5DD4C00FDB205 /* TitleView.swift */,
+				A214594D28E5DD9B00FDB205 /* CurrentPriceView.swift */,
+				A214594F28E5DDCA00FDB205 /* MinMaxRangeView.swift */,
+				A24A964828E63EC300B74E14 /* LaunchScreen.storyboard */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -85,6 +102,7 @@
 		A22579F72767F7C300F8E3AB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A25AC1C82768009C00C9610F /* Globals.swift */,
 				A2B155BF27459138004B1B02 /* NordPoolPrice.swift */,
 			);
 			path = Models;
@@ -113,9 +131,9 @@
 				A233FEE427669DE100FEDA9C /* Info.plist */,
 				A2B155B127458EE2004B1B02 /* ElektrihindApp.swift */,
 				A2B155B327458EE2004B1B02 /* ContentView.swift */,
+				A22579F62767F7B200F8E3AB /* Network */,
 				A2D6DD57279A06070007B14A /* ChartView */,
 				A22579F52767F79700F8E3AB /* Views */,
-				A22579F62767F7B200F8E3AB /* Network */,
 				A22579F72767F7C300F8E3AB /* Models */,
 				A2B155B527458EE4004B1B02 /* Assets.xcassets */,
 				A2D2C49E27727D0E009596E9 /* Extensions */,
@@ -224,6 +242,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2B155B927458EE4004B1B02 /* Preview Assets.xcassets in Resources */,
+				A24A964928E63EC300B74E14 /* LaunchScreen.storyboard in Resources */,
 				A2D2C49A27727AB6009596E9 /* Localizable.strings in Resources */,
 				A2B155B627458EE4004B1B02 /* Assets.xcassets in Resources */,
 			);
@@ -237,17 +256,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2D6DD56279A05A60007B14A /* BarChartView.swift in Sources */,
+				A214594E28E5DD9B00FDB205 /* CurrentPriceView.swift in Sources */,
 				A2D6DD5F279A0B6B0007B14A /* Legend.swift in Sources */,
 				A2B155C72745B070004B1B02 /* Extensions.swift in Sources */,
 				A2B155B427458EE2004B1B02 /* ContentView.swift in Sources */,
 				A2D6DD59279A061F0007B14A /* BarChartGlobals.swift in Sources */,
 				A2F9DFBD27653EFB006E4730 /* TabBarView.swift in Sources */,
 				A2B155C027459138004B1B02 /* NordPoolPrice.swift in Sources */,
+				A214594C28E5DD4C00FDB205 /* TitleView.swift in Sources */,
 				A2B155C2274599E7004B1B02 /* Network.swift in Sources */,
+				A214595228E5DE0B00FDB205 /* TomorrowChartView.swift in Sources */,
 				A25AC1C92768009C00C9610F /* Globals.swift in Sources */,
 				A2D6DD5B279A06700007B14A /* BarChartRow.swift in Sources */,
+				A24A964B28E6460300B74E14 /* TodayChartView.swift in Sources */,
 				A25AC1C72767FBC800C9610F /* SettingsView.swift in Sources */,
 				A2B155B227458EE2004B1B02 /* ElektrihindApp.swift in Sources */,
+				A214595028E5DDCA00FDB205 /* MinMaxRangeView.swift in Sources */,
 				A2D6DD5D279A06AC0007B14A /* BarChartCell.swift in Sources */,
 				A22579F22767F74600F8E3AB /* TodayView.swift in Sources */,
 				A22579F42767F76E00F8E3AB /* TomorrowView.swift in Sources */,
@@ -400,9 +424,12 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Elektrihind/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Elektrihind;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
@@ -411,7 +438,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = koodipardik.Elektrihind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -435,9 +462,12 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Elektrihind/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Elektrihind;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
@@ -446,7 +476,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = koodipardik.Elektrihind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

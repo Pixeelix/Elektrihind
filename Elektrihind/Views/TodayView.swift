@@ -17,7 +17,7 @@ struct TodayView: View {
                 TitleView(title: shared.localizedString("TITLE_TODAYS_PRICE"))
                 CurrentPriceView()
                     .padding(.bottom, UIScreen.isSmallScreen ? 30 : 50)
-                ChartView(day: .today)
+                TodayChartView()
             }
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)
@@ -36,7 +36,8 @@ struct TodayView: View {
             
             if lastLoadedHour != currentHour ||
                 dataLastLoaded.addingTimeInterval(3600) < Date() {
-               loadData()
+                loadData()
+                shared.chartViewUpdateId += 1 // Used to update ChartView as without id, the graph bars are not updating automatically
             } else {
                 return
             }
@@ -55,10 +56,4 @@ struct TodayView: View {
         self.dataLastLoaded = Date()
     }
     
-}
-
-struct TodayView_Previews: PreviewProvider {
-    static var previews: some View {
-        TodayView()
-    }
 }

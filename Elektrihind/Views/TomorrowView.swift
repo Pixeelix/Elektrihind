@@ -27,9 +27,9 @@ struct TomorrowView: View {
             } else {
                 VStack(alignment: .center) {
                     TitleView(title: shared.localizedString("TITLE_TOMORROWS_PRICE"))
-                    NextDayMinMaxRange()
+                    MinMaxRange()
                         .padding(.bottom, UIScreen.isSmallScreen ? 30 : 50)
-                    ChartView(day: .tomorrow)
+                    TomorrowChartView()
                 }
             }
         }
