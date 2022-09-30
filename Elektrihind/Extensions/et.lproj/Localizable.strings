@@ -18,6 +18,13 @@
 "TITLE_UNIT" = "Ühik";
 "TITLE_APP_INFO" = "Rakenduse info";
 "TITLE_VERSION" = "Versioon";
+"TITLE_OPEN_SETTINGS" = "Ava Seaded";
 "€/kWh" = "€/kWh";
 "€/MWh" = "€/MWh";
 "cent/kWh" = "senti/kWh";
+"TITLE_INCLUDE_TAX" = "Hind koos KM-ga";
+"TEXT_CONNECTION_LOST" = "Puudub internetiühendus";
+"TEXT_INFORMATION_ABOUT_APP" = "• Hinnad kuvatakse Eesti ajavööndis
+• Käibemaks 20%
+• Pea seda meeles NordPooli originaalhinnaga võrdluses!";
+"TITLE_PAY_ATTENTION" = "Pane tähele"; 

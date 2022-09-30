@@ -11,7 +11,9 @@ import SwiftUI
 struct ElektrihindApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(Globals())
+            ContentView()
+                .environmentObject(NetworkManager())
+                .environmentObject(Globals())
         }
     }
 }

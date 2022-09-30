@@ -10,7 +10,7 @@ import SwiftUI
 struct TomorrowView: View {
     @EnvironmentObject var shared: Globals
     @State var missingData = true
-    @State var dataLastLoadedHour: Int? = nil
+    @State var dataLastLoaded: Date? = nil
     
     var body: some View {
         HStack(alignment: .top) {
@@ -27,9 +27,9 @@ struct TomorrowView: View {
             } else {
                 VStack(alignment: .center) {
                     TitleView(title: shared.localizedString("TITLE_TOMORROWS_PRICE"))
-                    NextDayMinMaxRange()
-                        .padding(.bottom, 50)
-                    ChartView(day: .tomorrow)
+                    MinMaxRange()
+                        .padding(.bottom, UIScreen.isSmallScreen ? 30 : 50)
+                    TomorrowChartView()
                 }
             }
         }
@@ -41,18 +41,28 @@ struct TomorrowView: View {
             loadDataIfNeeded()
         }
     }
-    
     func loadDataIfNeeded() {
-        if let dataLastLoadedHour = dataLastLoadedHour,
-           dataLastLoadedHour == Calendar.current.component(.hour, from: Date()) {
-            return
-        } else {
-            Network().loadFullDayData(.tomorrow) { data in
-                missingData = data.count <= 2
-                shared.tomorrowFullDayData = data
+        if let dataLastLoaded = dataLastLoaded {
+            let lastLoadedHour = Calendar.current.component(.hour, from: Date())
+            let currentHour = Calendar.current.component(.hour, from: dataLastLoaded)
+            
+            if lastLoadedHour != currentHour ||
+                dataLastLoaded.addingTimeInterval(3600) < Date() {
+               loadData()
+            } else {
+                return
             }
-            self.dataLastLoadedHour = Calendar.current.component(.hour, from: Date())
+        } else {
+            loadData()
         }
+    }
+    
+    func loadData() {
+        Network().loadFullDayData(.tomorrow) { data in
+            missingData = data.count <= 2
+            shared.tomorrowFullDayData = data
+        }
+        self.dataLastLoaded = Date()
     }
 }
 

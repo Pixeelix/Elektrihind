@@ -9,15 +9,15 @@ import SwiftUI
 
 struct TodayView: View {
     @EnvironmentObject var shared: Globals
-    @State var dataLastLoadedHour: Int? = nil
+    @State var dataLastLoaded: Date? = nil
     
     var body: some View {
         HStack(alignment: .top) {
             VStack(alignment: .center) {
                 TitleView(title: shared.localizedString("TITLE_TODAYS_PRICE"))
                 CurrentPriceView()
-                    .padding(.bottom, 50)
-                ChartView(day: .today)
+                    .padding(.bottom, UIScreen.isSmallScreen ? 30 : 50)
+                TodayChartView()
             }
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)
@@ -30,24 +30,30 @@ struct TodayView: View {
     }
     
     func loadDataIfNeeded() {
-        if let dataLastLoadedHour = dataLastLoadedHour,
-           dataLastLoadedHour == Calendar.current.component(.hour, from: Date()) {
-            return
+        if let dataLastLoaded = dataLastLoaded {
+            let lastLoadedHour = Calendar.current.component(.hour, from: Date())
+            let currentHour = Calendar.current.component(.hour, from: dataLastLoaded)
+            
+            if lastLoadedHour != currentHour ||
+                dataLastLoaded.addingTimeInterval(3600) < Date() {
+                loadData()
+                shared.chartViewUpdateId += 1 // Used to update ChartView as without id, the graph bars are not updating automatically
+            } else {
+                return
+            }
         } else {
-            Network().loadCurrentPrice { data in
-                shared.currentPrice = data
-            }
-            Network().loadFullDayData(.today) { data in
-                shared.todayFullDayData = data
-            }
-            self.dataLastLoadedHour = Calendar.current.component(.hour, from: Date())
+            loadData()
         }
     }
     
-}
-
-struct TodayView_Previews: PreviewProvider {
-    static var previews: some View {
-        TodayView()
+    func loadData() {
+        Network().loadCurrentPrice { data in
+            shared.currentPrice = data
+        }
+        Network().loadFullDayData(.today) { data in
+            shared.todayFullDayData = data
+        }
+        self.dataLastLoaded = Date()
     }
+    
 }
