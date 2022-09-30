@@ -12,11 +12,20 @@ public struct BarChartCell : View {
     var index: Int = 0
     var width: Float
     var numberOfDataPoints: Int
+    var day: Day
     var cellWidth: Double {
         return Double(width)/(Double(numberOfDataPoints) * 1.5)
     }
+    let currentHour = Calendar.current.component(.hour, from: Date())
     var accentColor: Color
-    var gradient: GradientColor?
+    var originalGradient: GradientColor?
+    var gradient: GradientColor? {
+        if day == .today {
+            return index == currentHour ? GradientColor(start: Color(hexString: "#FF964F"), end: Color(hexString: ":#FF964F")) : originalGradient
+        } else {
+            return originalGradient
+        }
+    }
     
     @State var scaleValue: Double = 0
     @Binding var touchLocation: CGFloat
@@ -37,7 +46,7 @@ public struct BarChartCell : View {
 #if DEBUG
 struct ChartCell_Previews : PreviewProvider {
     static var previews: some View {
-        BarChartCell(value: Double(0.75), width: 320, numberOfDataPoints: 12, accentColor: Colors.OrangeStart, gradient: nil, touchLocation: .constant(-1))
+        BarChartCell(value: Double(0.75), width: 320, numberOfDataPoints: 12, day: .today, accentColor: Colors.OrangeStart, originalGradient: nil, touchLocation: .constant(-1))
     }
 }
 #endif

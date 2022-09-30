@@ -25,6 +25,7 @@ enum Language: String {
 }
 
 class Globals: ObservableObject {
+    @Published var chartViewUpdateId: Int = 1
     @Published var currentPrice: PriceData?
     @Published var todayFullDayData: [PriceData] = [] {
         didSet {

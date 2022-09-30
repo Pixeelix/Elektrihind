@@ -24,3 +24,7 @@
 "cent/kWh" = "cent/kWh";
 "TITLE_INCLUDE_TAX" = "Price including VAT";
 "TEXT_CONNECTION_LOST" = "No Internet Connection";
+"TEXT_INFORMATION_ABOUT_APP" = "• Prices are displayed in the Estonian time zone
+• VAT 20%
+• Keep this in mind when comparing the price with NordPool original data!";
+"TITLE_PAY_ATTENTION" = "Pay attention";

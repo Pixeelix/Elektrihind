@@ -6,10 +6,16 @@
 
 import SwiftUI
 
-public struct BarChartView : View {
+struct BarChartView : View {
+    @EnvironmentObject var shared: Globals
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     private var data: ChartData
-    public var title: String
+    private var title: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMMM"
+        formatter.locale = shared.language == .english ? Locale(identifier: "en_US") : Locale(identifier: "et_EE")
+        return day == .tomorrow ? formatter.string(from: Date().dayAfter) : formatter.string(from: Date())
+    }
     public var legend: String?
     public var style: ChartStyle
     public var darkModeStyle: ChartStyle
@@ -18,6 +24,7 @@ public struct BarChartView : View {
     public var cornerImage: Image?
     public var valueSpecifier:String
     public var animatedToBack: Bool
+    public var day: Day
     
     @State private var touchLocation: CGFloat = -1.0
     @State private var showValue: Bool = false
@@ -32,9 +39,9 @@ public struct BarChartView : View {
     var isFullWidth:Bool {
         return self.formSize == ChartForm.large
     }
-    public init(data:ChartData, title: String, legend: String? = nil, style: ChartStyle = Styles.barChartStyleOrangeLight, form: CGSize? = ChartForm.medium, dropShadow: Bool? = true, cornerImage:Image? = Image(systemName: "waveform.path.ecg"), valueSpecifier: String? = "%.1f", animatedToBack: Bool = false){
+    init(data: ChartData, day: Day, legend: String? = nil, style: ChartStyle = Styles.barChartStyleOrangeLight, form: CGSize? = ChartForm.medium, dropShadow: Bool? = true, cornerImage:Image? = Image(systemName: "waveform.path.ecg"), valueSpecifier: String? = "%.1f", animatedToBack: Bool = false) {
         self.data = data
-        self.title = title
+        self.day = day
         self.legend = legend
         self.style = style
         self.darkModeStyle = style.darkModeStyle != nil ? style.darkModeStyle! : Styles.barChartStyleOrangeDark
@@ -45,7 +52,7 @@ public struct BarChartView : View {
         self.animatedToBack = animatedToBack
     }
     
-    public var body: some View {
+    var body: some View {
         ZStack{
             Rectangle()
                 .fill(self.colorScheme == .dark ? self.darkModeStyle.backgroundColor : self.style.backgroundColor)
@@ -57,7 +64,7 @@ public struct BarChartView : View {
                         Text(self.title)
                             .font(.headline)
                             .foregroundColor(self.colorScheme == .dark ? self.darkModeStyle.textColor : self.style.textColor)
-                    }else{
+                    } else {
                         HStack {
                             Text("\(self.currentValue, specifier: self.valueSpecifier)")
                                 .font(.headline)
@@ -84,7 +91,7 @@ public struct BarChartView : View {
 //                        .foregroundColor(self.colorScheme == .dark ? self.darkModeStyle.legendTextColor : self.style.legendTextColor)
                 }.padding()
                 BarChartRow(data: data.points.map{$0.1},
-                            accentColor: self.colorScheme == .dark ? self.darkModeStyle.accentColor : self.style.accentColor,
+                            day: day, accentColor: self.colorScheme == .dark ? self.darkModeStyle.accentColor : self.style.accentColor,
                             gradient: self.colorScheme == .dark ? self.darkModeStyle.gradientColor : self.style.gradientColor,
                             touchLocation: self.$touchLocation)
                 if self.legend != nil  && self.formSize == ChartForm.medium && !self.showLabelValue{
@@ -93,7 +100,7 @@ public struct BarChartView : View {
 //                        .foregroundColor(self.colorScheme == .dark ? self.darkModeStyle.legendTextColor : self.style.legendTextColor)
 //                        .padding()
                                 
-                }else if (self.data.valuesGiven && self.getCurrentValue() != nil) {
+                } else if (self.data.valuesGiven && self.getCurrentValue() != nil) {
 //                    LabelView(arrowOffset: self.getArrowOffset(touchLocation: self.touchLocation),
 //                              title: .constant(self.getCurrentValue()!.0))
 //                        .offset(x: self.getLabelViewOffset(touchLocation: self.touchLocation), y: -6)
@@ -139,7 +146,7 @@ public struct BarChartView : View {
                 maxHeight:self.formSize.height)
         .gesture(DragGesture()
                 .onChanged({ value in
-                    self.touchLocation = value.location.x/self.formSize.width
+                    self.touchLocation = value.location.x / self.formSize.width
                     self.showValue = true
                     self.currentValue = self.getCurrentValue()?.1 ?? 0
                     if(self.data.valuesGiven && self.formSize == ChartForm.medium) {
@@ -191,7 +198,7 @@ public struct BarChartView : View {
 #if DEBUG
 struct ChartView_Previews : PreviewProvider {
     static var previews: some View {
-        BarChartView(data: TestData.values, title: "21.12", legend: "Quarterly", form: ChartForm.extraLarge, valueSpecifier: "%.4f €/kWh")
+        BarChartView(data: TestData.values, day: .today, legend: "Quarterly", form: ChartForm.extraLarge, valueSpecifier: "%.4f €/kWh")
     }
 }
 #endif
