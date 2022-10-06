@@ -27,7 +27,7 @@ enum Language: String {
 class Globals: ObservableObject {
     @Published var chartViewUpdateId: Int = 1
     @Published var currentPrice: PriceData?
-    @Published var todayFullDayData: [PriceData] = [] {
+    @Published var todayFullDayData: [PriceData]? {
         didSet {
             updateFullDayChartData()
         }
@@ -112,6 +112,7 @@ class Globals: ObservableObject {
         formatter.timeZone = TimeZone(abbreviation: "EET")
         formatter.locale = NSLocale.current
         formatter.dateFormat = "HH:mm"
+        guard let todayFullDayData = todayFullDayData else { return }
         for data in todayFullDayData {
             let timeStampDate = Date(timeIntervalSince1970: data.timestamp)
             let strTime = formatter.string(from: timeStampDate)
