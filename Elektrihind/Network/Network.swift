@@ -97,8 +97,7 @@ class Network: ObservableObject {
                 guard let data = data else { return }
                 DispatchQueue.main.async {
                     do {
-                        let decodedNordPoolData = try
-                        JSONDecoder().decode(NordPoolCountriesData.self, from: data)
+                        let decodedNordPoolData = try JSONDecoder().decode(NordPoolCountriesData.self, from: data)
                         var fullDayData = [PriceData]()
                         for data in decodedNordPoolData.data.ee {
                             fullDayData.append(data)
