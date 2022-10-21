@@ -32,6 +32,7 @@ struct TodayView: View {
             }
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)
+        .background(backGroundColor().edgesIgnoringSafeArea(.all))
         .onAppear() {
             loadDataIfNeeded()
         }
@@ -41,7 +42,6 @@ struct TodayView: View {
     }
     
     func loadDataIfNeeded() {
-        shared.chartViewUpdateId += 1 // Used to update ChartView as without id, the graph bars are not updating automatically
         if let dataLastLoaded = dataLastLoaded {
             let lastLoadedHour = Calendar.current.component(.hour, from: Date())
             let currentHour = Calendar.current.component(.hour, from: dataLastLoaded)
@@ -64,7 +64,14 @@ struct TodayView: View {
             shared.todayFullDayData = data
         }
         self.dataLastLoaded = Date()
-        
+        shared.chartViewUpdateId += 1 // Used to update ChartView as without id, the graph bars are not updating automatically
     }
-    
+}
+
+struct TodayView_Previews: PreviewProvider {
+    static let shared = Globals()
+    static var previews: some View {
+        TodayView()
+            .environmentObject(shared)
+    }
 }

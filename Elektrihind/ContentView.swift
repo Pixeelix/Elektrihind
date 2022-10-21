@@ -21,21 +21,18 @@ struct ContentView: View {
             TabView(selection: $tabBarSelection) {
                 TodayView()
                     .tag(0)
-                    .background(backGroundColor().edgesIgnoringSafeArea(.all))
                 TomorrowView()
                     .tag(1)
-                    .background(backGroundColor().edgesIgnoringSafeArea(.all))
-    //          Text("Hea teada")
-    //              .tag(2)
-    //              .background(backGroundColor().edgesIgnoringSafeArea(.all))
+                GoodToKnowView()
+                  .tag(2)
                 SettingsView()
-                    .tag(2)
-                    .background(backGroundColor().edgesIgnoringSafeArea(.all))
+                    .tag(3)
             }
             .onAppear() {
                 shared.getSavedSettings()
             }
             .overlay(TabBarView(selection: $tabBarSelection), alignment: .bottom)
+            .ignoresSafeArea(.keyboard, edges: .bottom)
         } else {
             ZStack {
                 backGroundColor().ignoresSafeArea()
@@ -76,16 +73,18 @@ struct ContentView: View {
             }
         }
     }
-    
-    func backGroundColor() -> LinearGradient {
-       return LinearGradient(gradient: Gradient(colors: [Color("backgroundTop"), Color("backgroundBottom")]), startPoint: .topLeading, endPoint: .bottomTrailing)
-    }
 }
 
 struct ContentView_Previews: PreviewProvider {
+    static let shared = Globals()
+    static let networkManager = NetworkManager()
     static var previews: some View {
         ForEach(ColorScheme.allCases, id: \.self) {
-            ContentView().preferredColorScheme($0)
+            ContentView()
+                .environmentObject(shared)
+                .environmentObject(networkManager)
+                .preferredColorScheme($0)
         }
     }
 }
+

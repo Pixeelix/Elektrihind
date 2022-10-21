@@ -55,7 +55,9 @@ struct SettingsView: View {
                         }
                     }
                 }.scrollContentBackground(.hidden)
-            }} else {
+            }
+            .background(backGroundColor().edgesIgnoringSafeArea(.all))
+        } else {
                 NavigationView {
                     ZStack {
                         LinearGradient(gradient: Gradient(colors: [Color("backgroundTop"), Color("backgroundBottom")]), startPoint: .topLeading, endPoint: .bottomTrailing).edgesIgnoringSafeArea(.all)
@@ -106,8 +108,10 @@ struct SettingsView: View {
 }
 
 struct SettingsView_Previews: PreviewProvider {
+    static let shared = Globals()
     static var previews: some View {
         SettingsView()
+            .environmentObject(shared)
     }
 }
 

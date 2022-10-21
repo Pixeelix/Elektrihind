@@ -20,7 +20,7 @@ struct TabBarView: View {
     let tabs = [
         Tab(image: "bolt.fill", label: "LABEL_TODAY", index: 0),
         Tab(image: "clock.fill", label: "LABEL_TOMORROW", index: 1),
-        //Tab(image: "leaf.fill", label: "Hea teada", index: 2),
+        Tab(image: "leaf.fill", label: "LABEL_ASSISTENT", index: 2),
         Tab(image: "gearshape.fill", label: "LABEL_SETTINGS", index: 3),
     ]
     
@@ -72,8 +72,10 @@ struct TabBarView: View {
 }
 
 struct TabBarView_Previews: PreviewProvider {
+    static let shared = Globals()
     static var previews: some View {
         TabBarView(selection: Binding.constant(0))
             .previewLayout(.sizeThatFits)
+            .environmentObject(shared)
     }
 }

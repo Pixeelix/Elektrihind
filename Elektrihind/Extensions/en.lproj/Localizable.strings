@@ -8,6 +8,7 @@
 "TITLE_LANGUAGE" = "Language";
 "TITLE_TODAYS_PRICE" = "Price today";
 "TITLE_TOMORROWS_PRICE" = "Price tomorrow";
+"TITLE_HELPER" = "Helper";
 "TITLE_SETTINGS" = "Settings";
 "LABEL_TODAY" = "Today";
 "LABEL_TOMORROW" = "Tomorrow";
@@ -28,3 +29,4 @@
 • VAT 20%
 • Keep this in mind when comparing the price with NordPool original data!";
 "TITLE_PAY_ATTENTION" = "Pay attention";
+"LABEL_ASSISTENT" = "Assistent";

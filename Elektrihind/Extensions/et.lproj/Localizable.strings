@@ -8,6 +8,7 @@
 "TITLE_LANGUAGE" = "Keel";
 "TITLE_TODAYS_PRICE" = "Tänane hind";
 "TITLE_TOMORROWS_PRICE" = "Homne hind";
+"TITLE_HELPER" = "Abimees";
 "TITLE_SETTINGS" = "Seaded";
 "LABEL_TODAY" = "Täna";
 "LABEL_TOMORROW" = "Homme";
@@ -27,4 +28,5 @@
 "TEXT_INFORMATION_ABOUT_APP" = "• Hinnad kuvatakse Eesti ajavööndis
 • Käibemaks 20%
 • Pea seda meeles NordPooli originaalhinnaga võrdluses!";
-"TITLE_PAY_ATTENTION" = "Pane tähele"; 
+"TITLE_PAY_ATTENTION" = "Pane tähele";
+"LABEL_ASSISTENT" = "Abimees";

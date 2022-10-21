@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
 extension Date {
     static var yesterday: Date { return Date().dayBefore }
@@ -68,5 +69,15 @@ extension Bundle {
         
         return loadedData
     }
+}
+
+extension UIApplication {
+    func endEditing() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+
+func backGroundColor() -> LinearGradient {
+   return LinearGradient(gradient: Gradient(colors: [Color("backgroundTop"), Color("backgroundBottom")]), startPoint: .topLeading, endPoint: .bottomTrailing)
 }
 

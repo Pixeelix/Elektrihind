@@ -34,6 +34,7 @@ struct TomorrowView: View {
             }
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)
+        .background(backGroundColor().edgesIgnoringSafeArea(.all))
         .onAppear() {
             loadDataIfNeeded()
         }
@@ -67,7 +68,9 @@ struct TomorrowView: View {
 }
 
 struct TomorrowView_Previews: PreviewProvider {
+    static let shared = Globals()
     static var previews: some View {
         TomorrowView()
+            .environmentObject(shared)
     }
 }
