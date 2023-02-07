@@ -39,7 +39,7 @@ struct BarChartView : View {
     var isFullWidth:Bool {
         return self.formSize == ChartForm.large
     }
-    init(data: ChartData, day: Day, legend: String? = nil, style: ChartStyle = Styles.barChartStyleOrangeLight, form: CGSize? = ChartForm.medium, dropShadow: Bool? = true, cornerImage:Image? = Image(systemName: "waveform.path.ecg"), valueSpecifier: String? = "%.1f", animatedToBack: Bool = false) {
+    init(data: ChartData, day: Day, legend: String? = nil, style: ChartStyle = Styles.barChartStyleOrangeLight, form: CGSize? = ChartForm.extraLarge, dropShadow: Bool? = true, cornerImage:Image? = Image(systemName: "waveform.path.ecg"), valueSpecifier: String? = "%.1f", animatedToBack: Bool = false) {
         self.data = data
         self.day = day
         self.legend = legend
@@ -53,12 +53,12 @@ struct BarChartView : View {
     }
     
     var body: some View {
-        ZStack{
+        ZStack {
             Rectangle()
                 .fill(self.colorScheme == .dark ? self.darkModeStyle.backgroundColor : self.style.backgroundColor)
                 .cornerRadius(20)
                 .shadow(color: self.style.dropShadowColor, radius: self.dropShadow ? 8 : 0)
-            VStack(alignment: .leading){
+            VStack(alignment: .leading) {
                 HStack{
                     if(!showValue){
                         Text(self.title)
@@ -141,7 +141,7 @@ struct BarChartView : View {
             }
         }
         .frame(minWidth:self.formSize.width,
-                maxWidth: self.isFullWidth ? .infinity : self.formSize.width,
+               maxWidth: self.isFullWidth ? .infinity : self.formSize.width,
                 minHeight:self.formSize.height,
                 maxHeight:self.formSize.height)
         .gesture(DragGesture()
@@ -197,8 +197,10 @@ struct BarChartView : View {
 
 #if DEBUG
 struct ChartView_Previews : PreviewProvider {
+    static let shared = Globals()
     static var previews: some View {
         BarChartView(data: TestData.values, day: .today, legend: "Quarterly", form: ChartForm.extraLarge, valueSpecifier: "%.4f €/kWh")
+            .environmentObject(shared)
     }
 }
 #endif

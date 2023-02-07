@@ -89,8 +89,8 @@ struct GoodToKnowView: View {
         .foregroundColor(.white)
         .background(backGroundColor().edgesIgnoringSafeArea(.all))
         .onAppear {
-            if let midnight = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date()) {
-                selectedTime = midnight
+            if let oneHour = Calendar.current.date(bySettingHour: 1, minute: 0, second: 0, of: Date()) {
+                selectedTime = oneHour
             }
         }
         .onTapGesture {
