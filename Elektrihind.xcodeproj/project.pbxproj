@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6EABF3743C4BB05236B39CD9 /* Pods_Elektrihind.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B356D8A53206173088EDEC2 /* Pods_Elektrihind.framework */; };
 		A214594C28E5DD4C00FDB205 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A214594B28E5DD4C00FDB205 /* TitleView.swift */; };
 		A214594E28E5DD9B00FDB205 /* CurrentPriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A214594D28E5DD9B00FDB205 /* CurrentPriceView.swift */; };
 		A214595028E5DDCA00FDB205 /* MinMaxRangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A214594F28E5DDCA00FDB205 /* MinMaxRangeView.swift */; };
@@ -17,6 +18,7 @@
 		A23EA35528EDA8D80015E206 /* fullDayExampleData2.json in Resources */ = {isa = PBXBuildFile; fileRef = A23EA35428EDA8D80015E206 /* fullDayExampleData2.json */; };
 		A23EA35728EDA8DD0015E206 /* fullDayExampleData3.json in Resources */ = {isa = PBXBuildFile; fileRef = A23EA35628EDA8DD0015E206 /* fullDayExampleData3.json */; };
 		A23EA35928EDA8E20015E206 /* fullDayExampleData4.json in Resources */ = {isa = PBXBuildFile; fileRef = A23EA35828EDA8E20015E206 /* fullDayExampleData4.json */; };
+		A245280929943F5E0021661E /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A245280829943F5D0021661E /* Banner.swift */; };
 		A24A964928E63EC300B74E14 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A24A964828E63EC300B74E14 /* LaunchScreen.storyboard */; };
 		A24A964B28E6460300B74E14 /* TodayChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24A964A28E6460300B74E14 /* TodayChartView.swift */; };
 		A25AC1C72767FBC800C9610F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25AC1C62767FBC800C9610F /* SettingsView.swift */; };
@@ -39,6 +41,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8B356D8A53206173088EDEC2 /* Pods_Elektrihind.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Elektrihind.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		96EEC7175FCCAFE1F74E09D9 /* Pods-Elektrihind.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Elektrihind.debug.xcconfig"; path = "Target Support Files/Pods-Elektrihind/Pods-Elektrihind.debug.xcconfig"; sourceTree = "<group>"; };
+		9E01F75CF7F775983B62067C /* Pods-Elektrihind.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Elektrihind.release.xcconfig"; path = "Target Support Files/Pods-Elektrihind/Pods-Elektrihind.release.xcconfig"; sourceTree = "<group>"; };
 		A214594B28E5DD4C00FDB205 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		A214594D28E5DD9B00FDB205 /* CurrentPriceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPriceView.swift; sourceTree = "<group>"; };
 		A214594F28E5DDCA00FDB205 /* MinMaxRangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinMaxRangeView.swift; sourceTree = "<group>"; };
@@ -49,6 +54,7 @@
 		A23EA35428EDA8D80015E206 /* fullDayExampleData2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fullDayExampleData2.json; sourceTree = "<group>"; };
 		A23EA35628EDA8DD0015E206 /* fullDayExampleData3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fullDayExampleData3.json; sourceTree = "<group>"; };
 		A23EA35828EDA8E20015E206 /* fullDayExampleData4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fullDayExampleData4.json; sourceTree = "<group>"; };
+		A245280829943F5D0021661E /* Banner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		A24A964828E63EC300B74E14 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A24A964A28E6460300B74E14 /* TodayChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayChartView.swift; sourceTree = "<group>"; };
 		A25AC1C62767FBC800C9610F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -77,13 +83,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6EABF3743C4BB05236B39CD9 /* Pods_Elektrihind.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A22579F52767F79700F8E3AB /* Views */ = {
+		4C0010EB2A6C3A8C41613926 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				96EEC7175FCCAFE1F74E09D9 /* Pods-Elektrihind.debug.xcconfig */,
+				9E01F75CF7F775983B62067C /* Pods-Elektrihind.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		A22579F52767F79700F8E3AB /* View */ = {
 			isa = PBXGroup;
 			children = (
 				A22579F12767F74600F8E3AB /* TodayView.swift */,
@@ -95,9 +111,10 @@
 				A214594B28E5DD4C00FDB205 /* TitleView.swift */,
 				A214594D28E5DD9B00FDB205 /* CurrentPriceView.swift */,
 				A214594F28E5DDCA00FDB205 /* MinMaxRangeView.swift */,
+				A245280829943F5D0021661E /* Banner.swift */,
 				A24A964828E63EC300B74E14 /* LaunchScreen.storyboard */,
 			);
-			path = Views;
+			path = View;
 			sourceTree = "<group>";
 		};
 		A22579F62767F7B200F8E3AB /* Network */ = {
@@ -122,7 +139,8 @@
 			children = (
 				A2B155B027458EE2004B1B02 /* Elektrihind */,
 				A2B155AF27458EE2004B1B02 /* Products */,
-				A2F9DFB927653B8A006E4730 /* Frameworks */,
+				4C0010EB2A6C3A8C41613926 /* Pods */,
+				D640FB2E305BB5B2077F3998 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -142,7 +160,7 @@
 				A2B155B327458EE2004B1B02 /* ContentView.swift */,
 				A22579F62767F7B200F8E3AB /* Network */,
 				A2D6DD57279A06070007B14A /* ChartView_old */,
-				A22579F52767F79700F8E3AB /* Views */,
+				A22579F52767F79700F8E3AB /* View */,
 				A22579F72767F7C300F8E3AB /* Models */,
 				A2B155B527458EE4004B1B02 /* Assets.xcassets */,
 				A2D2C49E27727D0E009596E9 /* Extensions */,
@@ -184,9 +202,10 @@
 			path = ChartView_old;
 			sourceTree = "<group>";
 		};
-		A2F9DFB927653B8A006E4730 /* Frameworks */ = {
+		D640FB2E305BB5B2077F3998 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8B356D8A53206173088EDEC2 /* Pods_Elektrihind.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -198,17 +217,17 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A2B155BC27458EE4004B1B02 /* Build configuration list for PBXNativeTarget "Elektrihind" */;
 			buildPhases = (
+				001E486BB2A86CE590656576 /* [CP] Check Pods Manifest.lock */,
 				A2B155AA27458EE2004B1B02 /* Sources */,
 				A2B155AB27458EE2004B1B02 /* Frameworks */,
 				A2B155AC27458EE2004B1B02 /* Resources */,
+				59E03F0EFEC439E9773DA173 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = Elektrihind;
-			packageProductDependencies = (
-			);
 			productName = Elektrihind;
 			productReference = A2B155AE27458EE2004B1B02 /* Elektrihind.app */;
 			productType = "com.apple.product-type.application";
@@ -238,8 +257,6 @@
 				et,
 			);
 			mainGroup = A2B155A527458EE2004B1B02;
-			packageReferences = (
-			);
 			productRefGroup = A2B155AF27458EE2004B1B02 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -267,6 +284,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		001E486BB2A86CE590656576 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Elektrihind-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		59E03F0EFEC439E9773DA173 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Elektrihind/Pods-Elektrihind-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Elektrihind/Pods-Elektrihind-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Elektrihind/Pods-Elektrihind-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A2B155AA27458EE2004B1B02 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -287,6 +346,7 @@
 				A25AC1C92768009C00C9610F /* Globals.swift in Sources */,
 				A2D6DD5B279A06700007B14A /* BarChartRow.swift in Sources */,
 				A24A964B28E6460300B74E14 /* TodayChartView.swift in Sources */,
+				A245280929943F5E0021661E /* Banner.swift in Sources */,
 				A25AC1C72767FBC800C9610F /* SettingsView.swift in Sources */,
 				A2B155B227458EE2004B1B02 /* ElektrihindApp.swift in Sources */,
 				A214595028E5DDCA00FDB205 /* MinMaxRangeView.swift in Sources */,
@@ -429,6 +489,7 @@
 		};
 		A2B155BD27458EE4004B1B02 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 96EEC7175FCCAFE1F74E09D9 /* Pods-Elektrihind.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -467,6 +528,7 @@
 		};
 		A2B155BE27458EE4004B1B02 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9E01F75CF7F775983B62067C /* Pods-Elektrihind.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
