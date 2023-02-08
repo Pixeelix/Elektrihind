@@ -11,7 +11,7 @@ import GoogleMobileAds
 
 struct BannerAd: UIViewRepresentable {
     
-    var unitID: String = "ca-app-pub-5431783362632568~5429121733"
+    var unitID: String = "ca-app-pub-5431783362632568/4212512484"
     
     init() {
     #if DEBUG
