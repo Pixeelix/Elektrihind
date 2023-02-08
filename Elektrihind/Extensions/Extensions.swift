@@ -48,7 +48,10 @@ extension String {
 
 extension UIScreen {
     static let screenWidth = UIScreen.main.bounds.size.width
-    static let isSmallScreen = screenWidth < 375
+    static let screenHeight = UIScreen.main.bounds.size.height
+    static let is1stGenIphone = screenHeight <= 568
+    static let isIphone8 = screenHeight <= 667
+    static let isTallScreen = screenHeight > 667
 }
 
 extension Bundle {

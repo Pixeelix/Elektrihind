@@ -107,7 +107,7 @@ struct BarChartView : View {
 //                        .foregroundColor(self.colorScheme == .dark ? self.darkModeStyle.legendTextColor : self.style.legendTextColor)
                     let timesArray = ["00:00", "04:00", "08:00", "12:00", "16:00", "20:00", "23:00"]
                     let shotTimesArray = ["00:00", "08:00", "12:00", "18:00", "23:00"]
-                    if !UIScreen.isSmallScreen {
+                    if !UIScreen.is1stGenIphone {
                     HStack {
                             ForEach(timesArray, id: \.self) {
                                 Text($0)
