@@ -23,6 +23,8 @@ struct TomorrowView: View {
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
                         .padding(EdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10))
+                    Spacer()
+                    BannerAd().frame(maxHeight: 60)
                 }
             } else {
                 VStack(alignment: .center) {

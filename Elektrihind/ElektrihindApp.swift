@@ -7,11 +7,13 @@
 
 import SwiftUI
 import GoogleMobileAds
+import FirebaseCore
 
 @main
 struct ElektrihindApp: App {
     init() {
         GADMobileAds.sharedInstance().start(completionHandler: nil)
+        FirebaseApp.configure()
     }
     var body: some Scene {
         WindowGroup {
