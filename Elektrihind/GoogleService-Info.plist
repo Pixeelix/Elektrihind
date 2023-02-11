@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>883615845675-t9l1pbdilip1utiv2lvpp6flflkgh82a.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.883615845675-t9l1pbdilip1utiv2lvpp6flflkgh82a</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBcWoMrhuYqz8SVfCUdtAsUEungOJJyvOo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>883615845675</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>koodipardik.Elektrihind</string>
+	<key>PROJECT_ID</key>
+	<string>elektrihind-76019</string>
+	<key>STORAGE_BUCKET</key>
+	<string>elektrihind-76019.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:883615845675:ios:31e66eee11be8c44dd096e</string>
+	<key>ADMOB_APP_ID</key>
+	<string>ca-app-pub-5431783362632568~5429121733</string>
+</dict>
+</plist>

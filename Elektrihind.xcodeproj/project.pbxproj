@@ -19,6 +19,7 @@
 		A23EA35728EDA8DD0015E206 /* fullDayExampleData3.json in Resources */ = {isa = PBXBuildFile; fileRef = A23EA35628EDA8DD0015E206 /* fullDayExampleData3.json */; };
 		A23EA35928EDA8E20015E206 /* fullDayExampleData4.json in Resources */ = {isa = PBXBuildFile; fileRef = A23EA35828EDA8E20015E206 /* fullDayExampleData4.json */; };
 		A245280929943F5E0021661E /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A245280829943F5D0021661E /* Banner.swift */; };
+		A245280B299827580021661E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A245280A299827570021661E /* GoogleService-Info.plist */; };
 		A24A964928E63EC300B74E14 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A24A964828E63EC300B74E14 /* LaunchScreen.storyboard */; };
 		A24A964B28E6460300B74E14 /* TodayChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24A964A28E6460300B74E14 /* TodayChartView.swift */; };
 		A25AC1C72767FBC800C9610F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25AC1C62767FBC800C9610F /* SettingsView.swift */; };
@@ -55,6 +56,7 @@
 		A23EA35628EDA8DD0015E206 /* fullDayExampleData3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fullDayExampleData3.json; sourceTree = "<group>"; };
 		A23EA35828EDA8E20015E206 /* fullDayExampleData4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fullDayExampleData4.json; sourceTree = "<group>"; };
 		A245280829943F5D0021661E /* Banner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
+		A245280A299827570021661E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A24A964828E63EC300B74E14 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A24A964A28E6460300B74E14 /* TodayChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayChartView.swift; sourceTree = "<group>"; };
 		A25AC1C62767FBC800C9610F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				A233FEE427669DE100FEDA9C /* Info.plist */,
+				A245280A299827570021661E /* GoogleService-Info.plist */,
 				A2B155B127458EE2004B1B02 /* ElektrihindApp.swift */,
 				A2B155B327458EE2004B1B02 /* ContentView.swift */,
 				A22579F62767F7B200F8E3AB /* Network */,
@@ -273,6 +276,7 @@
 			files = (
 				A23EA35328EDA5FF0015E206 /* fullDayExampleData1.json in Resources */,
 				A23EA35728EDA8DD0015E206 /* fullDayExampleData3.json in Resources */,
+				A245280B299827580021661E /* GoogleService-Info.plist in Resources */,
 				A23EA35528EDA8D80015E206 /* fullDayExampleData2.json in Resources */,
 				A23EA35928EDA8E20015E206 /* fullDayExampleData4.json in Resources */,
 				A2B155B927458EE4004B1B02 /* Preview Assets.xcassets in Resources */,
@@ -495,7 +499,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 12;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "\"Elektrihind/Preview Content\"";
 				DEVELOPMENT_TEAM = 39G5236S72;
@@ -504,7 +508,6 @@
 				INFOPLIST_FILE = Elektrihind/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Elektrihind;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
@@ -517,7 +520,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8;
+				MARKETING_VERSION = 1.7;
 				PRODUCT_BUNDLE_IDENTIFIER = koodipardik.Elektrihind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -534,7 +537,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 12;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "\"Elektrihind/Preview Content\"";
 				DEVELOPMENT_TEAM = 39G5236S72;
@@ -543,7 +546,6 @@
 				INFOPLIST_FILE = Elektrihind/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Elektrihind;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
@@ -556,7 +558,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8;
+				MARKETING_VERSION = 1.7;
 				PRODUCT_BUNDLE_IDENTIFIER = koodipardik.Elektrihind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
