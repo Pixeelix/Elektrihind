@@ -21,7 +21,6 @@ struct TodayChartView: View {
     var body: some View {
         VStack {
             BarChartView(data: ChartData(values: shared.todayFullDayChartData), day: .today, legend: "Quarterly", style: myCustomStyle, form: ChartForm.extraLarge, valueSpecifier: "%.\(shared.minFractionDigits)f \(shared.localizedString(shared.unit))", animatedToBack: false)
-                .id(shared.chartViewUpdateId)
         }
     }
 }

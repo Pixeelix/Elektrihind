@@ -24,6 +24,7 @@
 		A24A964B28E6460300B74E14 /* TodayChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24A964A28E6460300B74E14 /* TodayChartView.swift */; };
 		A25AC1C72767FBC800C9610F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25AC1C62767FBC800C9610F /* SettingsView.swift */; };
 		A25AC1C92768009C00C9610F /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25AC1C82768009C00C9610F /* Globals.swift */; };
+		A26E31E629C5169500B080D4 /* UpdaterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26E31E529C5169500B080D4 /* UpdaterViewModel.swift */; };
 		A2B155B227458EE2004B1B02 /* ElektrihindApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B155B127458EE2004B1B02 /* ElektrihindApp.swift */; };
 		A2B155B427458EE2004B1B02 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B155B327458EE2004B1B02 /* ContentView.swift */; };
 		A2B155B627458EE4004B1B02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B155B527458EE4004B1B02 /* Assets.xcassets */; };
@@ -61,6 +62,7 @@
 		A24A964A28E6460300B74E14 /* TodayChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayChartView.swift; sourceTree = "<group>"; };
 		A25AC1C62767FBC800C9610F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A25AC1C82768009C00C9610F /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		A26E31E529C5169500B080D4 /* UpdaterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdaterViewModel.swift; sourceTree = "<group>"; };
 		A2B155AE27458EE2004B1B02 /* Elektrihind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Elektrihind.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2B155B127458EE2004B1B02 /* ElektrihindApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElektrihindApp.swift; sourceTree = "<group>"; };
 		A2B155B327458EE2004B1B02 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 			children = (
 				A25AC1C82768009C00C9610F /* Globals.swift */,
 				A2B155BF27459138004B1B02 /* NordPoolPrice.swift */,
+				A26E31E529C5169500B080D4 /* UpdaterViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 				A2D6DD56279A05A60007B14A /* BarChartView.swift in Sources */,
 				A214594E28E5DD9B00FDB205 /* CurrentPriceView.swift in Sources */,
 				A2D6DD5F279A0B6B0007B14A /* Legend.swift in Sources */,
+				A26E31E629C5169500B080D4 /* UpdaterViewModel.swift in Sources */,
 				A2B155C72745B070004B1B02 /* Extensions.swift in Sources */,
 				A2B155B427458EE2004B1B02 /* ContentView.swift in Sources */,
 				A2D6DD59279A061F0007B14A /* BarChartGlobals.swift in Sources */,

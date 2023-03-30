@@ -25,7 +25,6 @@ enum Language: String {
 }
 
 class Globals: ObservableObject {
-    @Published var chartViewUpdateId: Int = 1
     @Published var currentPrice: PriceData?
     @Published var todayFullDayData: [PriceData]? {
         didSet {
@@ -39,6 +38,7 @@ class Globals: ObservableObject {
             calculateMinMaxValues()
         }
     }
+    @Published var missingTomorrowData = true
     @Published var tomorrowFullDayChartData: [(String, Double)] = []
     @Published var minNextDayPrice: String = ""
     @Published var maxNextDayPrice: String = ""
