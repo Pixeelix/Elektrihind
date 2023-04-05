@@ -29,7 +29,7 @@ struct TomorrowView: View {
                     TitleView(title: shared.localizedString("TITLE_TOMORROWS_PRICE"))
                     MinMaxRange()
                         .padding(.bottom, UIScreen.is1stGenIphone || UIScreen.isIphone8 ? 10 : 50)
-                    TomorrowChartView()
+                    ChartView(day: .tomorrow)
                     Spacer()
                     BannerAd().frame(maxHeight: 60)
                 }

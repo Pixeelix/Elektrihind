@@ -9,7 +9,6 @@ import SwiftUI
 
 struct TodayView: View {
     @EnvironmentObject var shared: Globals
-    @State var exampleCounter: Int = 0
     
     var body: some View {
         HStack(alignment: .top) {
@@ -17,7 +16,7 @@ struct TodayView: View {
                 TitleView(title: shared.localizedString("TITLE_TODAYS_PRICE"))
                 CurrentPriceView()
                     .padding(.bottom, UIScreen.is1stGenIphone || UIScreen.isIphone8 ? 10 : 50)
-                TodayChartView()
+                ChartView(day: .today)
                 Spacer()
                 BannerAd().frame(maxHeight: 60)
             }

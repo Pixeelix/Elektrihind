@@ -241,7 +241,7 @@ public class MultiLineChartData: ChartData {
 }
 
 public class TestData{
-    static public var data:ChartData = ChartData(points: [37,72,51,22,39,47,66,85,50])
+    static public var data:ChartData = ChartData(points: [0,0,0,0,0,0,0,0,0])
     static public var values:ChartData = ChartData(values: [("2017 Q3",2),
                                                             ("2017 Q4",15),
                                                             ("2018 Q1",81),

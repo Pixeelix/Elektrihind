@@ -19,7 +19,7 @@ struct BarChartView : View {
     public var legend: String?
     public var style: ChartStyle
     public var darkModeStyle: ChartStyle
-    public var formSize:CGSize
+    public var formSize: CGSize
     public var dropShadow: Bool
     public var cornerImage: Image?
     public var valueSpecifier:String
@@ -196,7 +196,7 @@ struct BarChartView : View {
 }
 
 #if DEBUG
-struct ChartView_Previews : PreviewProvider {
+struct BarChartView_Previews : PreviewProvider {
     static var previews: some View {
         BarChartView(data: TestData.values, day: .today, legend: "Quarterly", form: ChartForm.extraLarge, valueSpecifier: "%.4f €/kWh")
     }

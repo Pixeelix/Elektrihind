@@ -11,7 +11,6 @@
 		A214594C28E5DD4C00FDB205 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A214594B28E5DD4C00FDB205 /* TitleView.swift */; };
 		A214594E28E5DD9B00FDB205 /* CurrentPriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A214594D28E5DD9B00FDB205 /* CurrentPriceView.swift */; };
 		A214595028E5DDCA00FDB205 /* MinMaxRangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A214594F28E5DDCA00FDB205 /* MinMaxRangeView.swift */; };
-		A214595228E5DE0B00FDB205 /* TomorrowChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A214595128E5DE0B00FDB205 /* TomorrowChartView.swift */; };
 		A22579F22767F74600F8E3AB /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22579F12767F74600F8E3AB /* TodayView.swift */; };
 		A22579F42767F76E00F8E3AB /* TomorrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22579F32767F76E00F8E3AB /* TomorrowView.swift */; };
 		A23EA35328EDA5FF0015E206 /* fullDayExampleData1.json in Resources */ = {isa = PBXBuildFile; fileRef = A2E8BB3928EDA4D200B53FE9 /* fullDayExampleData1.json */; };
@@ -21,7 +20,10 @@
 		A245280929943F5E0021661E /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A245280829943F5D0021661E /* Banner.swift */; };
 		A245280B299827580021661E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A245280A299827570021661E /* GoogleService-Info.plist */; };
 		A24A964928E63EC300B74E14 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A24A964828E63EC300B74E14 /* LaunchScreen.storyboard */; };
-		A24A964B28E6460300B74E14 /* TodayChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24A964A28E6460300B74E14 /* TodayChartView.swift */; };
+		A258EFCE29DB3E7700B0B27D /* ConnectionLostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258EFCD29DB3E7700B0B27D /* ConnectionLostView.swift */; };
+		A258EFD029DB7A2900B0B27D /* CurrentPriceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258EFCF29DB7A2900B0B27D /* CurrentPriceViewModel.swift */; };
+		A258EFD229DDE00D00B0B27D /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258EFD129DDE00D00B0B27D /* ChartView.swift */; };
+		A258EFD429DDE06300B0B27D /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258EFD329DDE06300B0B27D /* ChartViewModel.swift */; };
 		A25AC1C72767FBC800C9610F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25AC1C62767FBC800C9610F /* SettingsView.swift */; };
 		A25AC1C92768009C00C9610F /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25AC1C82768009C00C9610F /* Globals.swift */; };
 		A26E31E629C5169500B080D4 /* UpdaterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26E31E529C5169500B080D4 /* UpdaterViewModel.swift */; };
@@ -49,7 +51,6 @@
 		A214594B28E5DD4C00FDB205 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		A214594D28E5DD9B00FDB205 /* CurrentPriceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPriceView.swift; sourceTree = "<group>"; };
 		A214594F28E5DDCA00FDB205 /* MinMaxRangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinMaxRangeView.swift; sourceTree = "<group>"; };
-		A214595128E5DE0B00FDB205 /* TomorrowChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TomorrowChartView.swift; sourceTree = "<group>"; };
 		A22579F12767F74600F8E3AB /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
 		A22579F32767F76E00F8E3AB /* TomorrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TomorrowView.swift; sourceTree = "<group>"; };
 		A233FEE427669DE100FEDA9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -59,7 +60,10 @@
 		A245280829943F5D0021661E /* Banner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		A245280A299827570021661E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A24A964828E63EC300B74E14 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		A24A964A28E6460300B74E14 /* TodayChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayChartView.swift; sourceTree = "<group>"; };
+		A258EFCD29DB3E7700B0B27D /* ConnectionLostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionLostView.swift; sourceTree = "<group>"; };
+		A258EFCF29DB7A2900B0B27D /* CurrentPriceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPriceViewModel.swift; sourceTree = "<group>"; };
+		A258EFD129DDE00D00B0B27D /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
+		A258EFD329DDE06300B0B27D /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
 		A25AC1C62767FBC800C9610F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A25AC1C82768009C00C9610F /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		A26E31E529C5169500B080D4 /* UpdaterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdaterViewModel.swift; sourceTree = "<group>"; };
@@ -107,13 +111,15 @@
 			isa = PBXGroup;
 			children = (
 				A22579F12767F74600F8E3AB /* TodayView.swift */,
-				A24A964A28E6460300B74E14 /* TodayChartView.swift */,
 				A22579F32767F76E00F8E3AB /* TomorrowView.swift */,
-				A214595128E5DE0B00FDB205 /* TomorrowChartView.swift */,
 				A25AC1C62767FBC800C9610F /* SettingsView.swift */,
+				A258EFD129DDE00D00B0B27D /* ChartView.swift */,
+				A258EFD329DDE06300B0B27D /* ChartViewModel.swift */,
+				A258EFCD29DB3E7700B0B27D /* ConnectionLostView.swift */,
 				A2F9DFBC27653EFB006E4730 /* TabBarView.swift */,
 				A214594B28E5DD4C00FDB205 /* TitleView.swift */,
 				A214594D28E5DD9B00FDB205 /* CurrentPriceView.swift */,
+				A258EFCF29DB7A2900B0B27D /* CurrentPriceViewModel.swift */,
 				A214594F28E5DDCA00FDB205 /* MinMaxRangeView.swift */,
 				A245280829943F5D0021661E /* Banner.swift */,
 				A24A964828E63EC300B74E14 /* LaunchScreen.storyboard */,
@@ -165,7 +171,7 @@
 				A2B155B127458EE2004B1B02 /* ElektrihindApp.swift */,
 				A2B155B327458EE2004B1B02 /* ContentView.swift */,
 				A22579F62767F7B200F8E3AB /* Network */,
-				A2D6DD57279A06070007B14A /* ChartView_old */,
+				A2D6DD57279A06070007B14A /* BarChartView */,
 				A22579F52767F79700F8E3AB /* View */,
 				A22579F72767F7C300F8E3AB /* Models */,
 				A2B155B527458EE4004B1B02 /* Assets.xcassets */,
@@ -196,7 +202,7 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		A2D6DD57279A06070007B14A /* ChartView_old */ = {
+		A2D6DD57279A06070007B14A /* BarChartView */ = {
 			isa = PBXGroup;
 			children = (
 				A2D6DD55279A05A60007B14A /* BarChartView.swift */,
@@ -205,7 +211,7 @@
 				A2D6DD58279A061F0007B14A /* BarChartGlobals.swift */,
 				A2D6DD5E279A0B6A0007B14A /* Legend.swift */,
 			);
-			path = ChartView_old;
+			path = BarChartView;
 			sourceTree = "<group>";
 		};
 		D13B5C6DC76B0C267995EE16 /* Frameworks */ = {
@@ -359,21 +365,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2D6DD56279A05A60007B14A /* BarChartView.swift in Sources */,
+				A258EFD229DDE00D00B0B27D /* ChartView.swift in Sources */,
 				A214594E28E5DD9B00FDB205 /* CurrentPriceView.swift in Sources */,
 				A2D6DD5F279A0B6B0007B14A /* Legend.swift in Sources */,
 				A26E31E629C5169500B080D4 /* UpdaterViewModel.swift in Sources */,
 				A2B155C72745B070004B1B02 /* Extensions.swift in Sources */,
+				A258EFD429DDE06300B0B27D /* ChartViewModel.swift in Sources */,
 				A2B155B427458EE2004B1B02 /* ContentView.swift in Sources */,
+				A258EFD029DB7A2900B0B27D /* CurrentPriceViewModel.swift in Sources */,
 				A2D6DD59279A061F0007B14A /* BarChartGlobals.swift in Sources */,
 				A2F9DFBD27653EFB006E4730 /* TabBarView.swift in Sources */,
 				A2B155C027459138004B1B02 /* NordPoolPrice.swift in Sources */,
 				A214594C28E5DD4C00FDB205 /* TitleView.swift in Sources */,
 				A2E8BB3A28EDA4D200B53FE9 /* fullDayExampleData1.json in Sources */,
 				A2B155C2274599E7004B1B02 /* Network.swift in Sources */,
-				A214595228E5DE0B00FDB205 /* TomorrowChartView.swift in Sources */,
 				A25AC1C92768009C00C9610F /* Globals.swift in Sources */,
 				A2D6DD5B279A06700007B14A /* BarChartRow.swift in Sources */,
-				A24A964B28E6460300B74E14 /* TodayChartView.swift in Sources */,
+				A258EFCE29DB3E7700B0B27D /* ConnectionLostView.swift in Sources */,
 				A245280929943F5E0021661E /* Banner.swift in Sources */,
 				A25AC1C72767FBC800C9610F /* SettingsView.swift in Sources */,
 				A2B155B227458EE2004B1B02 /* ElektrihindApp.swift in Sources */,

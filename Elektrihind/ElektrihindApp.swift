@@ -11,6 +11,8 @@ import FirebaseCore
 
 @main
 struct ElektrihindApp: App {
+    @StateObject var networkManager = NetworkManager()
+    @StateObject var shared = Globals()
     init() {
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         FirebaseApp.configure()
@@ -18,8 +20,8 @@ struct ElektrihindApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(NetworkManager())
-                .environmentObject(Globals())
+                .environmentObject(networkManager)
+                .environmentObject(shared)
         }
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import Network
 
 enum Day {
@@ -29,18 +30,14 @@ class NetworkManager: ObservableObject {
 }
 
 class Network: ObservableObject {
-    private let unit = Globals().unit
-    private let divider: Double = Globals().divider
-    private let taxStatus = Globals().includeTax
+    @EnvironmentObject var shared: Globals
     
     func loadCurrentPrice(completion:@escaping (PriceData) -> ()) {
-
         guard let url = URL(string: "https://dashboard.elering.ee/api/nps/price/EE/current") else { fatalError("Missing URL") }
         let urlRequest = URLRequest(url: url)
-        
         let dataTask = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             if let error = error {
-                print("Request error: ", error)
+                print("REQUEST ERROR: ", error)
                 return
             }
             
@@ -48,12 +45,15 @@ class Network: ObservableObject {
             
             if response.statusCode == 200 {
                 guard let data = data else { return }
+                print("REQUEST URL: \(url)")
+                print("REQUEST RESPONSE:")
+                data.printAsJSON()
                 DispatchQueue.main.async {
                     do {
                         let decodedNordPoolData = try
                         JSONDecoder().decode(NordPoolCurrentData.self, from: data)
-                        if let currentEstPrice = decodedNordPoolData.data.first {
-                            completion(currentEstPrice)
+                        if let currentEEPrice = decodedNordPoolData.data.first {
+                            completion(currentEEPrice)
                         }
                     } catch let error {
                         print("Error decoding: ", error)
@@ -83,11 +83,10 @@ class Network: ObservableObject {
         }
 
         guard let url = URL(string: "https://dashboard.elering.ee/api/nps/price?start=\(startDate)T\(startTime):00:00.000Z&end=\(endDate)T\(endTime):59:59.999Z") else { fatalError("Missing URL") }
-        print(url)
         let urlRequest = URLRequest(url: url)
         let dataTask = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             if let error = error {
-                print("Request error: ", error)
+                print("REQUEST ERROR: ", error)
                 return
             }
             
@@ -95,6 +94,9 @@ class Network: ObservableObject {
             
             if response.statusCode == 200 {
                 guard let data = data else { return }
+                print("REQUEST URL: \(url)")
+                print("REQUEST RESPONSE:")
+                data.printAsJSON()
                 DispatchQueue.main.async {
                     do {
                         let decodedNordPoolData = try JSONDecoder().decode(NordPoolCountriesData.self, from: data)

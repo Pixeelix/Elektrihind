@@ -26,7 +26,7 @@ struct TabBarView: View {
     
     var body: some View {
         HStack(alignment: .bottom) {
-            ForEach(tabs.indices) { index in
+            ForEach(tabs.indices, id:\.self) { index in
                 GeometryReader { geometry in
                     VStack(spacing: 4) {
                         if tabs[selection].index == 0 && tabs[index].index == 0  {

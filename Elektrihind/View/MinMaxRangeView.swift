@@ -27,8 +27,8 @@ struct MinMaxRange: View {
             }
         }
         .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.is1stGenIphone ? 120 : 140)
-        .background(Color("contentBoxBackground"))
-        .foregroundColor(Color("blueWhiteText"))
+        .background(Color.contentBoxBackground)
+        .foregroundColor(Color.bluewWhiteText)
         .cornerRadius(20)
         .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
     }
