@@ -13,10 +13,6 @@
 		A214595028E5DDCA00FDB205 /* MinMaxRangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A214594F28E5DDCA00FDB205 /* MinMaxRangeView.swift */; };
 		A22579F22767F74600F8E3AB /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22579F12767F74600F8E3AB /* TodayView.swift */; };
 		A22579F42767F76E00F8E3AB /* TomorrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22579F32767F76E00F8E3AB /* TomorrowView.swift */; };
-		A23EA35328EDA5FF0015E206 /* fullDayExampleData1.json in Resources */ = {isa = PBXBuildFile; fileRef = A2E8BB3928EDA4D200B53FE9 /* fullDayExampleData1.json */; };
-		A23EA35528EDA8D80015E206 /* fullDayExampleData2.json in Resources */ = {isa = PBXBuildFile; fileRef = A23EA35428EDA8D80015E206 /* fullDayExampleData2.json */; };
-		A23EA35728EDA8DD0015E206 /* fullDayExampleData3.json in Resources */ = {isa = PBXBuildFile; fileRef = A23EA35628EDA8DD0015E206 /* fullDayExampleData3.json */; };
-		A23EA35928EDA8E20015E206 /* fullDayExampleData4.json in Resources */ = {isa = PBXBuildFile; fileRef = A23EA35828EDA8E20015E206 /* fullDayExampleData4.json */; };
 		A245280929943F5E0021661E /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A245280829943F5D0021661E /* Banner.swift */; };
 		A245280B299827580021661E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A245280A299827570021661E /* GoogleService-Info.plist */; };
 		A24A964928E63EC300B74E14 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A24A964828E63EC300B74E14 /* LaunchScreen.storyboard */; };
@@ -40,7 +36,6 @@
 		A2D6DD5B279A06700007B14A /* BarChartRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D6DD5A279A06700007B14A /* BarChartRow.swift */; };
 		A2D6DD5D279A06AC0007B14A /* BarChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D6DD5C279A06AC0007B14A /* BarChartCell.swift */; };
 		A2D6DD5F279A0B6B0007B14A /* Legend.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D6DD5E279A0B6A0007B14A /* Legend.swift */; };
-		A2E8BB3A28EDA4D200B53FE9 /* fullDayExampleData1.json in Sources */ = {isa = PBXBuildFile; fileRef = A2E8BB3928EDA4D200B53FE9 /* fullDayExampleData1.json */; };
 		A2F9DFBD27653EFB006E4730 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F9DFBC27653EFB006E4730 /* TabBarView.swift */; };
 /* End PBXBuildFile section */
 
@@ -54,9 +49,6 @@
 		A22579F12767F74600F8E3AB /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
 		A22579F32767F76E00F8E3AB /* TomorrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TomorrowView.swift; sourceTree = "<group>"; };
 		A233FEE427669DE100FEDA9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		A23EA35428EDA8D80015E206 /* fullDayExampleData2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fullDayExampleData2.json; sourceTree = "<group>"; };
-		A23EA35628EDA8DD0015E206 /* fullDayExampleData3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fullDayExampleData3.json; sourceTree = "<group>"; };
-		A23EA35828EDA8E20015E206 /* fullDayExampleData4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fullDayExampleData4.json; sourceTree = "<group>"; };
 		A245280829943F5D0021661E /* Banner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		A245280A299827570021661E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A24A964828E63EC300B74E14 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -82,7 +74,6 @@
 		A2D6DD5A279A06700007B14A /* BarChartRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartRow.swift; sourceTree = "<group>"; };
 		A2D6DD5C279A06AC0007B14A /* BarChartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartCell.swift; sourceTree = "<group>"; };
 		A2D6DD5E279A0B6A0007B14A /* Legend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Legend.swift; sourceTree = "<group>"; };
-		A2E8BB3928EDA4D200B53FE9 /* fullDayExampleData1.json */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = text.json; path = fullDayExampleData1.json; sourceTree = "<group>"; tabWidth = 2; };
 		A2F9DFBC27653EFB006E4730 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -177,10 +168,6 @@
 				A2B155B527458EE4004B1B02 /* Assets.xcassets */,
 				A2D2C49E27727D0E009596E9 /* Extensions */,
 				A2B155B727458EE4004B1B02 /* Preview Content */,
-				A2E8BB3928EDA4D200B53FE9 /* fullDayExampleData1.json */,
-				A23EA35428EDA8D80015E206 /* fullDayExampleData2.json */,
-				A23EA35628EDA8DD0015E206 /* fullDayExampleData3.json */,
-				A23EA35828EDA8E20015E206 /* fullDayExampleData4.json */,
 			);
 			path = Elektrihind;
 			sourceTree = "<group>";
@@ -253,7 +240,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1310;
-				LastUpgradeCheck = 1310;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					A2B155AD27458EE2004B1B02 = {
 						CreatedOnToolsVersion = 13.1;
@@ -284,11 +271,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A23EA35328EDA5FF0015E206 /* fullDayExampleData1.json in Resources */,
-				A23EA35728EDA8DD0015E206 /* fullDayExampleData3.json in Resources */,
 				A245280B299827580021661E /* GoogleService-Info.plist in Resources */,
-				A23EA35528EDA8D80015E206 /* fullDayExampleData2.json in Resources */,
-				A23EA35928EDA8E20015E206 /* fullDayExampleData4.json in Resources */,
 				A2B155B927458EE4004B1B02 /* Preview Assets.xcassets in Resources */,
 				A24A964928E63EC300B74E14 /* LaunchScreen.storyboard in Resources */,
 				A2D2C49A27727AB6009596E9 /* Localizable.strings in Resources */,
@@ -340,6 +323,7 @@
 		};
 		A208D57829999A660053CFB4 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 12;
 			files = (
 			);
@@ -355,7 +339,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -377,7 +361,6 @@
 				A2F9DFBD27653EFB006E4730 /* TabBarView.swift in Sources */,
 				A2B155C027459138004B1B02 /* NordPoolPrice.swift in Sources */,
 				A214594C28E5DD4C00FDB205 /* TitleView.swift in Sources */,
-				A2E8BB3A28EDA4D200B53FE9 /* fullDayExampleData1.json in Sources */,
 				A2B155C2274599E7004B1B02 /* Network.swift in Sources */,
 				A25AC1C92768009C00C9610F /* Globals.swift in Sources */,
 				A2D6DD5B279A06700007B14A /* BarChartRow.swift in Sources */,
@@ -411,6 +394,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -472,6 +456,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -532,7 +517,6 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 17;
-				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Elektrihind/Preview Content\"";
 				DEVELOPMENT_TEAM = 39G5236S72;
@@ -571,7 +555,6 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 17;
-				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Elektrihind/Preview Content\"";
 				DEVELOPMENT_TEAM = 39G5236S72;
