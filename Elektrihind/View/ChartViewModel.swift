@@ -81,8 +81,10 @@ class ChartViewModel: ObservableObject {
             if day == .today,
                Calendar.current.isDate(dataLastLoaded, equalTo: Date(), toGranularity: .day) {
                 return false
-            } else if day == .tomorrow,
-                Calendar.current.isDate(dataLastLoaded, equalTo: Date(), toGranularity: .hour) {
+            } else if day == .tomorrow && shared.missingTomorrowData {
+                return true
+            } else if day == .tomorrow && !shared.missingTomorrowData,
+                      Calendar.current.isDate(dataLastLoaded, equalTo: Date(), toGranularity: .hour) {
                 return false
             }
             return true
