@@ -169,8 +169,7 @@ struct BarChartView : View {
                     }
                 })
         )
-            .gesture(TapGesture()
-        )
+            .gesture(TapGesture())
     }
     
     func getArrowOffset(touchLocation:CGFloat) -> Binding<CGFloat> {

@@ -8,6 +8,7 @@
 import SwiftUI
 
 public struct BarChartRow : View {
+    @Environment(\.scenePhase) var scenePhase
     var data: [Double]
     var day: Day
     var accentColor: Color
@@ -29,7 +30,7 @@ public struct BarChartRow : View {
                                  numberOfDataPoints: self.data.count,
                                  day: day,
                                  accentColor: self.accentColor,
-                                 originalGradient: self.gradient ?? GradientColor(start: Color.blue, end: Color.blue),
+                                 gradient: getGradientFor(i),
                                  touchLocation: self.$touchLocation)
                         .scaleEffect(self.touchLocation > CGFloat(i)/CGFloat(self.data.count) && self.touchLocation < CGFloat(i+1)/CGFloat(self.data.count) ? CGSize(width: 1.4, height: 1.1) : CGSize(width: 1, height: 1), anchor: .bottom)
                         .animation(.spring())
@@ -37,6 +38,21 @@ public struct BarChartRow : View {
                 }
             }
             .padding([.top, .leading, .trailing], 10)
+        }
+    }
+    
+    func getGradientFor(_ index: Int) -> GradientColor{
+        let currentHour = Calendar.current.component(.hour, from: Date())
+        if day == .today {
+            if index == currentHour {
+                print("ORANZ")
+                return GradientColor(start: Color(hexString: "#FF964F"), end: Color(hexString: ":#FF964F"))
+            } else {
+                print("SININE")
+                return gradient ?? GradientColor(start: Color.blue, end: Color.blue)
+            }
+        } else {
+            return gradient ?? GradientColor(start: Color.blue, end: Color.blue)
         }
     }
     
