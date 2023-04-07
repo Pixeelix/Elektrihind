@@ -45,10 +45,8 @@ public struct BarChartRow : View {
         let currentHour = Calendar.current.component(.hour, from: Date())
         if day == .today {
             if index == currentHour {
-                print("ORANZ")
                 return GradientColor(start: Color(hexString: "#FF964F"), end: Color(hexString: ":#FF964F"))
             } else {
-                print("SININE")
                 return gradient ?? GradientColor(start: Color.blue, end: Color.blue)
             }
         } else {
