@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct TodayView: View {
+    @Environment(\.scenePhase) var scenePhase
     @EnvironmentObject var shared: Globals
+    @StateObject private var chartViewModel = ChartViewModel()
     
     var body: some View {
         HStack(alignment: .top) {
@@ -16,12 +18,22 @@ struct TodayView: View {
                 TitleView(title: shared.localizedString("TITLE_TODAYS_PRICE"))
                 CurrentPriceView()
                     .padding(.bottom, UIScreen.is1stGenIphone || UIScreen.isIphone8 ? 10 : 50)
-                ChartView(day: .today)
+                ChartView(day: .today, viewModel: chartViewModel)
                 Spacer()
                 BannerAd().frame(maxHeight: 60)
             }
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)
+        .onAppear {
+            chartViewModel.setup(self.shared, day: .today)
+            chartViewModel.loadChartData()
+        }
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active {
+                chartViewModel.setup(self.shared, day: .today)
+                chartViewModel.loadChartData()
+            }
+        }
     }
     
 }
