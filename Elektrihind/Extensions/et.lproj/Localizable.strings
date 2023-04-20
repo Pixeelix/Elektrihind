@@ -3,7 +3,7 @@
   Elektrihind
 
   Created by Martin Pihooja on 21.12.2021.
-  
+  EST
 */
 "TITLE_LANGUAGE" = "Keel";
 "TITLE_TODAYS_PRICE" = "Tänane hind";
@@ -24,7 +24,15 @@
 "cent/kWh" = "senti/kWh";
 "TITLE_INCLUDE_TAX" = "Hind koos KM-ga";
 "TEXT_CONNECTION_LOST" = "Puudub internetiühendus";
-"TEXT_INFORMATION_ABOUT_APP" = "• Hinnad kuvatakse Eesti ajavööndis
-• Käibemaks 20%
-• Pea seda meeles NordPooli originaalhinnaga võrdluses!";
-"TITLE_PAY_ATTENTION" = "Pane tähele"; 
+"TEXT_INFORMATION_ABOUT_APP" = "• Hinnad kuvatakse kohalikus ajavööndis";
+"TITLE_PAY_ATTENTION" = "Pane tähele";
+"TITLE_REGION" = "Regioon";
+"ESTONIA" = "Eesti";
+"LATVIA" = "Läti";
+"LITHUANIA" = "Leedu";
+"FINLAND" = "Soome";
+"ESTONIAN" = "Eesti";
+"ENGLISH" = "Inglise";
+"FINNISH" = "Soome";
+"RUSSIAN" = "Vene";
+"TITLE_VAT" = "Käibemaks";

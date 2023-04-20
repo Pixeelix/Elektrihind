@@ -1,0 +1,10 @@
+/* 
+  InfoPlist.strings
+  Elektrihind
+
+  Created by Martin Pihooja on 20.04.2023.
+  
+*/
+
+"CFBundleDisplayName" = "Sähkön Hinta";
+"UILaunchStoryboardName" = "LaunchScreenFI";

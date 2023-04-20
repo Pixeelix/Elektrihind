@@ -28,7 +28,7 @@ class ChartViewModel: ObservableObject {
     func loadChartData() {
         if shouldLoadData() {
             isLoading = true
-            Network().loadFullDayData(day) { data in
+            Network().loadFullDayData(day, region: shared.region) { data in
                 if self.day == .tomorrow {
                     self.shared.missingTomorrowData = data.count <= 2
                 }
@@ -50,7 +50,7 @@ class ChartViewModel: ObservableObject {
         for data in dataArrayFromAPI {
             let timeStampDate = Date(timeIntervalSince1970: data.timestamp)
             let stringTime = formatter.string(from: timeStampDate)
-            let price = shared.includeTax ? (data.price / shared.divider) * 1.2 : data.price / shared.divider
+            let price = shared.includeTax ? (data.price / shared.divider) * shared.taxRate : data.price / shared.divider
             let dataPoint = (stringTime, price)
             fullDayChartData.append(dataPoint)
         }
@@ -64,7 +64,7 @@ class ChartViewModel: ObservableObject {
     private func calculateMinMaxValues() {
         var pricesArray = [Double]()
         for data in dataArrayFromAPI {
-            let price = shared.includeTax ? data.price * 1.2 : data.price
+            let price = shared.includeTax ? data.price * shared.taxRate : data.price
             pricesArray.append(price)
         }
         if let minNumberValue = pricesArray.min(),
@@ -77,6 +77,9 @@ class ChartViewModel: ObservableObject {
     }
     
     private func shouldLoadData() -> Bool {
+        if shared.dataUpdateMandatory {
+            return true
+        }
         if let dataLastLoaded = dataLastLoaded {
             if day == .today,
                Calendar.current.isDate(dataLastLoaded, equalTo: Date(), toGranularity: .day) {

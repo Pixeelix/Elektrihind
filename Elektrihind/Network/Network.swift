@@ -32,8 +32,8 @@ class NetworkManager: ObservableObject {
 class Network: ObservableObject {
     @EnvironmentObject var shared: Globals
     
-    func loadCurrentPrice(completion:@escaping (PriceData) -> ()) {
-        guard let url = URL(string: "https://dashboard.elering.ee/api/nps/price/EE/current") else { fatalError("Missing URL") }
+    func loadCurrentPrice(region: Region, completion:@escaping (PriceData) -> ()) {
+        guard let url = URL(string: "https://dashboard.elering.ee/api/nps/price/\(region.rawValue)/current") else { fatalError("Missing URL") }
         let urlRequest = URLRequest(url: url)
         let dataTask = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             if let error = error {
@@ -64,7 +64,7 @@ class Network: ObservableObject {
         dataTask.resume()
     }
     
-    func loadFullDayData(_ day: Day, completion:@escaping ([PriceData]) -> ()) {
+    func loadFullDayData(_ day: Day, region: Region, completion:@escaping ([PriceData]) -> ()) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let yesterDay = dateFormatter.string(from: Date().dayBefore)
@@ -101,8 +101,23 @@ class Network: ObservableObject {
                     do {
                         let decodedNordPoolData = try JSONDecoder().decode(NordPoolCountriesData.self, from: data)
                         var fullDayData = [PriceData]()
-                        for data in decodedNordPoolData.data.ee {
-                            fullDayData.append(data)
+                        switch region {
+                        case .estonia:
+                            for data in decodedNordPoolData.data.ee {
+                                fullDayData.append(data)
+                            }
+                        case .latvia:
+                            for data in decodedNordPoolData.data.lt {
+                                fullDayData.append(data)
+                            }
+                        case .lithuania:
+                            for data in decodedNordPoolData.data.lv {
+                                fullDayData.append(data)
+                            }
+                        case .finland:
+                            for data in decodedNordPoolData.data.fi {
+                                fullDayData.append(data)
+                            }
                         }
                         completion(fullDayData)
                     } catch let error {

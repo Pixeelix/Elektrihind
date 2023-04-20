@@ -25,7 +25,21 @@ struct ChartView: View {
     var body: some View {
         VStack {
             if viewModel.isLoading {
-                ProgressView()
+                ZStack {
+                    Rectangle()
+                        .fill(Color.contentBoxBackground)
+                        .cornerRadius(20)
+                        .padding()
+                    Spacer()
+                    VStack {
+                        ProgressView("Loading...")
+                    }
+                    .tint(.bluewWhiteText)
+                    .foregroundColor(.bluewWhiteText)
+                    .padding()
+                    Spacer()
+                }
+                
             } else {
                 BarChartView(data: viewModel.data, day: self.day, legend: viewModel.legend, style: style, form: viewModel.form, valueSpecifier: viewModel.specifier, animatedToBack: false)
             }

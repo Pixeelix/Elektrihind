@@ -15,6 +15,11 @@ struct CurrentPriceView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
             HStack(alignment: .top) {
+                Image(shared.region.rawValue)
+                    .resizable()
+                    .frame(width: 40, height: 22)
+                    .cornerRadius(8)
+                    .shadow(radius: 5)
                 Spacer()
                 Text(viewModel.currenPriceTimeStamp)
                     .font(.system(size: 300))
@@ -22,6 +27,7 @@ struct CurrentPriceView: View {
             }
             .frame(height: 22)
             .padding(.top, 8)
+            .padding(.leading, 10)
             .padding(.trailing, 10)
             
             VStack {

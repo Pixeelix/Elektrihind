@@ -12,6 +12,18 @@ struct MinMaxRange: View {
     
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
+            HStack(alignment: .top) {
+                Image(shared.region.rawValue)
+                    .resizable()
+                    .frame(width: 40, height: 22)
+                    .cornerRadius(8)
+                    .shadow(radius: 5)
+                Spacer()
+            }
+            .frame(height: 22)
+            .padding(.top, 8)
+            .padding(.leading, 10)
+            .padding(.trailing, 10)
             VStack {
                 Text("\(shared.minNextDayPrice) - \(shared.maxNextDayPrice)")
                     .font(.system(size: 300, weight: .medium))
@@ -25,11 +37,11 @@ struct MinMaxRange: View {
                 Text(shared.localizedString(shared.unit))
                     .font(.system(size: 24, weight: .medium))
             }
+            Spacer()
         }
         .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.is1stGenIphone ? 120 : 140)
         .background(Color.contentBoxBackground)
         .foregroundColor(Color.bluewWhiteText)
         .cornerRadius(20)
-        .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
     }
 }

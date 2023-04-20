@@ -22,7 +22,7 @@ class CurrentPriceViewModel: ObservableObject {
     
     func loadCurrentPrice() {
         if shouldLoadData() {
-            Network().loadCurrentPrice { data in
+            Network().loadCurrentPrice(region: shared.region) { data in
                 self.currentPriceData = data
                 self.updateCurrentPrice()
                 self.dataLastLoaded = Date()
@@ -40,6 +40,9 @@ class CurrentPriceViewModel: ObservableObject {
     }
     
     private func shouldLoadData() -> Bool {
+        if shared.dataUpdateMandatory {
+            return true
+        }
         if let dataLastLoaded = dataLastLoaded,
            Calendar.current.isDate(dataLastLoaded, equalTo: Date(), toGranularity: .hour) {
             return false
@@ -58,7 +61,7 @@ class CurrentPriceViewModel: ObservableObject {
     }
     
     private func getCurrentPriceFrom(_ price: Double) {
-        let priceWithTax = shared.includeTax ? price * 1.2 : price
+        let priceWithTax = shared.includeTax ? price * shared.taxRate : price
         let formattedPrice = shared.numberFormatter.string(from: NSNumber(value: priceWithTax / shared.divider))
         self.currenPrice = formattedPrice ?? "---"
     }

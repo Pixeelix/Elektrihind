@@ -15,7 +15,6 @@
 		A22579F42767F76E00F8E3AB /* TomorrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22579F32767F76E00F8E3AB /* TomorrowView.swift */; };
 		A245280929943F5E0021661E /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A245280829943F5D0021661E /* Banner.swift */; };
 		A245280B299827580021661E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A245280A299827570021661E /* GoogleService-Info.plist */; };
-		A24A964928E63EC300B74E14 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A24A964828E63EC300B74E14 /* LaunchScreen.storyboard */; };
 		A258EFCE29DB3E7700B0B27D /* ConnectionLostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258EFCD29DB3E7700B0B27D /* ConnectionLostView.swift */; };
 		A258EFD029DB7A2900B0B27D /* CurrentPriceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258EFCF29DB7A2900B0B27D /* CurrentPriceViewModel.swift */; };
 		A258EFD229DDE00D00B0B27D /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258EFD129DDE00D00B0B27D /* ChartView.swift */; };
@@ -30,6 +29,9 @@
 		A2B155C027459138004B1B02 /* NordPoolPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B155BF27459138004B1B02 /* NordPoolPrice.swift */; };
 		A2B155C2274599E7004B1B02 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B155C1274599E7004B1B02 /* Network.swift */; };
 		A2B155C72745B070004B1B02 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B155C62745B070004B1B02 /* Extensions.swift */; };
+		A2BA07E529F0938A004BEC1F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A2BA07E729F0938A004BEC1F /* InfoPlist.strings */; };
+		A2BA07EB29F09548004BEC1F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2BA07ED29F09548004BEC1F /* LaunchScreen.storyboard */; };
+		A2BA07F829F096C0004BEC1F /* LaunchScreenFI.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2BA07F729F096C0004BEC1F /* LaunchScreenFI.storyboard */; };
 		A2D2C49A27727AB6009596E9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A2D2C49C27727AB6009596E9 /* Localizable.strings */; };
 		A2D6DD56279A05A60007B14A /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D6DD55279A05A60007B14A /* BarChartView.swift */; };
 		A2D6DD59279A061F0007B14A /* BarChartGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D6DD58279A061F0007B14A /* BarChartGlobals.swift */; };
@@ -49,7 +51,6 @@
 		A233FEE427669DE100FEDA9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A245280829943F5D0021661E /* Banner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		A245280A299827570021661E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		A24A964828E63EC300B74E14 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A258EFCD29DB3E7700B0B27D /* ConnectionLostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionLostView.swift; sourceTree = "<group>"; };
 		A258EFCF29DB7A2900B0B27D /* CurrentPriceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPriceViewModel.swift; sourceTree = "<group>"; };
 		A258EFD129DDE00D00B0B27D /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
@@ -65,6 +66,12 @@
 		A2B155BF27459138004B1B02 /* NordPoolPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordPoolPrice.swift; sourceTree = "<group>"; };
 		A2B155C1274599E7004B1B02 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		A2B155C62745B070004B1B02 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		A2BA07E629F0938A004BEC1F /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = et.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A2BA07E829F0938F004BEC1F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A2BA07E929F09390004BEC1F /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A2BA07EA29F09390004BEC1F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A2BA07F429F09555004BEC1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A2BA07F729F096C0004BEC1F /* LaunchScreenFI.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreenFI.storyboard; sourceTree = "<group>"; };
 		A2D2C49B27727AB6009596E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A2D2C49D27727AB9009596E9 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = et.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A2D6DD55279A05A60007B14A /* BarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartView.swift; sourceTree = "<group>"; };
@@ -72,6 +79,8 @@
 		A2D6DD5A279A06700007B14A /* BarChartRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartRow.swift; sourceTree = "<group>"; };
 		A2D6DD5C279A06AC0007B14A /* BarChartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartCell.swift; sourceTree = "<group>"; };
 		A2D6DD5E279A0B6A0007B14A /* Legend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Legend.swift; sourceTree = "<group>"; };
+		A2F417A029EC525A00FC2562 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A2F417A129EDCE2D00FC2562 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A2F9DFBC27653EFB006E4730 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		A95E17653EEA245B5D8376C1 /* Pods-Elektrihind.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Elektrihind.release.xcconfig"; path = "Target Support Files/Pods-Elektrihind/Pods-Elektrihind.release.xcconfig"; sourceTree = "<group>"; };
 		EE61CAC91F5903E604B6B99D /* Pods-Elektrihind.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Elektrihind.debug.xcconfig"; path = "Target Support Files/Pods-Elektrihind/Pods-Elektrihind.debug.xcconfig"; sourceTree = "<group>"; };
@@ -113,7 +122,8 @@
 				A258EFCF29DB7A2900B0B27D /* CurrentPriceViewModel.swift */,
 				A214594F28E5DDCA00FDB205 /* MinMaxRangeView.swift */,
 				A245280829943F5D0021661E /* Banner.swift */,
-				A24A964828E63EC300B74E14 /* LaunchScreen.storyboard */,
+				A2BA07ED29F09548004BEC1F /* LaunchScreen.storyboard */,
+				A2BA07F729F096C0004BEC1F /* LaunchScreenFI.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -158,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				A233FEE427669DE100FEDA9C /* Info.plist */,
+				A2BA07E729F0938A004BEC1F /* InfoPlist.strings */,
 				A245280A299827570021661E /* GoogleService-Info.plist */,
 				A2B155B127458EE2004B1B02 /* ElektrihindApp.swift */,
 				A2B155B327458EE2004B1B02 /* ContentView.swift */,
@@ -255,6 +266,8 @@
 				en,
 				Base,
 				et,
+				fi,
+				ru,
 			);
 			mainGroup = A2B155A527458EE2004B1B02;
 			productRefGroup = A2B155AF27458EE2004B1B02 /* Products */;
@@ -272,8 +285,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A245280B299827580021661E /* GoogleService-Info.plist in Resources */,
+				A2BA07E529F0938A004BEC1F /* InfoPlist.strings in Resources */,
 				A2B155B927458EE4004B1B02 /* Preview Assets.xcassets in Resources */,
-				A24A964928E63EC300B74E14 /* LaunchScreen.storyboard in Resources */,
+				A2BA07F829F096C0004BEC1F /* LaunchScreenFI.storyboard in Resources */,
+				A2BA07EB29F09548004BEC1F /* LaunchScreen.storyboard in Resources */,
 				A2D2C49A27727AB6009596E9 /* Localizable.strings in Resources */,
 				A2B155B627458EE4004B1B02 /* Assets.xcassets in Resources */,
 			);
@@ -377,11 +392,32 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		A2BA07E729F0938A004BEC1F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A2BA07E629F0938A004BEC1F /* et */,
+				A2BA07E829F0938F004BEC1F /* en */,
+				A2BA07E929F09390004BEC1F /* fi */,
+				A2BA07EA29F09390004BEC1F /* ru */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A2BA07ED29F09548004BEC1F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A2BA07F429F09555004BEC1F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 		A2D2C49C27727AB6009596E9 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				A2D2C49B27727AB6009596E9 /* en */,
 				A2D2C49D27727AB9009596E9 /* et */,
+				A2F417A029EC525A00FC2562 /* fi */,
+				A2F417A129EDCE2D00FC2562 /* ru */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -441,7 +477,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -497,7 +533,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -515,7 +551,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 22;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Elektrihind/Preview Content\"";
 				DEVELOPMENT_TEAM = 39G5236S72;
@@ -531,12 +567,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.9.2;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = koodipardik.Elektrihind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -553,7 +589,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 22;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Elektrihind/Preview Content\"";
 				DEVELOPMENT_TEAM = 39G5236S72;
@@ -569,12 +605,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.9.2;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = koodipardik.Elektrihind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

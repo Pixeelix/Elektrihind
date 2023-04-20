@@ -30,8 +30,16 @@ struct SettingsView: View {
                     Section (header: Text(shared.localizedString("TITLE_GENERAL"))){
                         Picker(shared.localizedString("TITLE_LANGUAGE"), selection: $shared.language) {
                             ForEach(Language.allLanguages, id: \.self) { language in
-                                Text(language.fullName)
+                                Text(shared.localizedString(language.name))
                             }
+                        }
+                        Picker(shared.localizedString("TITLE_REGION"), selection: $shared.region) {
+                            ForEach(Region.allRegions, id: \.self) { region in
+                                Text(shared.localizedString(region.name))
+                            }
+                        }
+                        .onChange(of: shared.region) { _ in
+                            shared.dataUpdateMandatory = true
                         }
                         Picker(shared.localizedString("TITLE_UNIT"), selection: $shared.unit) {
                             ForEach(unitsArray, id: \.self) {
@@ -40,6 +48,11 @@ struct SettingsView: View {
                         }
                         Toggle(isOn: $shared.includeTax) {
                             Text(shared.localizedString("TITLE_INCLUDE_TAX"))
+                        }
+                        HStack {
+                            Text(shared.localizedString("TITLE_VAT"))
+                            Spacer()
+                            Text(shared.taxPercentage)
                         }
                     }
                     Section(header: Text(shared.localizedString("TITLE_APP_INFO"))) {
@@ -65,7 +78,7 @@ struct SettingsView: View {
                                 Section (header: Text(shared.localizedString("TITLE_GENERAL"))){
                                     Picker(shared.localizedString("TITLE_LANGUAGE"), selection: $shared.language) {
                                         ForEach(Language.allLanguages, id: \.self) { language in
-                                            Text(language.fullName)
+                                            Text(language.name)
                                         }
                                     }
                                     Picker(shared.localizedString("TITLE_UNIT"), selection: $shared.unit) {
@@ -75,6 +88,11 @@ struct SettingsView: View {
                                     }
                                     Toggle(isOn: $shared.includeTax) {
                                         Text(shared.localizedString("TITLE_INCLUDE_TAX"))
+                                    }
+                                    HStack {
+                                        Text(shared.localizedString("TITLE_VAT"))
+                                        Spacer()
+                                        Text(shared.taxPercentage)
                                     }
                                 }
                                 Section(header: Text(shared.localizedString("TITLE_APP_INFO"))) {

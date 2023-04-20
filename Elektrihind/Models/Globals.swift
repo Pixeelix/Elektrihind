@@ -10,15 +10,44 @@ import Foundation
 enum Language: String {
     case estonian = "et"
     case english = "en"
+    case finnish = "fi"
+    case russian = "ru"
     
-    static let allLanguages = [estonian, english]
-    var fullName: String {
+    static let allLanguages = [estonian, english, finnish, russian]
+    var name: String {
       get {
         switch self {
         case .estonian:
-            return "Eesti"
+            return "ESTONIAN"
           case .english:
-            return "English"
+            return "ENGLISH"
+        case.finnish:
+            return "FINNISH"
+        case.russian:
+            return "RUSSIAN"
+        }
+      }
+    }
+}
+
+enum Region: String {
+    case estonia = "EE"
+    case latvia = "LV"
+    case lithuania = "LT"
+    case finland = "FI"
+    
+    static let allRegions = [estonia, latvia, lithuania, finland]
+    var name: String {
+      get {
+        switch self {
+        case .estonia:
+            return "ESTONIA"
+        case .latvia:
+            return "LATVIA"
+        case .lithuania:
+            return "LITHUANIA"
+        case .finland:
+            return "FINLAND"
         }
       }
     }
@@ -31,6 +60,9 @@ class Globals: ObservableObject {
     @Published var divider: Double = 1
     @Published var minFractionDigits: Int = 1
     @Published var numberFormatter = NumberFormatter()
+    @Published var dataUpdateMandatory: Bool = false
+    @Published var taxPercentage: String = "0%"
+    @Published var taxRate: Double = 0.0
     @Published var includeTax: Bool = false {
         didSet {
             saveTaxValue()
@@ -39,6 +71,25 @@ class Globals: ObservableObject {
     @Published var language: Language = .estonian {
         didSet {
             saveLanguage()
+        }
+    }
+    @Published var region: Region = .estonia {
+        didSet {
+            saveRegion()
+            switch region {
+            case .estonia:
+                taxPercentage = "20%"
+                taxRate = 1.2
+            case .latvia:
+                taxPercentage = "21%"
+                taxRate = 1.21
+            case .lithuania:
+                taxPercentage = "21%"
+                taxRate = 1.21
+            case .finland:
+                taxPercentage = "10%"
+                taxRate = 1.1
+            }
         }
     }
     @Published var unit: String = "€/kWh" {
@@ -63,10 +114,37 @@ class Globals: ObservableObject {
     }
     
     func getSavedSettings() {
-        let languageString = UserDefaults.standard.string(forKey: "language") ?? "et"
-        language = Language(rawValue: languageString) ?? .estonian
+        let languageString = UserDefaults.standard.string(forKey: "language") ?? getLanguageFromLocale()
+        language = Language(rawValue: languageString) ?? .english
+        let regionString = UserDefaults.standard.string(forKey: "region") ?? getRegionFromLocale()
+        region = Region(rawValue: regionString) ?? .estonia
         unit = UserDefaults.standard.string(forKey: "unit") ?? unit
         includeTax = UserDefaults.standard.bool(forKey: "includeTax")
+    }
+    
+    private func getLanguageFromLocale() -> String {
+        if let regionCode = Locale.current.regionCode {
+            switch regionCode {
+            case "EE":
+                return "EE"
+            case "FI":
+                return "fi"
+            case "RU":
+                return "ru"
+            default:
+                return "en"
+            }
+        } else {
+            return "en"
+        }
+    }
+    
+    private func getRegionFromLocale() -> String {
+        if let regionCode = Locale.current.regionCode {
+            return regionCode
+        } else {
+            return "EE"
+        }
     }
     
     func localizedString(_ key: String) -> String {
@@ -75,6 +153,11 @@ class Globals: ObservableObject {
     
     func saveLanguage() {
         UserDefaults.standard.set(language.rawValue, forKey: "language")
+        UserDefaults.standard.synchronize()
+    }
+    
+    func saveRegion() {
+        UserDefaults.standard.set(region.rawValue, forKey: "region")
         UserDefaults.standard.synchronize()
     }
     

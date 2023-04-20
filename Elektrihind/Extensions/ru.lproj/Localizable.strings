@@ -1,0 +1,38 @@
+/*
+  Localizable.strings
+  Elektrihind
+
+  Created by Martin Pihooja on 21.12.2021.
+  ENG
+*/
+"TITLE_LANGUAGE" = "Язык";
+"TITLE_TODAYS_PRICE" = "Цена сегодня";
+"TITLE_TOMORROWS_PRICE" = "Цена завтра";
+"TITLE_SETTINGS" = "Настройки";
+"LABEL_TODAY" = "Сегодня";
+"LABEL_TOMORROW" = "Завтра";
+"LABEL_SETTINGS" = "Настройки";
+"TITLE_GENERAL" = "Генерал";
+"TITLE_MEASURE" = "Мера";
+"TEXT_TOMORROWS_PRICE_WILL_APEAR" = "Информация о ценах на завтра доступна с 15:00";
+"TITLE_UNIT" = "Единица";
+"TITLE_APP_INFO" = "Информация о приложении";
+"TITLE_VERSION" = "Версия";
+"TITLE_OPEN_SETTINGS" = "Открыть настройки";
+"€/kWh" = "€/kWh";
+"€/MWh" = "€/MWh";
+"cent/kWh" = "центt/kWh";
+"TITLE_INCLUDE_TAX" = "Цена с НДС";
+"TEXT_CONNECTION_LOST" = "Нет соединения с интернетом";
+"TEXT_INFORMATION_ABOUT_APP" = "• Цены отображаются в вашем часовом поясе";
+"TITLE_PAY_ATTENTION" = "Обращать внимание";
+"TITLE_REGION" = "Область";
+"ESTONIA" = "Эстония";
+"LATVIA" = "Латвия";
+"LITHUANIA" = "Литва";
+"FINLAND" = "Финляндия";
+"ESTONIAN" = "Эстонский";
+"ENGLISH" = "Английский";
+"FINNISH" = "Финский";
+"RUSSIAN" = "Русский";
+"TITLE_VAT" = "НДС";

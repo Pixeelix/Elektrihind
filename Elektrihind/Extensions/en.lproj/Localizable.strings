@@ -3,7 +3,7 @@
   Elektrihind
 
   Created by Martin Pihooja on 21.12.2021.
-  
+  ENG
 */
 "TITLE_LANGUAGE" = "Language";
 "TITLE_TODAYS_PRICE" = "Price today";
@@ -24,7 +24,15 @@
 "cent/kWh" = "cent/kWh";
 "TITLE_INCLUDE_TAX" = "Price including VAT";
 "TEXT_CONNECTION_LOST" = "No Internet Connection";
-"TEXT_INFORMATION_ABOUT_APP" = "• Prices are displayed in the Estonian time zone
-• VAT 20%
-• Keep this in mind when comparing the price with NordPool original data!";
+"TEXT_INFORMATION_ABOUT_APP" = "• Prices are displayed in local time zone";
 "TITLE_PAY_ATTENTION" = "Pay attention";
+"TITLE_REGION" = "Region";
+"ESTONIA" = "Estonia";
+"LATVIA" = "Latvia";
+"LITHUANIA" = "Lithuania";
+"FINLAND" = "Finland";
+"ESTONIAN" = "Estonian";
+"ENGLISH" = "English";
+"FINNISH" = "Finnish";
+"RUSSIAN" = "Russian";
+"TITLE_VAT" = "VAT";

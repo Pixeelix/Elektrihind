@@ -13,7 +13,7 @@ struct BarChartView : View {
     private var title: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd MMMM"
-        formatter.locale = shared.language == .english ? Locale(identifier: "en_US") : Locale(identifier: "et_EE")
+        formatter.locale = getLocale()
         return day == .tomorrow ? formatter.string(from: Date().dayAfter) : formatter.string(from: Date())
     }
     public var legend: String?
@@ -191,6 +191,19 @@ struct BarChartView : View {
         guard self.data.points.count > 0 else { return nil}
         let index = max(0,min(self.data.points.count-1,Int(floor((self.touchLocation*self.formSize.width)/(self.formSize.width/CGFloat(self.data.points.count))))))
         return self.data.points[index]
+    }
+    
+    func getLocale() -> Locale {
+        switch shared.language {
+        case .english:
+            return Locale(identifier: "en_US")
+        case .finnish:
+            return Locale(identifier: "fi_FI")
+        case .estonian:
+            return Locale(identifier: "et_EE")
+        case .russian:
+            return Locale(identifier: "ru_RU")
+        }
     }
 }
 

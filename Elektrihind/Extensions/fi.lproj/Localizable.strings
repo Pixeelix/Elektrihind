@@ -1,0 +1,38 @@
+/*
+  Localizable.strings
+  Elektrihind
+
+  Created by Martin Pihooja on 21.12.2021.
+  FIN
+*/
+"TITLE_LANGUAGE" = "Kieli";
+"TITLE_TODAYS_PRICE" = "Hinta tänään";
+"TITLE_TOMORROWS_PRICE" = "Hinta huomenna";
+"TITLE_SETTINGS" = "Asetukset";
+"LABEL_TODAY" = "Tänään";
+"LABEL_TOMORROW" = "Huomenna";
+"LABEL_SETTINGS" = "Asetukset";
+"TITLE_GENERAL" = "Yleistä";
+"TITLE_MEASURE" = "Mitata";
+"TEXT_TOMORROWS_PRICE_WILL_APEAR" = "Huomisen hintatiedot saatavilla klo 15:00 alkaen";
+"TITLE_UNIT" = "Yksikkö";
+"TITLE_APP_INFO" = "App tiedot";
+"TITLE_VERSION" = "Version";
+"TITLE_OPEN_SETTINGS" = "Avaa Asetukset";
+"€/kWh" = "€/kWh";
+"€/MWh" = "€/MWh";
+"cent/kWh" = "snt/kWh";
+"TITLE_INCLUDE_TAX" = "Hinta sisältää ALV";
+"TEXT_CONNECTION_LOST" = "Ei Internet-yhteyttä";
+"TEXT_INFORMATION_ABOUT_APP" = "• Hinnat näkyvät paikallisella aikavyöhykkeelläsi";
+"TITLE_PAY_ATTENTION" = "Kiinnittää huomiota";
+"TITLE_REGION" = "Region";
+"ESTONIA" = "Viro";
+"LATVIA" = "Latvia";
+"LITHUANIA" = "Liettua";
+"FINLAND" = "Suomi";
+"ESTONIAN" = "Viron";
+"ENGLISH" = "Englanti";
+"FINNISH" = "Suomi";
+"RUSSIAN" = "Venäjä";
+"TITLE_VAT" = "ALV";
