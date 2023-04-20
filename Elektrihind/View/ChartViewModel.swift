@@ -77,7 +77,11 @@ class ChartViewModel: ObservableObject {
     }
     
     private func shouldLoadData() -> Bool {
-        if shared.dataUpdateMandatory {
+        if day == .today && shared.todayDataUpdateMandatory {
+            shared.todayDataUpdateMandatory = false
+            return true
+        } else if day == .tomorrow && shared.tomorrowDataUpdateMandatory {
+            shared.tomorrowDataUpdateMandatory = false
             return true
         }
         if let dataLastLoaded = dataLastLoaded {

@@ -39,7 +39,8 @@ struct SettingsView: View {
                             }
                         }
                         .onChange(of: shared.region) { _ in
-                            shared.dataUpdateMandatory = true
+                            shared.todayDataUpdateMandatory = true
+                            shared.tomorrowDataUpdateMandatory = true
                         }
                         Picker(shared.localizedString("TITLE_UNIT"), selection: $shared.unit) {
                             ForEach(unitsArray, id: \.self) {

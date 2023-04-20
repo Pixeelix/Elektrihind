@@ -40,7 +40,7 @@ class CurrentPriceViewModel: ObservableObject {
     }
     
     private func shouldLoadData() -> Bool {
-        if shared.dataUpdateMandatory {
+        if shared.todayDataUpdateMandatory {
             return true
         }
         if let dataLastLoaded = dataLastLoaded,

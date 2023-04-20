@@ -60,7 +60,8 @@ class Globals: ObservableObject {
     @Published var divider: Double = 1
     @Published var minFractionDigits: Int = 1
     @Published var numberFormatter = NumberFormatter()
-    @Published var dataUpdateMandatory: Bool = false
+    @Published var todayDataUpdateMandatory: Bool = false
+    @Published var tomorrowDataUpdateMandatory: Bool = false
     @Published var taxPercentage: String = "0%"
     @Published var taxRate: Double = 0.0
     @Published var includeTax: Bool = false {
@@ -115,7 +116,7 @@ class Globals: ObservableObject {
     
     func getSavedSettings() {
         let languageString = UserDefaults.standard.string(forKey: "language") ?? getLanguageFromLocale()
-        language = Language(rawValue: languageString) ?? .english
+        language = Language(rawValue: languageString) ?? .estonian
         let regionString = UserDefaults.standard.string(forKey: "region") ?? getRegionFromLocale()
         region = Region(rawValue: regionString) ?? .estonia
         unit = UserDefaults.standard.string(forKey: "unit") ?? unit
@@ -126,13 +127,13 @@ class Globals: ObservableObject {
         if let regionCode = Locale.current.regionCode {
             switch regionCode {
             case "EE":
-                return "EE"
+                return "et"
             case "FI":
                 return "fi"
             case "RU":
                 return "ru"
             default:
-                return "en"
+                return "et"
             }
         } else {
             return "en"
