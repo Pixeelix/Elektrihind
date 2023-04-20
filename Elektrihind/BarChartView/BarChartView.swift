@@ -78,13 +78,6 @@ struct BarChartView : View {
                         }
                         .frame(maxWidth: .infinity)
                     }
-                    if(self.formSize == ChartForm.large && self.legend != nil && !showValue) {
-                        Text(self.legend!)
-                            .font(.callout)
-                            .foregroundColor(self.colorScheme == .dark ? self.darkModeStyle.accentColor : self.style.accentColor)
-                            .transition(.opacity)
-                            .animation(.easeOut)
-                    }
                     Spacer()
 //                    self.cornerImage
 //                        .imageScale(.large)

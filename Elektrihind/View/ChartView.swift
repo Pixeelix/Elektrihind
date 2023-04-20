@@ -24,7 +24,7 @@ struct ChartView: View {
     
     var body: some View {
         VStack {
-            if viewModel.isLoading {
+            if !viewModel.isLoading {
                 ZStack {
                     Rectangle()
                         .fill(Color.contentBoxBackground)
@@ -34,7 +34,7 @@ struct ChartView: View {
                     VStack {
                         ProgressView("Loading...")
                     }
-                    .tint(.bluewWhiteText)
+                    .progressViewStyle(CircularProgressViewStyle(tint: .bluewWhiteText))
                     .foregroundColor(.bluewWhiteText)
                     .padding()
                     Spacer()

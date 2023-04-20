@@ -17,8 +17,8 @@ struct CurrentPriceView: View {
             HStack(alignment: .top) {
                 Image(shared.region.rawValue)
                     .resizable()
-                    .frame(width: 40, height: 22)
-                    .cornerRadius(8)
+                    .frame(width: 30, height: 22)
+                    .cornerRadius(6)
                     .shadow(radius: 5)
                 Spacer()
                 Text(viewModel.currenPriceTimeStamp)
