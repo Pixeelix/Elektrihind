@@ -17,7 +17,7 @@
 "TEXT_TOMORROWS_PRICE_WILL_APEAR" = "Huomisen hintatiedot saatavilla klo 15:00 alkaen";
 "TITLE_UNIT" = "Yksikkö";
 "TITLE_APP_INFO" = "App tiedot";
-"TITLE_VERSION" = "Version";
+"TITLE_VERSION" = "Versio";
 "TITLE_OPEN_SETTINGS" = "Avaa Asetukset";
 "€/kWh" = "€/kWh";
 "€/MWh" = "€/MWh";
@@ -26,7 +26,7 @@
 "TEXT_CONNECTION_LOST" = "Ei Internet-yhteyttä";
 "TEXT_INFORMATION_ABOUT_APP" = "• Hinnat näkyvät paikallisella aikavyöhykkeelläsi";
 "TITLE_PAY_ATTENTION" = "Kiinnittää huomiota";
-"TITLE_REGION" = "Region";
+"TITLE_REGION" = "Alue";
 "ESTONIA" = "Viro";
 "LATVIA" = "Latvia";
 "LITHUANIA" = "Liettua";
