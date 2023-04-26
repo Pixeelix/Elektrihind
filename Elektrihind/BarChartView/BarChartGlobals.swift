@@ -141,16 +141,16 @@ public struct ChartForm {
     public static let small = CGSize(width:180, height:120)
     public static let medium = CGSize(width:180, height:240)
     public static let large = CGSize(width:360, height:120)
-    static let barChartHeight: Int = {
+    static let barChartHeight: CGFloat = {
         if UIScreen.is1stGenIphone {
             return 230
         } else if UIScreen.isIphone8 {
             return 290
         } else {
-           return 300
+            return UIScreen.screenHeight * 0.4
         }
     }()
-    public static let extraLarge = CGSize(width: UIScreen.is1stGenIphone ? 300 : 350, height: barChartHeight)
+    public static let extraLarge = CGSize(width: UIScreen.is1stGenIphone ? CGFloat(300) : UIScreen.screenWidth - 40, height: barChartHeight)
     public static let detail = CGSize(width:180, height:120)
     #endif
 }
