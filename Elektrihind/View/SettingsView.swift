@@ -82,6 +82,15 @@ struct SettingsView: View {
                                             Text(language.name)
                                         }
                                     }
+                                    Picker(shared.localizedString("TITLE_REGION"), selection: $shared.region) {
+                                        ForEach(Region.allRegions, id: \.self) { region in
+                                            Text(shared.localizedString(region.name))
+                                        }
+                                    }
+                                    .onChange(of: shared.region) { _ in
+                                        shared.todayDataUpdateMandatory = true
+                                        shared.tomorrowDataUpdateMandatory = true
+                                    }
                                     Picker(shared.localizedString("TITLE_UNIT"), selection: $shared.unit) {
                                         ForEach(unitsArray, id: \.self) {
                                             Text(shared.localizedString($0))

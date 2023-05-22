@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		356FE4D06F62823E3EC4DC49 /* Pods_Elektrihind.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 063650F35B5F5612E5BBDCCB /* Pods_Elektrihind.framework */; };
+		41D6FC32093CE2FE8640BBB0 /* Pods_Elektrihind.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6138A1531B91856A7B51433 /* Pods_Elektrihind.framework */; };
 		A214594C28E5DD4C00FDB205 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A214594B28E5DD4C00FDB205 /* TitleView.swift */; };
 		A214594E28E5DD9B00FDB205 /* CurrentPriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A214594D28E5DD9B00FDB205 /* CurrentPriceView.swift */; };
 		A214595028E5DDCA00FDB205 /* MinMaxRangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A214594F28E5DDCA00FDB205 /* MinMaxRangeView.swift */; };
@@ -42,7 +42,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		063650F35B5F5612E5BBDCCB /* Pods_Elektrihind.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Elektrihind.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3FA2666DF116A3F0196F86E8 /* Pods-Elektrihind.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Elektrihind.release.xcconfig"; path = "Target Support Files/Pods-Elektrihind/Pods-Elektrihind.release.xcconfig"; sourceTree = "<group>"; };
+		8A30E028A1548C595C7255A8 /* Pods-Elektrihind.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Elektrihind.debug.xcconfig"; path = "Target Support Files/Pods-Elektrihind/Pods-Elektrihind.debug.xcconfig"; sourceTree = "<group>"; };
 		A214594B28E5DD4C00FDB205 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		A214594D28E5DD9B00FDB205 /* CurrentPriceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPriceView.swift; sourceTree = "<group>"; };
 		A214594F28E5DDCA00FDB205 /* MinMaxRangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinMaxRangeView.swift; sourceTree = "<group>"; };
@@ -82,8 +83,7 @@
 		A2F417A029EC525A00FC2562 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A2F417A129EDCE2D00FC2562 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A2F9DFBC27653EFB006E4730 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
-		A95E17653EEA245B5D8376C1 /* Pods-Elektrihind.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Elektrihind.release.xcconfig"; path = "Target Support Files/Pods-Elektrihind/Pods-Elektrihind.release.xcconfig"; sourceTree = "<group>"; };
-		EE61CAC91F5903E604B6B99D /* Pods-Elektrihind.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Elektrihind.debug.xcconfig"; path = "Target Support Files/Pods-Elektrihind/Pods-Elektrihind.debug.xcconfig"; sourceTree = "<group>"; };
+		D6138A1531B91856A7B51433 /* Pods_Elektrihind.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Elektrihind.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,7 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				356FE4D06F62823E3EC4DC49 /* Pods_Elektrihind.framework in Frameworks */,
+				41D6FC32093CE2FE8640BBB0 /* Pods_Elektrihind.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,8 +101,8 @@
 		4C0010EB2A6C3A8C41613926 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				EE61CAC91F5903E604B6B99D /* Pods-Elektrihind.debug.xcconfig */,
-				A95E17653EEA245B5D8376C1 /* Pods-Elektrihind.release.xcconfig */,
+				8A30E028A1548C595C7255A8 /* Pods-Elektrihind.debug.xcconfig */,
+				3FA2666DF116A3F0196F86E8 /* Pods-Elektrihind.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -152,7 +152,7 @@
 				A2B155B027458EE2004B1B02 /* Elektrihind */,
 				A2B155AF27458EE2004B1B02 /* Products */,
 				4C0010EB2A6C3A8C41613926 /* Pods */,
-				F1FC1C0C479922CE569D53E3 /* Frameworks */,
+				BF448718BAF2504A454FE01A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -212,10 +212,10 @@
 			path = BarChartView;
 			sourceTree = "<group>";
 		};
-		F1FC1C0C479922CE569D53E3 /* Frameworks */ = {
+		BF448718BAF2504A454FE01A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				063650F35B5F5612E5BBDCCB /* Pods_Elektrihind.framework */,
+				D6138A1531B91856A7B51433 /* Pods_Elektrihind.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -227,12 +227,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A2B155BC27458EE4004B1B02 /* Build configuration list for PBXNativeTarget "Elektrihind" */;
 			buildPhases = (
-				2BF14BC111A033A43FF50CA8 /* [CP] Check Pods Manifest.lock */,
+				DC4C93A258C3515304683595 /* [CP] Check Pods Manifest.lock */,
 				A2B155AA27458EE2004B1B02 /* Sources */,
 				A2B155AB27458EE2004B1B02 /* Frameworks */,
 				A2B155AC27458EE2004B1B02 /* Resources */,
 				A208D57829999A660053CFB4 /* ShellScript */,
-				63ADAEECB3EB59A465AB3D11 /* [CP] Embed Pods Frameworks */,
+				0F28B314C51A51018433D163 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -297,29 +297,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2BF14BC111A033A43FF50CA8 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Elektrihind-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		63ADAEECB3EB59A465AB3D11 /* [CP] Embed Pods Frameworks */ = {
+		0F28B314C51A51018433D163 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -353,6 +331,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DC4C93A258C3515304683595 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Elektrihind-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -545,7 +545,7 @@
 		};
 		A2B155BD27458EE4004B1B02 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EE61CAC91F5903E604B6B99D /* Pods-Elektrihind.debug.xcconfig */;
+			baseConfigurationReference = 8A30E028A1548C595C7255A8 /* Pods-Elektrihind.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -572,7 +572,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = koodipardik.Elektrihind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -583,7 +583,7 @@
 		};
 		A2B155BE27458EE4004B1B02 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A95E17653EEA245B5D8376C1 /* Pods-Elektrihind.release.xcconfig */;
+			baseConfigurationReference = 3FA2666DF116A3F0196F86E8 /* Pods-Elektrihind.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -610,7 +610,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = koodipardik.Elektrihind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
