@@ -17,10 +17,11 @@ struct TodayView: View {
             VStack(alignment: .center) {
                 TitleView(title: shared.localizedString("TITLE_TODAYS_PRICE"))
                 CurrentPriceView()
-                    .padding(.bottom, UIScreen.is1stGenIphone || UIScreen.isIphone8 ? 10 : 50)
+                    .padding(.bottom, UIScreen.is1stGenIphone || UIScreen.isIphone8 ? 0 : 50)
                 ChartView(day: .today, viewModel: chartViewModel)
                 Spacer()
                 BannerAd().frame(maxHeight: 60)
+                    .padding(.bottom, 25)
             }
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)

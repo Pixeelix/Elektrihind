@@ -69,7 +69,6 @@ struct SettingsView: View {
                         }
                     }
                 }.scrollContentBackground(.hidden)
-                BannerAd().frame(maxHeight: 60)
             }} else {
                 NavigationView {
                     ZStack {
@@ -118,7 +117,6 @@ struct SettingsView: View {
                                     }
                                 }
                             }
-                            BannerAd().frame(maxHeight: 60)
                         }
 
                     }

@@ -24,7 +24,6 @@ struct TomorrowView: View {
                         .multilineTextAlignment(.center)
                         .padding(EdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10))
                     Spacer()
-                    BannerAd().frame(maxHeight: 60)
                 }
             } else {
                 VStack(alignment: .center) {
@@ -33,7 +32,6 @@ struct TomorrowView: View {
                         .padding(.bottom, UIScreen.is1stGenIphone || UIScreen.isIphone8 ? 10 : 50)
                     ChartView(day: .tomorrow, viewModel: chartViewModel)
                     Spacer()
-                    BannerAd().frame(maxHeight: 60)
                 }
             }
         }
