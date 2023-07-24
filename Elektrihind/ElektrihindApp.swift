@@ -19,9 +19,18 @@ struct ElektrihindApp: App {
     }
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(networkManager)
-                .environmentObject(shared)
+            ZStack {
+                ContentView()
+                    .environmentObject(networkManager)
+                    .environmentObject(shared)
+                UMPWrapper(canLoadAdsCallback: {
+                    debugPrint("Can load ads now")
+                })
+                .disabled(true)
+            }
+            
         }
     }
 }
+
+
