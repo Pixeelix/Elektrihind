@@ -8,6 +8,7 @@
 import SwiftUI
 import GoogleMobileAds
 import FirebaseCore
+import AppTrackingTransparency
 
 @main
 struct ElektrihindApp: App {
@@ -19,15 +20,20 @@ struct ElektrihindApp: App {
     }
     var body: some Scene {
         WindowGroup {
-            ZStack {
-                ContentView()
-                    .environmentObject(networkManager)
-                    .environmentObject(shared)
-                UMPWrapper(canLoadAdsCallback: {
-                    debugPrint("Can load ads now")
-                })
-                .disabled(true)
-            }
+            ContentView()
+                .environmentObject(networkManager)
+                .environmentObject(shared)
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                            ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in })
+                        }
+            
+//            ZStack {
+//
+//                UMPWrapper(canLoadAdsCallback: {
+//                    debugPrint("Can load ads now")
+//                })
+//                .disabled(true)
+//            }
             
         }
     }
