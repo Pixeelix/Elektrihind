@@ -9,6 +9,7 @@ import SwiftUI
 import GoogleMobileAds
 import FirebaseCore
 import AppTrackingTransparency
+import FBAudienceNetwork
 
 @main
 struct ElektrihindApp: App {
@@ -17,6 +18,7 @@ struct ElektrihindApp: App {
     init() {
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         FirebaseApp.configure()
+        FBAdSettings.setAdvertiserTrackingEnabled(true)
     }
     var body: some Scene {
         WindowGroup {

@@ -8,6 +8,7 @@ target 'Elektrihind' do
 pod 'Google-Mobile-Ads-SDK'
 pod 'FirebaseAnalytics'
 pod 'FirebaseCrashlytics'
+pod 'GoogleMobileAdsMediationFacebook'
 
   # Pods for Elektrihind
   
