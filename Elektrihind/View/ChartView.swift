@@ -28,7 +28,7 @@ struct ChartView: View {
                 ZStack {
                     Rectangle()
                         .fill(Color.contentBoxBackground)
-                        .cornerRadius(20)
+                        .cornerRadius(14)
                         .padding()
                     Spacer()
                     VStack {
@@ -41,7 +41,7 @@ struct ChartView: View {
                 }
                 
             } else {
-                BarChartView(data: viewModel.data, day: self.day, legend: viewModel.legend, style: style, form: viewModel.form, valueSpecifier: viewModel.specifier, animatedToBack: false)
+                BarChartView(data: viewModel.data, day: self.day, legend: viewModel.legend, style: style, form: viewModel.form, valueSpecifier: viewModel.specifier, animatedToBack: false).clipped()
             }
         }
     }

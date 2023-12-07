@@ -14,6 +14,7 @@
 		A224648B2A6F17FD00B99250 /* UMPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A224648A2A6F17FD00B99250 /* UMPViewController.swift */; };
 		A22579F22767F74600F8E3AB /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22579F12767F74600F8E3AB /* TodayView.swift */; };
 		A22579F42767F76E00F8E3AB /* TomorrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22579F32767F76E00F8E3AB /* TomorrowView.swift */; };
+		A22A6CC02AD5C823006C752E /* MinAvgMaxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22A6CBF2AD5C823006C752E /* MinAvgMaxView.swift */; };
 		A245280929943F5E0021661E /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A245280829943F5D0021661E /* Banner.swift */; };
 		A245280B299827580021661E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A245280A299827570021661E /* GoogleService-Info.plist */; };
 		A258EFCE29DB3E7700B0B27D /* ConnectionLostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258EFCD29DB3E7700B0B27D /* ConnectionLostView.swift */; };
@@ -51,6 +52,7 @@
 		A224648A2A6F17FD00B99250 /* UMPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UMPViewController.swift; sourceTree = "<group>"; };
 		A22579F12767F74600F8E3AB /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
 		A22579F32767F76E00F8E3AB /* TomorrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TomorrowView.swift; sourceTree = "<group>"; };
+		A22A6CBF2AD5C823006C752E /* MinAvgMaxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinAvgMaxView.swift; sourceTree = "<group>"; };
 		A233FEE427669DE100FEDA9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A245280829943F5D0021661E /* Banner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		A245280A299827570021661E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				A2F9DFBC27653EFB006E4730 /* TabBarView.swift */,
 				A214594B28E5DD4C00FDB205 /* TitleView.swift */,
 				A214594D28E5DD9B00FDB205 /* CurrentPriceView.swift */,
+				A22A6CBF2AD5C823006C752E /* MinAvgMaxView.swift */,
 				A258EFCF29DB7A2900B0B27D /* CurrentPriceViewModel.swift */,
 				A214594F28E5DDCA00FDB205 /* MinMaxRangeView.swift */,
 				A245280829943F5D0021661E /* Banner.swift */,
@@ -234,7 +237,7 @@
 				A2B155AA27458EE2004B1B02 /* Sources */,
 				A2B155AB27458EE2004B1B02 /* Frameworks */,
 				A2B155AC27458EE2004B1B02 /* Resources */,
-				A208D57829999A660053CFB4 /* ShellScript */,
+				A208D57829999A660053CFB4 /* Run Script */,
 				0F28B314C51A51018433D163 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -317,7 +320,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Elektrihind/Pods-Elektrihind-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A208D57829999A660053CFB4 /* ShellScript */ = {
+		A208D57829999A660053CFB4 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 12;
@@ -327,6 +330,7 @@
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -383,6 +387,7 @@
 				A25AC1C92768009C00C9610F /* Globals.swift in Sources */,
 				A2D6DD5B279A06700007B14A /* BarChartRow.swift in Sources */,
 				A258EFCE29DB3E7700B0B27D /* ConnectionLostView.swift in Sources */,
+				A22A6CC02AD5C823006C752E /* MinAvgMaxView.swift in Sources */,
 				A245280929943F5E0021661E /* Banner.swift in Sources */,
 				A25AC1C72767FBC800C9610F /* SettingsView.swift in Sources */,
 				A2B155B227458EE2004B1B02 /* ElektrihindApp.swift in Sources */,
@@ -555,7 +560,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 39;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Elektrihind/Preview Content\"";
 				DEVELOPMENT_TEAM = 39G5236S72;
@@ -576,7 +581,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5;
+				MARKETING_VERSION = 2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = koodipardik.Elektrihind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -593,7 +598,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 39;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Elektrihind/Preview Content\"";
 				DEVELOPMENT_TEAM = 39G5236S72;
@@ -614,7 +619,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5;
+				MARKETING_VERSION = 2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = koodipardik.Elektrihind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -22,21 +22,15 @@ struct ElektrihindApp: App {
     }
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(networkManager)
-                .environmentObject(shared)
-                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-                            ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in })
-                        }
-            
-//            ZStack {
-//
-//                UMPWrapper(canLoadAdsCallback: {
-//                    debugPrint("Can load ads now")
-//                })
-//                .disabled(true)
-//            }
-            
+            ZStack {
+                ContentView()
+                    .environmentObject(networkManager)
+                    .environmentObject(shared)
+                UMPWrapper(canLoadAdsCallback: {
+                    debugPrint("Can load ads now")
+                })
+                .disabled(true)
+            }
         }
     }
 }

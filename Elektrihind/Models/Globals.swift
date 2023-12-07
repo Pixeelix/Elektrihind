@@ -55,7 +55,11 @@ enum Region: String {
 
 class Globals: ObservableObject {
     @Published var missingTomorrowData = false
+    @Published var minDayPrice: String = "---"
+    @Published var avgDayPrice: String = "---"
+    @Published var maxDayPrice: String = "---"
     @Published var minNextDayPrice: String = "---"
+    @Published var avgNextDayPrice: String = "---"
     @Published var maxNextDayPrice: String = "---"
     @Published var divider: Double = 1
     @Published var minFractionDigits: Int = 1
@@ -88,8 +92,8 @@ class Globals: ObservableObject {
                 taxPercentage = "21%"
                 taxRate = 1.21
             case .finland:
-                taxPercentage = "10%"
-                taxRate = 1.1
+                taxPercentage = "24%"
+                taxRate = 1.24
             }
         }
     }

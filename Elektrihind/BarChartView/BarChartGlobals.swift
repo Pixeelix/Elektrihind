@@ -145,7 +145,7 @@ public struct ChartForm {
         if UIScreen.is1stGenIphone {
             return 230
         } else if UIScreen.isIphone8 {
-            return 290
+            return 260
         } else {
             return UIScreen.screenHeight * 0.4
         }

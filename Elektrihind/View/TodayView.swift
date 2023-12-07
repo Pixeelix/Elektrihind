@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TodayView: View {
+    @Binding var tabSelection: Int
     @Environment(\.scenePhase) var scenePhase
     @EnvironmentObject var shared: Globals
     @StateObject private var chartViewModel = ChartViewModel()
@@ -16,12 +17,13 @@ struct TodayView: View {
         HStack(alignment: .top) {
             VStack(alignment: .center) {
                 TitleView(title: shared.localizedString("TITLE_TODAYS_PRICE"))
-                CurrentPriceView()
-                    .padding(.bottom, UIScreen.is1stGenIphone || UIScreen.isIphone8 ? 0 : 50)
+                CurrentPriceView(tabSelection: $tabSelection)
+                    .padding(.bottom, 0)
+                MinAvgMaxView(day: .today)
                 ChartView(day: .today, viewModel: chartViewModel)
                 Spacer()
-                BannerAd().frame(maxHeight: 60)
-                    .padding(.bottom, 25)
+                BannerAd(unitID: "ca-app-pub-5431783362632568/4212512484").frame(maxHeight: 60)
+                    .padding(.bottom, 15)
             }
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)

@@ -55,9 +55,7 @@ class ChartViewModel: ObservableObject {
             fullDayChartData.append(dataPoint)
         }
         self.data = ChartData(values: fullDayChartData)
-        if day == .tomorrow {
-            calculateMinMaxValues()
-        }
+        calculateMinMaxValues()
         isLoading = false
     }
     
@@ -67,12 +65,22 @@ class ChartViewModel: ObservableObject {
             let price = shared.includeTax ? data.price * shared.taxRate : data.price
             pricesArray.append(price)
         }
+        let pricesSum = pricesArray.reduce(0, +)
         if let minNumberValue = pricesArray.min(),
            let maxNumberValue = pricesArray.max() {
             let minNumber = shared.numberFormatter.string(from: NSNumber(value: minNumberValue / shared.divider))
+            let avgNumber = shared.numberFormatter.string(from: NSNumber(value: (pricesSum / Double(pricesArray.count)) / shared.divider))
             let maxNumber = shared.numberFormatter.string(from: NSNumber(value: maxNumberValue / shared.divider))
-            shared.minNextDayPrice = minNumber ?? "---"
-            shared.maxNextDayPrice = maxNumber ?? "---"
+            if day == .today {
+                shared.minDayPrice = minNumber ?? "---"
+                shared.avgDayPrice = avgNumber ?? "---"
+                shared.maxDayPrice = maxNumber ?? "---"
+            } else if day == .tomorrow {
+                shared.minNextDayPrice = minNumber ?? "---"
+                shared.avgNextDayPrice = avgNumber ?? "---"
+                shared.maxNextDayPrice = maxNumber ?? "---"
+            }
+
         }
     }
     

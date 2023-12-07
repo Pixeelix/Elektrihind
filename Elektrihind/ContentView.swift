@@ -19,10 +19,10 @@ struct ContentView: View {
     var body: some View {
         if networkManager.isConnected {
             TabView(selection: $tabBarSelection) {
-                TodayView()
+                TodayView(tabSelection: $tabBarSelection)
                     .tag(0)
                     .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
-                TomorrowView()
+                TomorrowView(tabSelection: $tabBarSelection)
                     .tag(1)
                     .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
     //          Text("Hea teada")

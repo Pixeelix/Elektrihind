@@ -36,3 +36,6 @@
 "FINNISH" = "Suomi";
 "RUSSIAN" = "Venäjä";
 "TITLE_VAT" = "ALV";
+"TITLE_MIN" = "Min";
+"TITLE_AVG" = "Keski";
+"TITLE_MAX" = "Max";

@@ -11,9 +11,10 @@ import GoogleMobileAds
 
 struct BannerAd: UIViewRepresentable {
     
-    var unitID: String = "ca-app-pub-5431783362632568/4212512484"
+    var unitID: String
     
-    init() {
+    init(unitID: String) {
+        self.unitID = unitID
     #if DEBUG
         self.unitID = "ca-app-pub-3940256099942544/2934735716"
     #endif
@@ -27,6 +28,7 @@ struct BannerAd: UIViewRepresentable {
         let adView = GADBannerView(adSize: GADAdSizeBanner)
         adView.adUnitID = unitID
         adView.rootViewController = UIApplication.shared.getRootViewController()
+        adView.delegate = context.coordinator
         adView.load(GADRequest())
         return adView
     }

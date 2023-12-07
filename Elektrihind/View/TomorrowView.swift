@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TomorrowView: View {
+    @Binding var tabSelection: Int
     @Environment(\.scenePhase) var scenePhase
     @EnvironmentObject var shared: Globals
     @StateObject private var chartViewModel = ChartViewModel()
@@ -28,10 +29,13 @@ struct TomorrowView: View {
             } else {
                 VStack(alignment: .center) {
                     TitleView(title: shared.localizedString("TITLE_TOMORROWS_PRICE"))
-                    MinMaxRange()
-                        .padding(.bottom, UIScreen.is1stGenIphone || UIScreen.isIphone8 ? 10 : 50)
+                    MinMaxRange(tabSelection: $tabSelection)
+                        .padding(.bottom, 0)
+                    MinAvgMaxView(day: .tomorrow)
                     ChartView(day: .tomorrow, viewModel: chartViewModel)
                     Spacer()
+                    BannerAd(unitID: "ca-app-pub-5431783362632568/3104542071").frame(maxHeight: 60)
+                        .padding(.bottom, 15)
                 }
             }
         }
@@ -51,6 +55,6 @@ struct TomorrowView: View {
 
 struct TomorrowView_Previews: PreviewProvider {
     static var previews: some View {
-        TomorrowView()
+        TomorrowView(tabSelection: .constant(0))
     }
 }

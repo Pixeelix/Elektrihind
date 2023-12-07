@@ -36,3 +36,6 @@
 "FINNISH" = "Soome";
 "RUSSIAN" = "Vene";
 "TITLE_VAT" = "Käibemaks";
+"TITLE_MIN" = "Min";
+"TITLE_AVG" = "Keskmine";
+"TITLE_MAX" = "Max";
