@@ -83,8 +83,8 @@ class Globals: ObservableObject {
             saveRegion()
             switch region {
             case .estonia:
-                taxPercentage = "20%"
-                taxRate = 1.2
+                taxPercentage = "22%"
+                taxRate = 1.22
             case .latvia:
                 taxPercentage = "21%"
                 taxRate = 1.21
