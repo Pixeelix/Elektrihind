@@ -16,7 +16,6 @@ class ChartViewModel: ObservableObject {
     @Published var isLoading: Bool = true
     @Published var data: ChartData = TestData.data
     @Published var specifier: String = "%.1f"
-    @Published var legend: String = "Quarterly"
     @Published var form: CGSize = ChartForm.extraLarge
 
     func setup(_ shared: Globals, day: Day) {

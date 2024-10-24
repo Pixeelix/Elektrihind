@@ -41,7 +41,7 @@ struct ChartView: View {
                 }
                 
             } else {
-                BarChartView(data: viewModel.data, day: self.day, legend: viewModel.legend, style: style, form: viewModel.form, valueSpecifier: viewModel.specifier, animatedToBack: false).clipped()
+                BarChartView(data: viewModel.data, day: self.day, style: style, form: viewModel.form, valueSpecifier: viewModel.specifier, animatedToBack: false).clipped()
             }
         }
     }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum Language: String {
     case estonian = "et"
@@ -118,6 +119,14 @@ class Globals: ObservableObject {
         }
     }
     
+    // New property for "Always On Display"
+     @Published var alwaysOnDisplay: Bool = UserDefaults.standard.bool(forKey: "alwaysOnDisplay") {
+         didSet {
+             saveAlwaysOnDisplay()
+             UIApplication.shared.isIdleTimerDisabled = alwaysOnDisplay
+         }
+     }
+    
     func getSavedSettings() {
         let languageString = UserDefaults.standard.string(forKey: "language") ?? getLanguageFromLocale()
         language = Language(rawValue: languageString) ?? .estonian
@@ -125,6 +134,8 @@ class Globals: ObservableObject {
         region = Region(rawValue: regionString) ?? .estonia
         unit = UserDefaults.standard.string(forKey: "unit") ?? unit
         includeTax = UserDefaults.standard.bool(forKey: "includeTax")
+        alwaysOnDisplay = UserDefaults.standard.bool(forKey: "alwaysOnDisplay")
+        UIApplication.shared.isIdleTimerDisabled = alwaysOnDisplay
     }
     
     private func getLanguageFromLocale() -> String {
@@ -172,5 +183,9 @@ class Globals: ObservableObject {
     
     func saveTaxValue() {
         UserDefaults.standard.set(includeTax, forKey: "includeTax")
+    }
+    
+    func saveAlwaysOnDisplay() {
+        UserDefaults.standard.set(alwaysOnDisplay, forKey: "alwaysOnDisplay")
     }
 }

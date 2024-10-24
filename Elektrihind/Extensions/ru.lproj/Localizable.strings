@@ -39,3 +39,4 @@
 "TITLE_MIN" = "Мин";
 "TITLE_AVG" = "Средний";
 "TITLE_MAX" = "Макс";
+"TITLE_ALWAYS_ON_DISPLAY" = "Всегда включённый экран";
