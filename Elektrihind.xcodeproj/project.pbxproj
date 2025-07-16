@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		41D6FC32093CE2FE8640BBB0 /* Pods_Elektrihind.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6138A1531B91856A7B51433 /* Pods_Elektrihind.framework */; };
 		A214594C28E5DD4C00FDB205 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A214594B28E5DD4C00FDB205 /* TitleView.swift */; };
 		A214594E28E5DD9B00FDB205 /* CurrentPriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A214594D28E5DD9B00FDB205 /* CurrentPriceView.swift */; };
 		A214595028E5DDCA00FDB205 /* MinMaxRangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A214594F28E5DDCA00FDB205 /* MinMaxRangeView.swift */; };
@@ -42,11 +41,12 @@
 		A2D6DD5D279A06AC0007B14A /* BarChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D6DD5C279A06AC0007B14A /* BarChartCell.swift */; };
 		A2D6DD5F279A0B6B0007B14A /* Legend.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D6DD5E279A0B6A0007B14A /* Legend.swift */; };
 		A2F9DFBD27653EFB006E4730 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F9DFBC27653EFB006E4730 /* TabBarView.swift */; };
+		EAED25969E3EAF8F58B1982D /* Pods_Elektrihind.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E63CA10A816BE92CC621A10 /* Pods_Elektrihind.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3FA2666DF116A3F0196F86E8 /* Pods-Elektrihind.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Elektrihind.release.xcconfig"; path = "Target Support Files/Pods-Elektrihind/Pods-Elektrihind.release.xcconfig"; sourceTree = "<group>"; };
-		8A30E028A1548C595C7255A8 /* Pods-Elektrihind.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Elektrihind.debug.xcconfig"; path = "Target Support Files/Pods-Elektrihind/Pods-Elektrihind.debug.xcconfig"; sourceTree = "<group>"; };
+		1DDD4FBC8FB986199EA5EADD /* Pods-Elektrihind.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Elektrihind.debug.xcconfig"; path = "Target Support Files/Pods-Elektrihind/Pods-Elektrihind.debug.xcconfig"; sourceTree = "<group>"; };
+		9E63CA10A816BE92CC621A10 /* Pods_Elektrihind.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Elektrihind.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A214594B28E5DD4C00FDB205 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		A214594D28E5DD9B00FDB205 /* CurrentPriceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPriceView.swift; sourceTree = "<group>"; };
 		A214594F28E5DDCA00FDB205 /* MinMaxRangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinMaxRangeView.swift; sourceTree = "<group>"; };
@@ -89,7 +89,7 @@
 		A2F417A029EC525A00FC2562 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A2F417A129EDCE2D00FC2562 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A2F9DFBC27653EFB006E4730 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
-		D6138A1531B91856A7B51433 /* Pods_Elektrihind.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Elektrihind.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCDED8B74DE8F522D2E222B2 /* Pods-Elektrihind.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Elektrihind.release.xcconfig"; path = "Target Support Files/Pods-Elektrihind/Pods-Elektrihind.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,8 +97,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				41D6FC32093CE2FE8640BBB0 /* Pods_Elektrihind.framework in Frameworks */,
 				A28EE7932B48AFCB00762A71 /* AppTrackingTransparency.framework in Frameworks */,
+				EAED25969E3EAF8F58B1982D /* Pods_Elektrihind.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,8 +108,8 @@
 		4C0010EB2A6C3A8C41613926 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				8A30E028A1548C595C7255A8 /* Pods-Elektrihind.debug.xcconfig */,
-				3FA2666DF116A3F0196F86E8 /* Pods-Elektrihind.release.xcconfig */,
+				1DDD4FBC8FB986199EA5EADD /* Pods-Elektrihind.debug.xcconfig */,
+				CCDED8B74DE8F522D2E222B2 /* Pods-Elektrihind.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -225,7 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				A28EE7922B48AFCB00762A71 /* AppTrackingTransparency.framework */,
-				D6138A1531B91856A7B51433 /* Pods_Elektrihind.framework */,
+				9E63CA10A816BE92CC621A10 /* Pods_Elektrihind.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -237,12 +237,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A2B155BC27458EE4004B1B02 /* Build configuration list for PBXNativeTarget "Elektrihind" */;
 			buildPhases = (
-				DC4C93A258C3515304683595 /* [CP] Check Pods Manifest.lock */,
+				B91B7F6CFEC9418962F64FC8 /* [CP] Check Pods Manifest.lock */,
 				A2B155AA27458EE2004B1B02 /* Sources */,
 				A2B155AB27458EE2004B1B02 /* Frameworks */,
 				A2B155AC27458EE2004B1B02 /* Resources */,
 				A208D57829999A660053CFB4 /* Run Script */,
-				0F28B314C51A51018433D163 /* [CP] Embed Pods Frameworks */,
+				912D21F2505BBB04D28273B9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -307,7 +307,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0F28B314C51A51018433D163 /* [CP] Embed Pods Frameworks */ = {
+		912D21F2505BBB04D28273B9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -344,7 +344,7 @@
 			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 			showEnvVarsInLog = 0;
 		};
-		DC4C93A258C3515304683595 /* [CP] Check Pods Manifest.lock */ = {
+		B91B7F6CFEC9418962F64FC8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -558,7 +558,7 @@
 		};
 		A2B155BD27458EE4004B1B02 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8A30E028A1548C595C7255A8 /* Pods-Elektrihind.debug.xcconfig */;
+			baseConfigurationReference = 1DDD4FBC8FB986199EA5EADD /* Pods-Elektrihind.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -596,7 +596,7 @@
 		};
 		A2B155BE27458EE4004B1B02 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3FA2666DF116A3F0196F86E8 /* Pods-Elektrihind.release.xcconfig */;
+			baseConfigurationReference = CCDED8B74DE8F522D2E222B2 /* Pods-Elektrihind.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
