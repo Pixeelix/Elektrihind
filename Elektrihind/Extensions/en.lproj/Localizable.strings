@@ -40,4 +40,5 @@
 "TITLE_AVG" = "Average";
 "TITLE_MAX" = "Max";
 "TITLE_ALWAYS_ON_DISPLAY" = "Always ON display";
+"TITLE_CHART_RESOLUTION" = "Market time unit";
 

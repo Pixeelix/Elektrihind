@@ -41,11 +41,27 @@ public struct BarChartRow : View {
         }
     }
     
-    func getGradientFor(_ index: Int) -> GradientColor{
-        let currentHour = Calendar.current.component(.hour, from: Date())
-        if day == .today {
-            if index == currentHour {
-                return GradientColor(start: Color(hexString: "#FF964F"), end: Color(hexString: ":#FF964F"))
+    func getGradientFor(_ index: Int) -> GradientColor {
+        // Highlight the bar that corresponds to the current time, regardless of data granularity
+        // (e.g., 96 points for 15-minute intervals, 24 points for hourly, etc.).
+        guard day == .today else {
+            return gradient ?? GradientColor(start: Color.blue, end: Color.blue)
+        }
+
+        let now = Date()
+        let hour = Calendar.current.component(.hour, from: now)
+        let minute = Calendar.current.component(.minute, from: now)
+        let totalPoints = max(0, data.count)
+
+        // Map minutes into the day to an index in [0, totalPoints - 1].
+        // This works for any granularity (24, 96, or other counts).
+        if totalPoints > 0 {
+            let minutesIntoDay = hour * 60 + minute // 0..1439
+            let proportionOfDay = Double(minutesIntoDay) / (24.0 * 60.0)
+            let currentIndex = min(totalPoints - 1, max(0, Int(floor(Double(totalPoints) * proportionOfDay))))
+
+            if index == currentIndex {
+                return GradientColor(start: Color(hexString: "#FF964F"), end: Color(hexString: "#FF964F"))
             } else {
                 return gradient ?? GradientColor(start: Color.blue, end: Color.blue)
             }
@@ -69,3 +85,4 @@ struct ChartRow_Previews : PreviewProvider {
     }
 }
 #endif
+

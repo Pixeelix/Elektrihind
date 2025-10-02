@@ -24,6 +24,7 @@ struct SettingsView: View {
         appearance.backgroundColor = .clear
         appearance.setBackgroundImage(UIImage(), for: .default)
         appearance.shadowImage = UIImage()
+        appearance.tintColor = .blue
     }
     
     var body: some View {
@@ -47,7 +48,8 @@ struct SettingsView: View {
                 appInfoSection
                 payAttentionSection
             }
-            .scrollContentBackground(.hidden)  // iOS 16-specific to hide background in the form
+            .tint(.blue)
+            .scrollContentBackground(.hidden)
         }
     }
     
@@ -64,6 +66,7 @@ struct SettingsView: View {
                     }
                 }
             }
+            .tint(.blue)
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarTitle(shared.localizedString("LABEL_SETTINGS"))
             .toolbar {
@@ -108,6 +111,16 @@ struct SettingsView: View {
             // New Toggle for "Always On Display"
             Toggle(isOn: $shared.alwaysOnDisplay) {
                 Text(shared.localizedString("TITLE_ALWAYS_ON_DISPLAY"))
+            }
+            
+            Picker(shared.localizedString("TITLE_CHART_RESOLUTION"), selection: $shared.chartResolution) {
+                ForEach(ChartResolution.allCases, id: \.self) { resolution in
+                    Text(resolution.label)
+                }
+            }
+            .onChange(of: shared.chartResolution) { _ in
+                shared.todayDataUpdateMandatory = true
+                shared.tomorrowDataUpdateMandatory = true
             }
         }
     }

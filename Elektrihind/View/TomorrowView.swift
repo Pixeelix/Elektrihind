@@ -26,6 +26,10 @@ struct TomorrowView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .onAppear(perform: loadChartData)
         .onChange(of: scenePhase, perform: handleScenePhaseChange)
+        .onChange(of: shared.chartResolution) { _ in
+            chartViewModel.setup(shared, day: .tomorrow)
+            chartViewModel.loadChartData()
+        }
     }
 
     // View when no data for tomorrow

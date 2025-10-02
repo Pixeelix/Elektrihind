@@ -18,6 +18,40 @@ class ChartViewModel: ObservableObject {
     @Published var specifier: String = "%.1f"
     @Published var form: CGSize = ChartForm.extraLarge
 
+    // Aggregate 15-minute data points into hourly data points by averaging each group of 4.
+    private func aggregateToHourly(_ data: [PriceData]) -> [PriceData] {
+        guard !data.isEmpty else { return [] }
+        // Group by the hour bucket using the timestamp.
+        var buckets: [(time: TimeInterval, values: [Double])] = []
+        var currentHourStart: TimeInterval? = nil
+        var currentValues: [Double] = []
+        let calendar = Calendar.current
+        for point in data.sorted(by: { $0.timestamp < $1.timestamp }) {
+            let date = Date(timeIntervalSince1970: point.timestamp)
+            let comps = calendar.dateComponents([.year, .month, .day, .hour], from: date)
+            guard let hourDate = calendar.date(from: comps) else { continue }
+            let hourStart = hourDate.timeIntervalSince1970
+            if currentHourStart == nil {
+                currentHourStart = hourStart
+            }
+            if hourStart != currentHourStart {
+                if let start = currentHourStart, !currentValues.isEmpty {
+                    let avg = currentValues.reduce(0, +) / Double(currentValues.count)
+                    buckets.append((time: start, values: [avg]))
+                }
+                currentHourStart = hourStart
+                currentValues = [point.price]
+            } else {
+                currentValues.append(point.price)
+            }
+        }
+        if let start = currentHourStart, !currentValues.isEmpty {
+            let avg = currentValues.reduce(0, +) / Double(currentValues.count)
+            buckets.append((time: start, values: [avg]))
+        }
+        return buckets.map { PriceData(timestamp: $0.time, price: $0.values.first ?? 0) }
+    }
+
     func setup(_ shared: Globals, day: Day) {
         self.shared = shared
         self.day = day
@@ -41,12 +75,18 @@ class ChartViewModel: ObservableObject {
     }
     
     private func updateChartData() {
+        var sourceData = dataArrayFromAPI
+        // If user selected hourly resolution, aggregate the 15-min data into hourly averages
+        if shared.chartResolution == .oneHour {
+            sourceData = aggregateToHourly(sourceData)
+        }
+
         var fullDayChartData: [(String, Double)] = []
         let formatter = DateFormatter()
         formatter.timeZone = TimeZone(abbreviation: "EET")
         formatter.locale = NSLocale.current
-        formatter.dateFormat = "HH:mm"
-        for data in dataArrayFromAPI {
+        formatter.dateFormat = shared.chartResolution == .oneHour ? "HH:00" : "HH:mm"
+        for data in sourceData {
             let timeStampDate = Date(timeIntervalSince1970: data.timestamp)
             let stringTime = formatter.string(from: timeStampDate)
             let price = shared.includeTax ? (data.price / shared.divider) * shared.taxRate : data.price / shared.divider
@@ -60,7 +100,8 @@ class ChartViewModel: ObservableObject {
     
     private func calculateMinMaxValues() {
         var pricesArray = [Double]()
-        for data in dataArrayFromAPI {
+        let sourceData: [PriceData] = (shared.chartResolution == .oneHour) ? aggregateToHourly(dataArrayFromAPI) : dataArrayFromAPI
+        for data in sourceData {
             let price = shared.includeTax ? data.price * shared.taxRate : data.price
             pricesArray.append(price)
         }

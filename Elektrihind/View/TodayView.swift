@@ -37,6 +37,10 @@ struct TodayView: View {
                 chartViewModel.loadChartData()
             }
         }
+        .onChange(of: shared.chartResolution) { _ in
+            chartViewModel.setup(self.shared, day: .today)
+            chartViewModel.loadChartData()
+        }
     }
 }
 

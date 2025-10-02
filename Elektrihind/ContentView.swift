@@ -13,29 +13,31 @@ struct ContentView: View {
     @State private var tabBarSelection = 0
     
     init() {
-        UITabBar.appearance().backgroundColor = UIColor(Color.tabBarBackground)
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(Color.tabBarBackground)
+        // Unselected items: use a neutral color
+        appearance.stackedLayoutAppearance.normal.iconColor = UIColor.systemGray
+        appearance.inlineLayoutAppearance.normal.iconColor = UIColor.systemGray
+        appearance.compactInlineLayoutAppearance.normal.iconColor = UIColor.systemGray
+        // Selected items: use the app's accent color
+        let selectedColor = UIColor.systemBlue
+        appearance.stackedLayoutAppearance.selected.iconColor = selectedColor
+        appearance.inlineLayoutAppearance.selected.iconColor = selectedColor
+        appearance.compactInlineLayoutAppearance.selected.iconColor = selectedColor
+
+        UITabBar.appearance().standardAppearance = appearance
+        if #available(iOS 15.0, *) {
+            UITabBar.appearance().scrollEdgeAppearance = appearance
+        }
     }
     
     var body: some View {
         if networkManager.isConnected {
-            TabView(selection: $tabBarSelection) {
-                TodayView(tabSelection: $tabBarSelection)
-                    .tag(0)
-                    .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
-                TomorrowView(tabSelection: $tabBarSelection)
-                    .tag(1)
-                    .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
-    //          Text("Hea teada")
-    //              .tag(2)
-    //              .background(backGroundColor().edgesIgnoringSafeArea(.all))
-                SettingsView()
-                    .tag(2)
-                    .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
-            }
-            .onAppear() {
-                shared.getSavedSettings()
-            }
-            .overlay(TabBarView(selection: $tabBarSelection), alignment: .bottom)
+            TabBarView(selection: $tabBarSelection)
+                .onAppear() {
+                    shared.getSavedSettings()
+                }
         } else {
             ConnectionLostView()
         }
@@ -49,3 +51,4 @@ struct ContentView_Previews: PreviewProvider {
         }
     }
 }
+

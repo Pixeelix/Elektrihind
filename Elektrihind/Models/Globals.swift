@@ -54,6 +54,18 @@ enum Region: String {
     }
 }
 
+enum ChartResolution: String, CaseIterable, Hashable {
+    case fifteenMinutes = "15min"
+    case oneHour = "1h"
+
+    var label: String {
+        switch self {
+        case .fifteenMinutes: return "15 min"
+        case .oneHour: return "1 h"
+        }
+    }
+}
+
 class Globals: ObservableObject {
     @Published var missingTomorrowData = false
     @Published var minDayPrice: String = "---"
@@ -119,6 +131,19 @@ class Globals: ObservableObject {
         }
     }
     
+    // Chart resolution setting (15 min or 1 h)
+    @Published var chartResolution: ChartResolution = {
+        if let saved = UserDefaults.standard.string(forKey: "chartResolution"),
+           let value = ChartResolution(rawValue: saved) {
+            return value
+        }
+        return .fifteenMinutes
+    }() {
+        didSet {
+            saveChartResolution()
+        }
+    }
+    
     // New property for "Always On Display"
      @Published var alwaysOnDisplay: Bool = UserDefaults.standard.bool(forKey: "alwaysOnDisplay") {
          didSet {
@@ -136,6 +161,11 @@ class Globals: ObservableObject {
         includeTax = UserDefaults.standard.bool(forKey: "includeTax")
         alwaysOnDisplay = UserDefaults.standard.bool(forKey: "alwaysOnDisplay")
         UIApplication.shared.isIdleTimerDisabled = alwaysOnDisplay
+        
+        if let savedResolution = UserDefaults.standard.string(forKey: "chartResolution"),
+           let value = ChartResolution(rawValue: savedResolution) {
+            chartResolution = value
+        }
     }
     
     private func getLanguageFromLocale() -> String {
@@ -187,5 +217,9 @@ class Globals: ObservableObject {
     
     func saveAlwaysOnDisplay() {
         UserDefaults.standard.set(alwaysOnDisplay, forKey: "alwaysOnDisplay")
+    }
+    
+    func saveChartResolution() {
+        UserDefaults.standard.set(chartResolution.rawValue, forKey: "chartResolution")
     }
 }
