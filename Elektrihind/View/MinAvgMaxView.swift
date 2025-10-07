@@ -16,21 +16,21 @@ struct MinAvgMaxView: View {
                 VStack(alignment: .center) {
                     Text(shared.localizedString("TITLE_MIN"))
                         .font(.system(size: 18, weight: .medium))
-                    Text(day == .today ? "\(shared.minDayPrice)" : "\(shared.minNextDayPrice)")
+                    Text(day == Day.today ? "\(shared.minDayPrice)" : "\(shared.minNextDayPrice)")
                         .font(.system(size: 18, weight: .bold))
                 }
                 Spacer()
                 VStack(alignment: .center) {
                     Text(shared.localizedString("TITLE_AVG"))
                         .font(.system(size: 18, weight: .medium))
-                    Text(day == .today ? "\(shared.avgDayPrice)" : "\(shared.avgNextDayPrice)")
+                    Text(day == Day.today ? "\(shared.avgDayPrice)" : "\(shared.avgNextDayPrice)")
                         .font(.system(size: 18, weight: .bold))
                 }
                 Spacer()
                 VStack(alignment: .center) {
                     Text(shared.localizedString("TITLE_MAX"))
                         .font(.system(size: 18, weight: .medium))
-                    Text(day == .today ? "\(shared.maxDayPrice)" : "\(shared.maxNextDayPrice)")
+                    Text(day == Day.today ? "\(shared.maxDayPrice)" : "\(shared.maxNextDayPrice)")
                         .font(.system(size: 18, weight: .bold))
                 }
             }
@@ -45,3 +45,4 @@ struct MinAvgMaxView: View {
         .cornerRadius(10)
     }
 }
+

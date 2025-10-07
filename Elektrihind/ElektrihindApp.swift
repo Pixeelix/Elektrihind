@@ -9,7 +9,6 @@ import SwiftUI
 import GoogleMobileAds
 import FirebaseCore
 import AppTrackingTransparency
-import FBAudienceNetwork
 
 @main
 struct ElektrihindApp: App {

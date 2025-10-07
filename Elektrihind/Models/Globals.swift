@@ -7,29 +7,7 @@
 
 import Foundation
 import SwiftUI
-
-enum Language: String {
-    case estonian = "et"
-    case english = "en"
-    case finnish = "fi"
-    case russian = "ru"
-    
-    static let allLanguages = [estonian, english, finnish, russian]
-    var name: String {
-      get {
-        switch self {
-        case .estonian:
-            return "ESTONIAN"
-          case .english:
-            return "ENGLISH"
-        case.finnish:
-            return "FINNISH"
-        case.russian:
-            return "RUSSIAN"
-        }
-      }
-    }
-}
+import WidgetKit
 
 enum Region: String {
     case estonia = "EE"
@@ -67,6 +45,15 @@ enum ChartResolution: String, CaseIterable, Hashable {
 }
 
 class Globals: ObservableObject {
+    
+    private let appGroupID = "group.koodipardik.Elektrihind"
+    private var appGroupDefaults: UserDefaults? { UserDefaults(suiteName: appGroupID) }
+
+    private func mirrorToAppGroup(key: String, value: Any) {
+        guard let defaults = appGroupDefaults else { return }
+        defaults.set(value, forKey: key)
+    }
+    
     @Published var missingTomorrowData = false
     @Published var minDayPrice: String = "---"
     @Published var avgDayPrice: String = "---"
@@ -131,7 +118,6 @@ class Globals: ObservableObject {
         }
     }
     
-    // Chart resolution setting (15 min or 1 h)
     @Published var chartResolution: ChartResolution = {
         if let saved = UserDefaults.standard.string(forKey: "chartResolution"),
            let value = ChartResolution(rawValue: saved) {
@@ -166,10 +152,17 @@ class Globals: ObservableObject {
            let value = ChartResolution(rawValue: savedResolution) {
             chartResolution = value
         }
+        
+        // Mirror values to App Group so the widget can read them
+        mirrorToAppGroup(key: "language", value: language.rawValue)
+        mirrorToAppGroup(key: "region", value: region.rawValue)
+        mirrorToAppGroup(key: "unit", value: unit)
+        mirrorToAppGroup(key: "includeTax", value: includeTax)
+        mirrorToAppGroup(key: "chartResolution", value: chartResolution.rawValue)
     }
     
     private func getLanguageFromLocale() -> String {
-        if let regionCode = Locale.current.regionCode {
+        if let regionCode = Locale.current.region?.identifier {
             switch regionCode {
             case "EE":
                 return "et"
@@ -186,7 +179,7 @@ class Globals: ObservableObject {
     }
     
     private func getRegionFromLocale() -> String {
-        if let regionCode = Locale.current.regionCode {
+        if let regionCode = Locale.current.region?.identifier {
             return regionCode
         } else {
             return "EE"
@@ -194,25 +187,33 @@ class Globals: ObservableObject {
     }
     
     func localizedString(_ key: String) -> String {
-        return key.localized(language)
+        return key.localized(language, in: .main)
     }
     
     func saveLanguage() {
         UserDefaults.standard.set(language.rawValue, forKey: "language")
+        mirrorToAppGroup(key: "language", value: language.rawValue)
+        WidgetCenter.shared.reloadAllTimelines()
         UserDefaults.standard.synchronize()
     }
     
     func saveRegion() {
         UserDefaults.standard.set(region.rawValue, forKey: "region")
+        mirrorToAppGroup(key: "region", value: region.rawValue)
+        WidgetCenter.shared.reloadAllTimelines()
         UserDefaults.standard.synchronize()
     }
     
     func saveUnit() {
         UserDefaults.standard.set(unit, forKey: "unit")
+        mirrorToAppGroup(key: "unit", value: unit)
+        WidgetCenter.shared.reloadAllTimelines()
     }
     
     func saveTaxValue() {
         UserDefaults.standard.set(includeTax, forKey: "includeTax")
+        mirrorToAppGroup(key: "includeTax", value: includeTax)
+        WidgetCenter.shared.reloadAllTimelines()
     }
     
     func saveAlwaysOnDisplay() {
@@ -221,5 +222,8 @@ class Globals: ObservableObject {
     
     func saveChartResolution() {
         UserDefaults.standard.set(chartResolution.rawValue, forKey: "chartResolution")
+        mirrorToAppGroup(key: "chartResolution", value: chartResolution.rawValue)
+        WidgetCenter.shared.reloadAllTimelines()
     }
 }
+

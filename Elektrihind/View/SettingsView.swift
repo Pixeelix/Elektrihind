@@ -29,56 +29,20 @@ struct SettingsView: View {
     
     var body: some View {
         Group {
-            if #available(iOS 16.0, *) {
-                ios16SettingsView
-            } else {
-                ios15SettingsView
-            }
-        }
-    }
-    
-    // Separate View for iOS 16+ using modern APIs
-    @available(iOS 16.0, *)
-    private var ios16SettingsView: some View {
-        VStack(alignment: .center) {
-            TitleView(title: shared.localizedString("LABEL_SETTINGS"))
-
-            Form {
-                generalSettingsSection
-                appInfoSection
-                payAttentionSection
-            }
-            .tint(.blue)
-            .scrollContentBackground(.hidden)
-        }
-    }
-    
-    // Separate View for older iOS versions
-    private var ios15SettingsView: some View {
-        NavigationView {
-            ZStack {
-                backgroundGradient
-                VStack {
-                    Form {
-                        generalSettingsSection
-                        appInfoSection
-                        payAttentionSection
-                    }
+            VStack(alignment: .center) {
+                TitleView(title: shared.localizedString("LABEL_SETTINGS"))
+                
+                Form {
+                    generalSettingsSection
+                    appInfoSection
+                    payAttentionSection
                 }
-            }
-            .tint(.blue)
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarTitle(shared.localizedString("LABEL_SETTINGS"))
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    TitleView(title: shared.localizedString("LABEL_SETTINGS"))
-                        .padding(.top, 11)
-                }
+                .tint(.blue)
+                .scrollContentBackground(.hidden)
             }
         }
     }
     
-    // Reusable view sections
     private var generalSettingsSection: some View {
         Section(header: Text(shared.localizedString("TITLE_GENERAL"))) {
             Picker(shared.localizedString("TITLE_LANGUAGE"), selection: $shared.language) {
@@ -108,7 +72,7 @@ struct SettingsView: View {
                 Spacer()
                 Text(shared.taxPercentage)
             }
-            // New Toggle for "Always On Display"
+            
             Toggle(isOn: $shared.alwaysOnDisplay) {
                 Text(shared.localizedString("TITLE_ALWAYS_ON_DISPLAY"))
             }
