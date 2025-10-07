@@ -44,7 +44,7 @@ public struct BarChartRow : View {
     func getGradientFor(_ index: Int) -> GradientColor {
         // Highlight the bar that corresponds to the current time, regardless of data granularity
         // (e.g., 96 points for 15-minute intervals, 24 points for hourly, etc.).
-        guard day == .today else {
+        guard day == Day.today else {
             return gradient ?? GradientColor(start: Color.blue, end: Color.blue)
         }
 
@@ -79,8 +79,8 @@ public struct BarChartRow : View {
 struct ChartRow_Previews : PreviewProvider {
     static var previews: some View {
         Group {
-            BarChartRow(data: [0], day: .today, accentColor: Colors.OrangeStart, touchLocation: .constant(-1))
-            BarChartRow(data: [8,23,54,32,12,37,7], day: .today, accentColor: Colors.OrangeStart, touchLocation: .constant(-1))
+            BarChartRow(data: [0], day: Day.today, accentColor: Colors.OrangeStart, touchLocation: .constant(-1))
+            BarChartRow(data: [8,23,54,32,12,37,7], day: Day.today, accentColor: Colors.OrangeStart, touchLocation: .constant(-1))
         }
     }
 }

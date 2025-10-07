@@ -12,10 +12,6 @@ struct NordPoolCountriesData: Decodable {
     let success: Bool
 }
 
-struct NordPoolCurrentData: Decodable {
-    let data: [PriceData]
-}
-
 struct Countries: Decodable {
     let ee, fi, lt, lv: [PriceData]
 }
@@ -24,3 +20,4 @@ struct PriceData: Decodable {
     let timestamp: Double
     let price: Double
 }
+

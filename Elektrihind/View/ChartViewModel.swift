@@ -8,9 +8,11 @@
 import Foundation
 import SwiftUI
 
+@MainActor
 class ChartViewModel: ObservableObject {
     private var shared = Globals()
-    private var day: Day = .today
+    private let network = NetworkService()
+    private var day: Day = Day.today
     private var dataArrayFromAPI: [PriceData] = []
     private var dataLastLoaded: Date? = nil
     @Published var isLoading: Bool = true
@@ -61,13 +63,18 @@ class ChartViewModel: ObservableObject {
     func loadChartData() {
         if shouldLoadData() {
             isLoading = true
-            Network().loadFullDayData(day, region: shared.region) { data in
-                if self.day == .tomorrow {
-                    self.shared.missingTomorrowData = data.count <= 2
+            Task {
+                do {
+                    let data = try await network.loadFullDayData(day, region: shared.region)
+                    if self.day == Day.tomorrow {
+                        self.shared.missingTomorrowData = data.count <= 2
+                    }
+                    self.dataArrayFromAPI = data
+                    self.updateChartData()
+                    self.dataLastLoaded = Date()
+                } catch {
+                    self.isLoading = false
                 }
-                self.dataArrayFromAPI = data
-                self.updateChartData()
-                self.dataLastLoaded = Date()
             }
         } else {
             updateChartData()
@@ -111,11 +118,11 @@ class ChartViewModel: ObservableObject {
             let minNumber = shared.numberFormatter.string(from: NSNumber(value: minNumberValue / shared.divider))
             let avgNumber = shared.numberFormatter.string(from: NSNumber(value: (pricesSum / Double(pricesArray.count)) / shared.divider))
             let maxNumber = shared.numberFormatter.string(from: NSNumber(value: maxNumberValue / shared.divider))
-            if day == .today {
+            if day == Day.today {
                 shared.minDayPrice = minNumber ?? "---"
                 shared.avgDayPrice = avgNumber ?? "---"
                 shared.maxDayPrice = maxNumber ?? "---"
-            } else if day == .tomorrow {
+            } else if day == Day.tomorrow {
                 shared.minNextDayPrice = minNumber ?? "---"
                 shared.avgNextDayPrice = avgNumber ?? "---"
                 shared.maxNextDayPrice = maxNumber ?? "---"
@@ -125,20 +132,20 @@ class ChartViewModel: ObservableObject {
     }
     
     private func shouldLoadData() -> Bool {
-        if day == .today && shared.todayDataUpdateMandatory {
+        if day == Day.today && shared.todayDataUpdateMandatory {
             shared.todayDataUpdateMandatory = false
             return true
-        } else if day == .tomorrow && shared.tomorrowDataUpdateMandatory {
+        } else if day == Day.tomorrow && shared.tomorrowDataUpdateMandatory {
             shared.tomorrowDataUpdateMandatory = false
             return true
         }
         if let dataLastLoaded = dataLastLoaded {
-            if day == .today,
+            if day == Day.today,
                Calendar.current.isDate(dataLastLoaded, equalTo: Date(), toGranularity: .day) {
                 return false
-            } else if day == .tomorrow && shared.missingTomorrowData {
+            } else if day == Day.tomorrow && shared.missingTomorrowData {
                 return true
-            } else if day == .tomorrow && !shared.missingTomorrowData,
+            } else if day == Day.tomorrow && !shared.missingTomorrowData,
                       Calendar.current.isDate(dataLastLoaded, equalTo: Date(), toGranularity: .hour) {
                 return false
             }

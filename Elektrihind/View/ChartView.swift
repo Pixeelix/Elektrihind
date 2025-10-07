@@ -49,6 +49,6 @@ struct ChartView: View {
 
 struct ChartView_Previews: PreviewProvider {
     static var previews: some View {
-        ChartView(day: .today, viewModel: ChartViewModel())
+        ChartView(day: Day.today, viewModel: ChartViewModel())
     }
 }

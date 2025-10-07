@@ -27,7 +27,7 @@ struct TomorrowView: View {
         .onAppear(perform: loadChartData)
         .onChange(of: scenePhase, perform: handleScenePhaseChange)
         .onChange(of: shared.chartResolution) { _ in
-            chartViewModel.setup(shared, day: .tomorrow)
+            chartViewModel.setup(shared, day: Day.tomorrow)
             chartViewModel.loadChartData()
         }
     }
@@ -52,29 +52,29 @@ struct TomorrowView: View {
             MinMaxRange(tabSelection: $tabSelection)
                 .padding(.bottom, 0)
             
-            MinAvgMaxView(day: .tomorrow)
+            MinAvgMaxView(day: Day.tomorrow)
             
-            ChartView(day: .tomorrow, viewModel: chartViewModel)
+            ChartView(day: Day.tomorrow, viewModel: chartViewModel)
             
             Spacer()
             
             BannerAd(unitID: "ca-app-pub-5431783362632568/3104542071")
                 .frame(maxHeight: 60)
-                .padding(.bottom, 15)
+                .padding(.bottom, 25)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     // Load chart data when the view appears
     private func loadChartData() {
-        chartViewModel.setup(shared, day: .tomorrow)
+        chartViewModel.setup(shared, day: Day.tomorrow)
         chartViewModel.loadChartData()
     }
 
     // Reload chart data when the app becomes active
     private func handleScenePhaseChange(_ newPhase: ScenePhase) {
         if newPhase == .active {
-            chartViewModel.setup(shared, day: .tomorrow)
+            chartViewModel.setup(shared, day: Day.tomorrow)
             chartViewModel.loadChartData()
         }
     }

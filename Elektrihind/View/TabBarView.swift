@@ -77,20 +77,12 @@ struct TabBarView: View {
 private extension View {
     @ViewBuilder
     func applyTabTint(_ color: Color) -> some View {
-        if #available(iOS 16.0, *) {
-            self.tint(color)
-        } else {
-            self.accentColor(color)
-        }
+        self.tint(color)
     }
     
     @ViewBuilder
     func hideTabBarBackground() -> some View {
-        if #available(iOS 16.0, *) {
-            self.toolbarBackground(.hidden, for: .tabBar)
-        } else {
-            self
-        }
+        self.toolbarBackground(.hidden, for: .tabBar)
     }
 }
 
