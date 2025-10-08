@@ -34,8 +34,8 @@ struct SettingsView: View {
                 
                 Form {
                     generalSettingsSection
-                    appInfoSection
                     payAttentionSection
+                    appInfoSection
                 }
                 .tint(.blue)
                 .scrollContentBackground(.hidden)
@@ -89,6 +89,13 @@ struct SettingsView: View {
         }
     }
     
+    private var payAttentionSection: some View {
+        Section(header: Text(shared.localizedString("TITLE_PAY_ATTENTION"))) {
+            Text(shared.localizedString("TEXT_INFORMATION_ABOUT_APP"))
+            Text(shared.localizedString("TEXT_IFORMATION_ABOUT_MARKET_TIME_UNIT"))
+        }
+    }
+    
     private var appInfoSection: some View {
         Section(header: Text(shared.localizedString("TITLE_APP_INFO"))) {
             HStack {
@@ -97,21 +104,6 @@ struct SettingsView: View {
                 Text(appVersion ?? "")
             }
         }
-    }
-    
-    private var payAttentionSection: some View {
-        Section(header: Text(shared.localizedString("TITLE_PAY_ATTENTION"))) {
-            HStack {
-                Text(shared.localizedString("TEXT_INFORMATION_ABOUT_APP"))
-            }
-        }
-    }
-    
-    // Background gradient for older iOS versions
-    private var backgroundGradient: some View {
-        LinearGradient(gradient: Gradient(colors: [Color("backgroundTop"), Color("backgroundBottom")]),
-                       startPoint: .topLeading, endPoint: .bottomTrailing)
-            .edgesIgnoringSafeArea(.all)
     }
 }
 

@@ -67,7 +67,7 @@ class ChartViewModel: ObservableObject {
                 do {
                     let data = try await network.loadFullDayData(day, region: shared.region)
                     if self.day == Day.tomorrow {
-                        self.shared.missingTomorrowData = data.count <= 2
+                        self.shared.missingTomorrowData = data.count <= 4
                     }
                     self.dataArrayFromAPI = data
                     self.updateChartData()

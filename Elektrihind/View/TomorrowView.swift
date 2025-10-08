@@ -35,12 +35,12 @@ struct TomorrowView: View {
     // View when no data for tomorrow
     private var noDataView: some View {
         VStack {
+            Spacer()
             Text(shared.localizedString("TEXT_TOMORROWS_PRICE_WILL_APEAR"))
                 .font(.system(size: 18, weight: .medium))
                 .foregroundColor(.white)
                 .multilineTextAlignment(.center)
                 .padding(EdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10))
-            
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

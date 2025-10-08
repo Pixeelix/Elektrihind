@@ -428,11 +428,15 @@ struct ElektrihindWidgetEntryView: View {
                     .font(.system(size: isSmall ? 40 : 48, weight: .semibold, design: .default))
                     .lineLimit(1)
                     .allowsTightening(true)
-                    .minimumScaleFactor(isSmall ? 0.35 : 0.6)
+                    .minimumScaleFactor(isSmall ? 0.25 : 0.6)
+                    .layoutPriority(0)
                 Text("\(entry.unit)".localized(lang, in: widgetBundle))
                     .font(.footnote.weight(.medium))
                     .foregroundColor(.secondary)
                     .truncationMode(.tail)
+                    .lineLimit(1)
+                    .fixedSize(horizontal: true, vertical: false)
+                    .layoutPriority(1)
             }
             if !entry.prices.isEmpty {
                 DayPriceChart(points: entry.prices,
@@ -619,13 +623,15 @@ private struct DayPriceChart: View {
 // Add @main to this struct in your Widget Extension target or wrap it in a WidgetBundle there.
 struct ElektrihindWidget: Widget {
     let kind: String = "ElektrihindWidgetExtension"
+    let widgetBundle = Bundle.main
+    let lang = WidgetSettings.language()
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: ElektrihindProvider()) { entry in
             ElektrihindWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("Elektrihind")
-        .description("Shows the current electricity price.")
+        .description("TEXT_WIDGET_DESCRIPTION".localized(lang, in: widgetBundle))
         .supportedFamilies([.systemSmall, .systemMedium])
     }
 }
