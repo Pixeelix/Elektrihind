@@ -10,46 +10,69 @@ import GoogleMobileAds
 import FirebaseCore
 import AppTrackingTransparency
 
+enum AdStatus {
+    case initializing
+    case authorized
+    case restricted
+}
+
 @main
 struct ElektrihindApp: App {
     @StateObject var networkManager = NetworkManager()
     @StateObject var shared = Globals()
-    @State var adStatus: Int = 0
+    @State private var adStatus: AdStatus = .initializing
+    @State private var canLoadAds: Bool = false
+    
+    init() {
+        FirebaseApp.configure()
+    }
     
     var body: some Scene {
         WindowGroup {
             ZStack {
                 switch adStatus {
-                case 0:
-                    HStack {}
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)
-                    .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
-                case 1:
+                case .initializing:
+                    ZStack {
+                        Color.backgroundColor.edgesIgnoringSafeArea(.all)
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                case .authorized:
                     ContentView()
                         .environmentObject(networkManager)
                         .environmentObject(shared)
-                    UMPWrapper(canLoadAdsCallback: {
-                        debugPrint("Can load ads now")
-                    })
-                    .disabled(true)
-                case 2:
+                        .background(
+                            UMPWrapper(canLoadAdsCallback: {
+                                debugPrint("Can load ads now")
+                                // Start AdMob once consent is available
+                                if !canLoadAds {
+                                    canLoadAds = true
+                                    GADMobileAds.sharedInstance().start(completionHandler: nil)
+                                }
+                            })
+                            .allowsHitTesting(false)
+                        )
+                case .restricted:
                     ContentView()
                         .environmentObject(networkManager)
                         .environmentObject(shared)
-                default:
-                    ContentView()
-                        .environmentObject(networkManager)
-                        .environmentObject(shared)
+                        .onAppear {
+                            if !canLoadAds {
+                                canLoadAds = true
+                                GADMobileAds.sharedInstance().start(completionHandler: nil)
+                            }
+                        }
                 }
             }.onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
                 ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
                     switch status {
                     case .authorized:
-                        adStatus = 1
+                        adStatus = .authorized
                     case .notDetermined, .restricted, .denied:
-                        adStatus = 2
+                        adStatus = .restricted
                     @unknown default:
-                        adStatus = 2
+                        adStatus = .restricted
                     }
                     print("STATUS: \(status)") })
             }

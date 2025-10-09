@@ -54,12 +54,21 @@ class UMPViewController: UIViewController {
                                 if let callback = self.canLoadAdsCallback {
                                     callback()
                                 }
+                            } else if UMPConsentInformation.sharedInstance.consentStatus == UMPConsentStatus.notRequired {
+                                if let callback = self.canLoadAdsCallback {
+                                    callback()
+                                }
                             }
                             // Handle dismissal by reloading form.
                             self.loadForm();
                         })
                 } else {
                     // Keep the form available for changes to user consent.
+                    // If consent is already obtained or not required, allow ads to load.
+                    let status = UMPConsentInformation.sharedInstance.consentStatus
+                    if status == .obtained || status == .notRequired {
+                        self.canLoadAdsCallback?()
+                    }
                 }
             }
         })

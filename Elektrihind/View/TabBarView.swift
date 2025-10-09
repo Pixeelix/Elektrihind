@@ -12,32 +12,30 @@ struct TabBarView: View {
     @Binding var selection: Int
     @EnvironmentObject var shared: Globals
     
-    private var selectedTintColor: Color {
+    private var selectedTintColor: UIColor {
         switch selection {
-        case 0:
-            return .orange // Today
-        case 1:
-            return Color(red: 102/255.0, green: 212/255.0, blue: 207/255.0) // Tomorrow
-        case 2:
-            return Color(red: 172/255.0, green: 142/255.0, blue: 104/255.0) // Settings
-        default:
-            return .blue
+        case 0: return UIColor.orange
+        case 1: return UIColor(red: 102/255, green: 212/255, blue: 207/255, alpha: 1)
+        case 2: return UIColor(red: 172/255, green: 142/255, blue: 104/255, alpha: 1)
+        default: return UIColor.systemBlue
         }
     }
     
     private func setTabBarTransparentAppearance() {
-        let appearance = UITabBarAppearance()
-        appearance.configureWithTransparentBackground()
-        appearance.backgroundColor = .clear
-        appearance.shadowColor = .clear
-        UITabBar.appearance().standardAppearance = appearance
-        UITabBar.appearance().scrollEdgeAppearance = appearance
-        func configure(_ itemAppearance: UITabBarItemAppearance) {
-            itemAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.label]
+        if #available(iOS 26.0, *) {
+            let appearance = UITabBarAppearance()
+            appearance.configureWithTransparentBackground()
+            appearance.backgroundColor = .clear
+            appearance.shadowColor = .clear
+            UITabBar.appearance().standardAppearance = appearance
+            UITabBar.appearance().scrollEdgeAppearance = appearance
+            func configure(_ itemAppearance: UITabBarItemAppearance) {
+                itemAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.label]
+            }
+            configure(appearance.stackedLayoutAppearance)
+            configure(appearance.inlineLayoutAppearance)
+            configure(appearance.compactInlineLayoutAppearance)
         }
-        configure(appearance.stackedLayoutAppearance)
-        configure(appearance.inlineLayoutAppearance)
-        configure(appearance.compactInlineLayoutAppearance)
     }
     
     var body: some View {
@@ -46,7 +44,7 @@ struct TabBarView: View {
                 TodayView(tabSelection: $selection)
                     .tag(0)
                     .tabItem {
-                        Image(systemName: "bolt.fill")
+                        Image(systemName: "bolt.fill").symbolRenderingMode(.monochrome)
                         Text(shared.localizedString("LABEL_TODAY"))
                     }
                     .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
@@ -54,7 +52,7 @@ struct TabBarView: View {
                 TomorrowView(tabSelection: $selection)
                     .tag(1)
                     .tabItem {
-                        Image(systemName: "clock.fill")
+                        Image(systemName: "clock.fill").symbolRenderingMode(.monochrome)
                         Text(shared.localizedString("LABEL_TOMORROW"))
                     }
                     .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
@@ -62,12 +60,19 @@ struct TabBarView: View {
                 SettingsView()
                     .tag(2)
                     .tabItem {
-                        Image(systemName: "gearshape.fill")
+                        Image(systemName: "gearshape.fill").symbolRenderingMode(.monochrome)
                         Text(shared.localizedString("LABEL_SETTINGS"))
                     }
                     .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
             }
-            .applyTabTint(selectedTintColor)
+            .tint(Color(selectedTintColor))
+            .onAppear {
+                UITabBar.appearance().tintColor = selectedTintColor
+                UITabBar.appearance().unselectedItemTintColor = .secondaryLabel
+            }
+            .onChange(of: selection) { _ in
+                UITabBar.appearance().tintColor = selectedTintColor
+            }
             .hideTabBarBackground()
             .onAppear { setTabBarTransparentAppearance() }
         }
@@ -75,14 +80,14 @@ struct TabBarView: View {
 }
 
 private extension View {
-    @ViewBuilder
-    func applyTabTint(_ color: Color) -> some View {
-        self.tint(color)
-    }
     
     @ViewBuilder
     func hideTabBarBackground() -> some View {
-        self.toolbarBackground(.hidden, for: .tabBar)
+        if #available(iOS 26.0, *) {
+            self.toolbarBackground(.hidden, for: .tabBar)
+        } else {
+            self
+        }
     }
 }
 
@@ -93,4 +98,3 @@ struct TabBarView_Previews: PreviewProvider {
             .previewLayout(.sizeThatFits)
     }
 }
-

@@ -5,4 +5,7 @@ use_frameworks! :linkage => :static
 target 'Elektrihind' do
   pod 'Firebase/Analytics'
   pod 'Google-Mobile-Ads-SDK'
+  pod 'FBAudienceNetwork'
+  pod 'GoogleUserMessagingPlatform'
+  pod 'GoogleMobileAdsMediationFacebook'
 end
