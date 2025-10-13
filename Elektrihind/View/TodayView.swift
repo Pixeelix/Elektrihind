@@ -22,7 +22,7 @@ struct TodayView: View {
                 MinAvgMaxView(day: Day.today)
                 ChartView(day: Day.today, viewModel: chartViewModel)
                 Spacer()
-                BannerAd(unitID: "ca-app-pub-5431783362632568/9156829008")
+                BannerAd(unitID: "ca-app-pub-5431783362632568/4212512484")
                     .frame(maxHeight: 60)
                     .padding(.bottom, 25)
             }
