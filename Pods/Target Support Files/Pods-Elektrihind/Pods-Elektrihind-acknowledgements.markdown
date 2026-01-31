@@ -852,7 +852,11 @@ Copyright 2022 Google
 
 ## Google-Mobile-Ads-SDK
 
-Copyright 2023 Google
+Copyright 2025 Google LLC
+
+## GoogleAdsOnDeviceConversion
+
+Copyright 2024 Google
 
 ## GoogleAppMeasurement
 
@@ -864,7 +868,7 @@ Copyright 2016 Google LLC
 
 ## GoogleUserMessagingPlatform
 
-Copyright 2023 Google
+Copyright 2025 Google LLC
 
 ## GoogleUtilities
 

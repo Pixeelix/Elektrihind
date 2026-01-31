@@ -34,17 +34,33 @@ struct TomorrowView: View {
 
     // View when no data for tomorrow
     private var noDataView: some View {
-        VStack {
-            Spacer()
-            Text(shared.localizedString("TEXT_TOMORROWS_PRICE_WILL_APEAR"))
-                .font(.system(size: 18, weight: .medium))
-                .foregroundColor(.white)
-                .multilineTextAlignment(.center)
-                .padding(EdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10))
-            Spacer()
+        GeometryReader { geo in
+            VStack(spacing: 0) {
+                // Top half
+                VStack {
+                    Spacer()
+                    Text(shared.localizedString("TEXT_TOMORROWS_PRICE_WILL_APEAR"))
+                        .font(.system(size: 18, weight: .medium))
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                        .padding(.vertical, 20)
+                        .padding(.horizontal, 10)
+                    Spacer()
+                }
+                .frame(height: geo.size.height * 0.4)
+
+                // Bottom half (ad near bottom)
+                VStack {
+                    Spacer()
+                    AdaptiveBannerAd(unitID: "ca-app-pub-5431783362632568/8076084809")
+                        .padding(.bottom, 25)
+                }
+                .frame(height: geo.size.height * 0.6)
+            }
+            .frame(width: geo.size.width, height: geo.size.height)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
+
 
     // View when tomorrow's data is available
     private var dataView: some View {
@@ -58,8 +74,8 @@ struct TomorrowView: View {
             
             Spacer()
             
-            BannerAd(unitID: "ca-app-pub-5431783362632568/3104542071")
-                .frame(maxHeight: 60)
+            FixedBannerAd(unitID: "ca-app-pub-5431783362632568/3104542071")
+                .frame(height: 50)
                 .padding(.bottom, 25)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

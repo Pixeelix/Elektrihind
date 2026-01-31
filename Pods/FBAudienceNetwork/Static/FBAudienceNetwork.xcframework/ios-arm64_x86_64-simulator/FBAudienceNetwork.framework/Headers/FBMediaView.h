@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import <FBAudienceNetwork/FBAdDefines.h>
 #import <FBAudienceNetwork/FBMediaViewVideoRenderer.h>
 #import <FBAudienceNetwork/UIView+FBNativeAdViewTag.h>
 #import <Foundation/Foundation.h>
+#import "FBAdDefines.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -55,6 +55,21 @@ FB_CLASS_EXPORT
  The tag for media view. It always returns FBNativeAdViewTagMedia.
  */
 @property (nonatomic, assign, readonly) FBNativeAdViewTag nativeAdViewTag;
+
+/**
+ Option to hide the play and pause controls for video ads. The default value is NO.
+ */
+@property (nonatomic, assign) BOOL shouldHideMediaControls;
+
+/**
+ Option to disable entering full screen mode for video ads. The default value is NO.
+ */
+@property (nonatomic, assign) BOOL disableFullScreen;
+
+/**
+ Option to start the video unmuted. The default value is NO.
+ */
+@property (nonatomic, assign) BOOL shouldStartUnmuted;
 
 /**
  Changes the width of the FBMediaView's frame based on the current height, respecting aspectRatio.

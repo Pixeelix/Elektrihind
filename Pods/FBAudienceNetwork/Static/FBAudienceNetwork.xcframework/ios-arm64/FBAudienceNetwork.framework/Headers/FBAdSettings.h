@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import <FBAudienceNetwork/FBAdDefines.h>
+#import "FBAdDefines.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -83,16 +83,6 @@ typedef NS_ENUM(NSInteger, FBAdTestAdType) {
 FB_CLASS_EXPORT FB_SUBCLASSING_RESTRICTED @interface FBAdSettings : NSObject
 
 /**
- Controls support for audio-only video playback when the app is backgrounded. Note that this is only supported
- when using FBMediaViewVideoRenderer, and requires corresponding support for background audio to be added to
- the app. Check Apple documentation at
- https://developer.apple.com/documentation/avfoundation/media_playback_and_selection/creating_a_basic_video_player_ios_and_tvos/enabling_background_audio
-
- Default value is NO.
- */
-@property (class, nonatomic, assign, getter=isBackgroundVideoPlaybackAllowed) BOOL backgroundVideoPlaybackAllowed;
-
-/**
  When test mode is on, setting a non default value for testAdType will
  requests the specified type of ad.
  */
@@ -116,13 +106,16 @@ FB_CLASS_EXPORT FB_SUBCLASSING_RESTRICTED @interface FBAdSettings : NSObject
 
 /**
  User's consent for advertiser tracking.
-
-
- The setter API only works in iOS14 or above and won't take effect in iOS13 or below.
  */
-+ (void)setAdvertiserTrackingEnabled:(BOOL)advertiserTrackingEnabled;
 
-/**
++ (void)setAdvertiserTrackingEnabled:(BOOL)advertiserTrackingEnabled
+    // patternlint-disable-next-line internal-deprecations-must-use-fb-deprecated
+    NS_DEPRECATED_IOS(
+        12_0,
+        17_0,
+        "The setter for advertiserTrackingEnabled flag is deprecated: The setAdvertiserTrackingEnabled flag is not used for Audience Network SDK 6.15.0+ on iOS 17+ as the Audience Network SDK 6.15.0+ on iOS 17+ now relies on [ATTrackingManager trackingAuthorizationStatus] to accurately represent ATT permission for users of your app");
+
+/*
  Returns test mode on/off.
  */
 + (BOOL)isTestMode;

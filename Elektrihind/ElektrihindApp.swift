@@ -48,7 +48,7 @@ struct ElektrihindApp: App {
                                 // Start AdMob once consent is available
                                 if !canLoadAds {
                                     canLoadAds = true
-                                    GADMobileAds.sharedInstance().start(completionHandler: nil)
+                                    MobileAds.shared.start()
                                 }
                             })
                             .allowsHitTesting(false)
@@ -60,7 +60,7 @@ struct ElektrihindApp: App {
                         .onAppear {
                             if !canLoadAds {
                                 canLoadAds = true
-                                GADMobileAds.sharedInstance().start(completionHandler: nil)
+                                MobileAds.shared.start()
                             }
                         }
                 }
