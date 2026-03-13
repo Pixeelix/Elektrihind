@@ -8,29 +8,30 @@
 import SwiftUI
 
 struct MinAvgMaxView: View {
-    @EnvironmentObject var shared: Globals
-    var day: Day
+    @EnvironmentObject var settings: AppSettings
+    @ObservedObject var chartViewModel: ChartViewModel
+
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
             HStack(alignment: .top) {
                 VStack(alignment: .center) {
-                    Text(shared.localizedString("TITLE_MIN"))
+                    Text(settings.localizedString("TITLE_MIN"))
                         .font(.system(size: 18, weight: .medium))
-                    Text(day == Day.today ? "\(shared.minDayPrice)" : "\(shared.minNextDayPrice)")
+                    Text(chartViewModel.minPrice)
                         .font(.system(size: 18, weight: .bold))
                 }
                 Spacer()
                 VStack(alignment: .center) {
-                    Text(shared.localizedString("TITLE_AVG"))
+                    Text(settings.localizedString("TITLE_AVG"))
                         .font(.system(size: 18, weight: .medium))
-                    Text(day == Day.today ? "\(shared.avgDayPrice)" : "\(shared.avgNextDayPrice)")
+                    Text(chartViewModel.avgPrice)
                         .font(.system(size: 18, weight: .bold))
                 }
                 Spacer()
                 VStack(alignment: .center) {
-                    Text(shared.localizedString("TITLE_MAX"))
+                    Text(settings.localizedString("TITLE_MAX"))
                         .font(.system(size: 18, weight: .medium))
-                    Text(day == Day.today ? "\(shared.maxDayPrice)" : "\(shared.maxNextDayPrice)")
+                    Text(chartViewModel.maxPrice)
                         .font(.system(size: 18, weight: .bold))
                 }
             }
@@ -45,4 +46,3 @@ struct MinAvgMaxView: View {
         .cornerRadius(10)
     }
 }
-

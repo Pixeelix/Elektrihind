@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -r \"class\\\\|struct\" /Users/martinpi/App/Elektrihind/Elektrihind/View/*.swift | head -20)"
+    ]
+  }
+}

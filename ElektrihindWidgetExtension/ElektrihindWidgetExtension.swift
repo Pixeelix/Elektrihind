@@ -25,24 +25,7 @@ private enum WidgetSettings {
     }
 
     static func cacheKeyForToday(regionCode: String) -> String {
-        // Mirror app's cache key scheme: prices_v1_<ee|lv|lt|fi>_<startUTC>
-        let regionKey: String = {
-            switch regionCode.uppercased() {
-            case "EE": return "ee"
-            case "LV": return "lv"
-            case "LT": return "lt"
-            case "FI": return "fi"
-            default: return "ee"
-            }
-        }()
-        // Compute UTC interval start for today (same logic as app's utcInterval(for: .today))
-        let calendar = Calendar.current
-        let localStart = calendar.startOfDay(for: Date())
-        let formatter = ISO8601DateFormatter()
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        let startString = formatter.string(from: localStart)
-        return "prices_v1_\(regionKey)_\(startString)"
+        return CacheKeyGenerator.cacheKeyForToday(regionCode: regionCode)
     }
 
     static func region() -> String {
@@ -73,31 +56,12 @@ private enum WidgetSettings {
     }
 
     static func taxRate(for region: String) -> Double {
-        switch region {
-        case "EE": return 1.24
-        case "LV": return 1.21
-        case "LT": return 1.21
-        case "FI": return 1.255
-        default: return 1.24
-        }
+        return TaxConfiguration.taxRate(forCode: region)
     }
 
     static func numberFormatter(for unit: String) -> (formatter: NumberFormatter, divider: Double) {
-        let formatter = NumberFormatter()
-        formatter.decimalSeparator = ","
-        formatter.maximumIntegerDigits = 4
-        if unit == "€/kWh" {
-            formatter.minimumFractionDigits = 4
-            return (formatter, 1000)
-        } else if unit == "€/MWh" {
-            formatter.minimumFractionDigits = 1
-            return (formatter, 1)
-        } else if unit == "cent/kWh" || unit == "senti/kWh" {
-            formatter.minimumFractionDigits = 1
-            return (formatter, 10)
-        }
-        formatter.minimumFractionDigits = 4
-        return (formatter, 1000)
+        let config = PriceFormatter.formatter(for: unit)
+        return (config.formatter, config.divider)
     }
     
     static func chartResolution() -> String {
@@ -140,13 +104,7 @@ private enum PriceFetcher {
     }
 
     static func timeZone(for region: String) -> TimeZone {
-        switch region {
-        case "EE": return TimeZone(identifier: "Europe/Tallinn") ?? .current
-        case "LV": return TimeZone(identifier: "Europe/Riga") ?? .current
-        case "LT": return TimeZone(identifier: "Europe/Vilnius") ?? .current
-        case "FI": return TimeZone(identifier: "Europe/Helsinki") ?? .current
-        default: return .current
-        }
+        return TimeZoneHelper.timeZone(forCode: region)
     }
 
     private struct CachedPayload: Codable {
@@ -179,10 +137,7 @@ private enum PriceFetcher {
         let nextLocalStart = calendar.date(byAdding: .day, value: 1, to: localStart)!
         let hours = calendar.dateComponents([.hour], from: localStart, to: nextLocalStart).hour ?? 24
         let isComplete = (itemsCount == hours)
-        let formatter = ISO8601DateFormatter()
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        let startUTC = formatter.string(from: localStart)
+        let startUTC = UTCInterval.todayStartUTC()
         let cached = CachedPayload(startUTC: startUTC, isComplete: isComplete, payload: payload, fetchedAt: Date())
         if let blob = try? JSONEncoder().encode(cached) {
             let key = WidgetSettings.cacheKeyForToday(regionCode: region)
@@ -198,17 +153,9 @@ private enum PriceFetcher {
         }
 
         // 2) Build the same UTC interval as the app's utcInterval(for: .today)
-        let calendar = Calendar.current
-        let localStart = calendar.startOfDay(for: Date())
-        let nextLocalStart = calendar.date(byAdding: .day, value: 1, to: localStart)!
-        let endDate = nextLocalStart.addingTimeInterval(-0.001)
-
-        let formatter = ISO8601DateFormatter()
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-
-        let startString = formatter.string(from: localStart)
-        let endString = formatter.string(from: endDate)
+        let interval = UTCInterval.interval(for: .today)
+        let startString = interval.start
+        let endString = interval.end
 
         let urlString = "https://dashboard.elering.ee/api/nps/price?start=\(startString)&end=\(endString)"
         guard let url = URL(string: urlString) else {

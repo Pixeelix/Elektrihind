@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct BarChartView : View {
-    @EnvironmentObject var shared: Globals
+    @EnvironmentObject var settings: AppSettings
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     private var data: ChartData
     private var title: String {
@@ -187,7 +187,7 @@ struct BarChartView : View {
     }
     
     func getLocale() -> Locale {
-        switch shared.language {
+        switch settings.language {
         case .english:
             return Locale(identifier: "en_US")
         case .finnish:

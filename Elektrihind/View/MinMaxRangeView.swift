@@ -9,15 +9,16 @@ import SwiftUI
 
 struct MinMaxRange: View {
     @Binding var tabSelection: Int
-    @EnvironmentObject var shared: Globals
-    
+    @EnvironmentObject var settings: AppSettings
+    @ObservedObject var chartViewModel: ChartViewModel
+
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
             HStack(alignment: .top) {
                 Button {
                     self.tabSelection = 2
                 } label: {
-                    Image(shared.region.rawValue)
+                    Image(settings.region.rawValue)
                         .resizable()
                 }
                 .frame(width: 30, height: 22)
@@ -29,9 +30,9 @@ struct MinMaxRange: View {
             .padding(.top, 8)
             .padding(.leading, 10)
             .padding(.trailing, 10)
-            
+
             VStack {
-                Text("\(shared.minNextDayPrice) - \(shared.maxNextDayPrice)")
+                Text("\(chartViewModel.minPrice) - \(chartViewModel.maxPrice)")
                     .font(.system(size: 300, weight: .medium))
                     .minimumScaleFactor(0.01)
                     .lineLimit(1)
@@ -39,9 +40,9 @@ struct MinMaxRange: View {
             .frame(height: UIScreen.isTallScreen ? 62 : 52)
             .padding(.horizontal, 30)
             .padding(.top, -12)
-            
+
             VStack {
-                Text(shared.localizedString(shared.unit))
+                Text(settings.localizedString(settings.unit))
                     .font(.system(size: 24, weight: .medium))
             }
             Spacer()

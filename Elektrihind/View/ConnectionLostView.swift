@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ConnectionLostView: View {
-    @EnvironmentObject var shared: Globals
+    @EnvironmentObject var settings: AppSettings
     
     var body: some View {
         ZStack {
@@ -21,7 +21,7 @@ struct ConnectionLostView: View {
                     .frame(width: 200, height: 200)
                     .foregroundColor(.white)
                 
-                Text(shared.localizedString("TEXT_CONNECTION_LOST"))
+                Text(settings.localizedString("TEXT_CONNECTION_LOST"))
                     .font(.system(size: 20))
                     .foregroundColor(.white)
                     .padding()
@@ -29,7 +29,7 @@ struct ConnectionLostView: View {
                 Button {
                     self.settingsOpener()
                 } label: {
-                    Text(shared.localizedString("TITLE_OPEN_SETTINGS"))
+                    Text(settings.localizedString("TITLE_OPEN_SETTINGS"))
                         .padding()
                         .font(.headline)
                         .foregroundColor(Color.blueGrayText)
@@ -53,6 +53,6 @@ struct ConnectionLostView: View {
 
 struct ConnectionLostView_Previews: PreviewProvider {
     static var previews: some View {
-        ConnectionLostView().environmentObject(Globals())
+        ConnectionLostView().environmentObject(AppSettings())
     }
 }

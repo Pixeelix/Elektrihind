@@ -19,7 +19,7 @@ enum AdStatus {
 @main
 struct ElektrihindApp: App {
     @StateObject var networkManager = NetworkManager()
-    @StateObject var shared = Globals()
+    @StateObject var settings = AppSettings()
     @State private var adStatus: AdStatus = .initializing
     @State private var canLoadAds: Bool = false
     
@@ -41,7 +41,7 @@ struct ElektrihindApp: App {
                 case .authorized:
                     ContentView()
                         .environmentObject(networkManager)
-                        .environmentObject(shared)
+                        .environmentObject(settings)
                         .background(
                             UMPWrapper(canLoadAdsCallback: {
                                 debugPrint("Can load ads now")
@@ -56,7 +56,7 @@ struct ElektrihindApp: App {
                 case .restricted:
                     ContentView()
                         .environmentObject(networkManager)
-                        .environmentObject(shared)
+                        .environmentObject(settings)
                         .onAppear {
                             if !canLoadAds {
                                 canLoadAds = true

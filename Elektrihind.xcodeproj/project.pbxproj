@@ -48,6 +48,24 @@
 		A2D6DD5D279A06AC0007B14A /* BarChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D6DD5C279A06AC0007B14A /* BarChartCell.swift */; };
 		A2D6DD5F279A0B6B0007B14A /* Legend.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D6DD5E279A0B6A0007B14A /* Legend.swift */; };
 		A2F9DFBD27653EFB006E4730 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F9DFBC27653EFB006E4730 /* TabBarView.swift */; };
+		A2CC011A2EA30000AABB000B /* SharedTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC011C2EA30000AABB000B /* SharedTypes.swift */; };
+		A2CC011B2EA30000AABB000B /* SharedTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC011C2EA30000AABB000B /* SharedTypes.swift */; };
+		A2CC011D2EA30000AABB000C /* NordPoolPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B155BF27459138004B1B02 /* NordPoolPrice.swift */; };
+		A2CC01022EA30000AABB0001 /* PriceUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC01012EA30000AABB0001 /* PriceUtilities.swift */; };
+		A2CC01032EA30000AABB0001 /* PriceUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC01012EA30000AABB0001 /* PriceUtilities.swift */; };
+		A2CC01052EA30000AABB0002 /* TaxConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC01042EA30000AABB0002 /* TaxConfiguration.swift */; };
+		A2CC01062EA30000AABB0002 /* TaxConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC01042EA30000AABB0002 /* TaxConfiguration.swift */; };
+		A2CC01082EA30000AABB0003 /* PriceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC01072EA30000AABB0003 /* PriceFormatter.swift */; };
+		A2CC01092EA30000AABB0003 /* PriceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC01072EA30000AABB0003 /* PriceFormatter.swift */; };
+		A2CC010B2EA30000AABB0004 /* TimeZoneHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC010A2EA30000AABB0004 /* TimeZoneHelper.swift */; };
+		A2CC010C2EA30000AABB0004 /* TimeZoneHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC010A2EA30000AABB0004 /* TimeZoneHelper.swift */; };
+		A2CC010E2EA30000AABB0005 /* UTCInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC010D2EA30000AABB0005 /* UTCInterval.swift */; };
+		A2CC010F2EA30000AABB0005 /* UTCInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC010D2EA30000AABB0005 /* UTCInterval.swift */; };
+		A2CC01112EA30000AABB0006 /* CacheKeyGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC01102EA30000AABB0006 /* CacheKeyGenerator.swift */; };
+		A2CC01122EA30000AABB0006 /* CacheKeyGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC01102EA30000AABB0006 /* CacheKeyGenerator.swift */; };
+		A2CC01142EA30000AABB0007 /* PriceCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC01132EA30000AABB0007 /* PriceCache.swift */; };
+		A2CC01162EA30000AABB0008 /* PriceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC01152EA30000AABB0008 /* PriceAPI.swift */; };
+		A2CC01182EA30000AABB0009 /* PriceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC01172EA30000AABB0009 /* PriceRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +141,16 @@
 		A2F9DFBC27653EFB006E4730 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		AFAE23AA583E94EC5C33D56B /* Pods-Elektrihind.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Elektrihind.release.xcconfig"; path = "Target Support Files/Pods-Elektrihind/Pods-Elektrihind.release.xcconfig"; sourceTree = "<group>"; };
 		D96A40C16271C0EB7F54BB06 /* Pods_Elektrihind.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Elektrihind.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2CC011C2EA30000AABB000B /* SharedTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedTypes.swift; sourceTree = "<group>"; };
+		A2CC01012EA30000AABB0001 /* PriceUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceUtilities.swift; sourceTree = "<group>"; };
+		A2CC01042EA30000AABB0002 /* TaxConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaxConfiguration.swift; sourceTree = "<group>"; };
+		A2CC01072EA30000AABB0003 /* PriceFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceFormatter.swift; sourceTree = "<group>"; };
+		A2CC010A2EA30000AABB0004 /* TimeZoneHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZoneHelper.swift; sourceTree = "<group>"; };
+		A2CC010D2EA30000AABB0005 /* UTCInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UTCInterval.swift; sourceTree = "<group>"; };
+		A2CC01102EA30000AABB0006 /* CacheKeyGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheKeyGenerator.swift; sourceTree = "<group>"; };
+		A2CC01132EA30000AABB0007 /* PriceCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceCache.swift; sourceTree = "<group>"; };
+		A2CC01152EA30000AABB0008 /* PriceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceAPI.swift; sourceTree = "<group>"; };
+		A2CC01172EA30000AABB0009 /* PriceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -203,6 +231,9 @@
 			isa = PBXGroup;
 			children = (
 				A2B155C1274599E7004B1B02 /* NetworkManager.swift */,
+				A2CC01132EA30000AABB0007 /* PriceCache.swift */,
+				A2CC01152EA30000AABB0008 /* PriceAPI.swift */,
+				A2CC01172EA30000AABB0009 /* PriceRepository.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -253,6 +284,7 @@
 				A2D6DD57279A06070007B14A /* BarChartView */,
 				A22579F52767F79700F8E3AB /* View */,
 				A22579F72767F7C300F8E3AB /* Models */,
+				A2CC01192EA30000AABB000A /* Shared */,
 				A2B155B527458EE4004B1B02 /* Assets.xcassets */,
 				A2D2C49E27727D0E009596E9 /* Extensions */,
 				A2B155B727458EE4004B1B02 /* Preview Content */,
@@ -298,6 +330,20 @@
 				D96A40C16271C0EB7F54BB06 /* Pods_Elektrihind.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A2CC01192EA30000AABB000A /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				A2CC011C2EA30000AABB000B /* SharedTypes.swift */,
+				A2CC01012EA30000AABB0001 /* PriceUtilities.swift */,
+				A2CC01042EA30000AABB0002 /* TaxConfiguration.swift */,
+				A2CC01072EA30000AABB0003 /* PriceFormatter.swift */,
+				A2CC010A2EA30000AABB0004 /* TimeZoneHelper.swift */,
+				A2CC010D2EA30000AABB0005 /* UTCInterval.swift */,
+				A2CC01102EA30000AABB0006 /* CacheKeyGenerator.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -461,6 +507,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2BE13CE2E95BFDB00C7E2D9 /* SharedLocalization.swift in Sources */,
+				A2CC011B2EA30000AABB000B /* SharedTypes.swift in Sources */,
+				A2CC011D2EA30000AABB000C /* NordPoolPrice.swift in Sources */,
+				A2CC01032EA30000AABB0001 /* PriceUtilities.swift in Sources */,
+				A2CC01062EA30000AABB0002 /* TaxConfiguration.swift in Sources */,
+				A2CC01092EA30000AABB0003 /* PriceFormatter.swift in Sources */,
+				A2CC010C2EA30000AABB0004 /* TimeZoneHelper.swift in Sources */,
+				A2CC010F2EA30000AABB0005 /* UTCInterval.swift in Sources */,
+				A2CC01122EA30000AABB0006 /* CacheKeyGenerator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,6 +549,16 @@
 				A2D6DD5D279A06AC0007B14A /* BarChartCell.swift in Sources */,
 				A22579F22767F74600F8E3AB /* TodayView.swift in Sources */,
 				A22579F42767F76E00F8E3AB /* TomorrowView.swift in Sources */,
+				A2CC011A2EA30000AABB000B /* SharedTypes.swift in Sources */,
+				A2CC01022EA30000AABB0001 /* PriceUtilities.swift in Sources */,
+				A2CC01052EA30000AABB0002 /* TaxConfiguration.swift in Sources */,
+				A2CC01082EA30000AABB0003 /* PriceFormatter.swift in Sources */,
+				A2CC010B2EA30000AABB0004 /* TimeZoneHelper.swift in Sources */,
+				A2CC010E2EA30000AABB0005 /* UTCInterval.swift in Sources */,
+				A2CC01112EA30000AABB0006 /* CacheKeyGenerator.swift in Sources */,
+				A2CC01142EA30000AABB0007 /* PriceCache.swift in Sources */,
+				A2CC01162EA30000AABB0008 /* PriceAPI.swift in Sources */,
+				A2CC01182EA30000AABB0009 /* PriceRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

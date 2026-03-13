@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChartView: View {
-    @EnvironmentObject var shared: Globals
+    @EnvironmentObject var settings: AppSettings
     var day: Day
     var viewModel: ChartViewModel
     let style = ChartStyle(backgroundColor: .white, accentColor: .blue, secondGradientColor: .blue, textColor: .blue, legendTextColor: .gray, dropShadowColor: .clear)

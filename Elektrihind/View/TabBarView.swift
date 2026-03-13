@@ -10,7 +10,7 @@ import UIKit
 
 struct TabBarView: View {
     @Binding var selection: Int
-    @EnvironmentObject var shared: Globals
+    @EnvironmentObject var settings: AppSettings
     
     private var selectedTintColor: UIColor {
         switch selection {
@@ -45,7 +45,7 @@ struct TabBarView: View {
                     .tag(0)
                     .tabItem {
                         Image(systemName: "bolt.fill").symbolRenderingMode(.monochrome)
-                        Text(shared.localizedString("LABEL_TODAY"))
+                        Text(settings.localizedString("LABEL_TODAY"))
                     }
                     .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
 
@@ -53,7 +53,7 @@ struct TabBarView: View {
                     .tag(1)
                     .tabItem {
                         Image(systemName: "clock.fill").symbolRenderingMode(.monochrome)
-                        Text(shared.localizedString("LABEL_TOMORROW"))
+                        Text(settings.localizedString("LABEL_TOMORROW"))
                     }
                     .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
 
@@ -61,7 +61,7 @@ struct TabBarView: View {
                     .tag(2)
                     .tabItem {
                         Image(systemName: "gearshape.fill").symbolRenderingMode(.monochrome)
-                        Text(shared.localizedString("LABEL_SETTINGS"))
+                        Text(settings.localizedString("LABEL_SETTINGS"))
                     }
                     .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
             }
@@ -94,7 +94,7 @@ private extension View {
 struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
         TabBarView(selection: Binding.constant(0))
-            .environmentObject(Globals())
+            .environmentObject(AppSettings())
             .previewLayout(.sizeThatFits)
     }
 }

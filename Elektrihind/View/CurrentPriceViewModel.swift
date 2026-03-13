@@ -7,65 +7,73 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 @MainActor
 class CurrentPriceViewModel: ObservableObject {
-    @Published var currenPriceTimeStamp: String = "--:--"
-    @Published var currenPrice: String = "---"
+    @Published var currentPriceTimestamp: String = "--:--"
+    @Published var currentPrice: String = "---"
     @Published var unit = "---"
+    @Published var errorMessage: String? = nil
     private var currentPriceData: PriceData?
     private var dataLastLoaded: Date? = nil
-    private var shared = Globals()
+    private var settings: AppSettings?
     private let network = NetworkService()
-    private var updateTimer: Timer?
-    
-    // Aggregate 15-minute data points into hourly data points by averaging each group of 4.
-    private func aggregateToHourly(_ data: [PriceData]) -> [PriceData] {
-        guard !data.isEmpty else { return [] }
-        var buckets: [(time: TimeInterval, values: [Double])] = []
-        var currentHourStart: TimeInterval? = nil
-        var currentValues: [Double] = []
-        let calendar = Calendar.current
-        for point in data.sorted(by: { $0.timestamp < $1.timestamp }) {
-            let date = Date(timeIntervalSince1970: point.timestamp)
-            let comps = calendar.dateComponents([.year, .month, .day, .hour], from: date)
-            guard let hourDate = calendar.date(from: comps) else { continue }
-            let hourStart = hourDate.timeIntervalSince1970
-            if currentHourStart == nil {
-                currentHourStart = hourStart
-            }
-            if hourStart != currentHourStart {
-                if let start = currentHourStart, !currentValues.isEmpty {
-                    let avg = currentValues.reduce(0, +) / Double(currentValues.count)
-                    buckets.append((time: start, values: [avg]))
-                }
-                currentHourStart = hourStart
-                currentValues = [point.price]
-            } else {
-                currentValues.append(point.price)
-            }
+    private var timerTask: Task<Void, Never>?
+    private var isConfigured = false
+    private var cancellables = Set<AnyCancellable>()
+
+    func configure(settings: AppSettings) {
+        self.settings = settings
+
+        if !isConfigured {
+            isConfigured = true
+            observeSettingsChanges()
+            scheduleQuarterHourTimerIfNeeded()
+            loadCurrentPrice()
         }
-        if let start = currentHourStart, !currentValues.isEmpty {
-            let avg = currentValues.reduce(0, +) / Double(currentValues.count)
-            buckets.append((time: start, values: [avg]))
+    }
+
+    private func observeSettingsChanges() {
+        guard let settings = settings else { return }
+
+        settings.$chartResolution
+            .dropFirst()
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.scheduleQuarterHourTimerIfNeeded()
+                self?.loadCurrentPrice()
+            }
+            .store(in: &cancellables)
+
+        settings.$region
+            .dropFirst()
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.loadCurrentPrice()
+            }
+            .store(in: &cancellables)
+
+        Publishers.Merge(
+            settings.$unit.dropFirst().map { _ in () },
+            settings.$includeTax.dropFirst().map { _ in () }
+        )
+        .receive(on: RunLoop.main)
+        .sink { [weak self] in
+            self?.updateCurrentPrice()
         }
-        return buckets.map { PriceData(timestamp: $0.time, price: $0.values.first ?? 0) }
+        .store(in: &cancellables)
     }
-    
-    func setup(_ shared: Globals) {
-        self.shared = shared
-        self.scheduleQuarterHourTimerIfNeeded()
-    }
-    
+
     func loadCurrentPrice() {
+        guard let settings = settings else { return }
         if shouldLoadData() {
             Task {
                 do {
-                    let data = try await network.loadFullDayData(Day.today, region: shared.region)
+                    let data = try await network.loadFullDayData(Day.today, region: settings.region)
                     let now = Date()
-                    if self.shared.chartResolution == .oneHour {
-                        // Aggregate to hourly and align to the start of the current hour
-                        let hourly = self.aggregateToHourly(data)
+                    if settings.chartResolution == .oneHour {
+                        let hourly = PriceUtilities.aggregateToHourly(data)
                         let calendar = Calendar.current
                         let hourStart = calendar.dateInterval(of: .hour, for: now)?.start ?? now
                         let current = hourly.last { Date(timeIntervalSince1970: $0.timestamp) <= hourStart } ?? hourly.last
@@ -78,16 +86,17 @@ class CurrentPriceViewModel: ObservableObject {
                     self.updateCurrentPrice()
                     self.dataLastLoaded = Date()
                 } catch {
-                    // Handle error if needed
+                    self.errorMessage = error.localizedDescription
                 }
             }
         } else {
             updateCurrentPrice()
         }
     }
-    
+
     private func shouldLoadData() -> Bool {
-        if shared.todayDataUpdateMandatory {
+        guard let settings = settings else { return true }
+        if settings.todayDataUpdateMandatory {
             return true
         }
 
@@ -98,11 +107,10 @@ class CurrentPriceViewModel: ObservableObject {
         let now = Date()
         let calendar = Calendar.current
 
-        switch shared.chartResolution {
+        switch settings.chartResolution {
         case .oneHour:
             return !calendar.isDate(last, equalTo: now, toGranularity: .hour)
         case .fifteenMinutes:
-            // Compute the start of the 15-minute bucket for both last and now
             func bucketStart(for date: Date) -> Date? {
                 let comps = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
                 guard let minute = comps.minute, let hour = comps.hour else { return nil }
@@ -124,63 +132,58 @@ class CurrentPriceViewModel: ObservableObject {
     }
 
     private func scheduleQuarterHourTimerIfNeeded() {
-        // Invalidate any existing timer
-        updateTimer?.invalidate()
-        updateTimer = nil
+        guard let settings = settings else { return }
+        timerTask?.cancel()
+        timerTask = nil
 
-        guard shared.chartResolution == .fifteenMinutes else { return }
+        guard settings.chartResolution == .fifteenMinutes else { return }
 
-        let calendar = Calendar.current
-        let now = Date()
-        // Compute next quarter-hour boundary
-        let comps = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
-        let minute = comps.minute ?? 0
-        let second = comps.second ?? 0
-        let remainderMinutes = 15 - (minute % 15)
-        let secondsUntilNextQuarter = TimeInterval(remainderMinutes * 60 - second)
-        let fireDate = now.addingTimeInterval(max(1, secondsUntilNextQuarter))
+        timerTask = Task { [weak self] in
+            let calendar = Calendar.current
+            let now = Date()
+            let comps = calendar.dateComponents([.minute, .second], from: now)
+            let minute = comps.minute ?? 0
+            let second = comps.second ?? 0
+            let remainderMinutes = 15 - (minute % 15)
+            let secondsUntilNextQuarter = UInt64(max(1, remainderMinutes * 60 - second))
 
-        // Schedule a one-shot to align to the boundary, then a repeating timer every 15 minutes
-        let alignTimer = Timer(fireAt: fireDate, interval: 0, target: self, selector: #selector(alignedQuarterFired), userInfo: nil, repeats: false)
-        RunLoop.main.add(alignTimer, forMode: .common)
-        updateTimer = alignTimer
-    }
+            try? await Task.sleep(nanoseconds: secondsUntilNextQuarter * 1_000_000_000)
+            guard !Task.isCancelled else { return }
+            await self?.loadCurrentPrice()
 
-    @objc private func alignedQuarterFired() {
-        // Fire immediately at the boundary
-        self.loadCurrentPrice()
-        // Switch to a repeating timer every 15 minutes
-        updateTimer?.invalidate()
-        updateTimer = Timer.scheduledTimer(withTimeInterval: 15 * 60, repeats: true) { [weak self] _ in
-            self?.loadCurrentPrice()
+            while !Task.isCancelled {
+                try? await Task.sleep(nanoseconds: 15 * 60 * 1_000_000_000)
+                guard !Task.isCancelled else { return }
+                await self?.loadCurrentPrice()
+            }
         }
-        RunLoop.main.add(updateTimer!, forMode: .common)
     }
-    
+
     private func updateCurrentPrice() {
-        guard let data = currentPriceData else { return }
+        guard let settings = settings, let data = currentPriceData else { return }
         self.getCurrentTimeStampFrom(data.timestamp)
         self.getCurrentPriceFrom(data.price)
-        self.unit = self.shared.localizedString(self.shared.unit)
+        self.unit = settings.localizedString(settings.unit)
     }
-    
+
     private func getCurrentTimeStampFrom(_ timeStamp: Double) {
+        guard let settings = settings else { return }
         let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "EET")
+        dateFormatter.timeZone = TimeZoneHelper.timeZone(for: settings.region)
         dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = (shared.chartResolution == .oneHour) ? "HH:00" : "HH:mm"
+        dateFormatter.dateFormat = (settings.chartResolution == .oneHour) ? "HH:00" : "HH:mm"
         let date = Date(timeIntervalSince1970: timeStamp)
-        self.currenPriceTimeStamp = dateFormatter.string(from: date)
+        self.currentPriceTimestamp = dateFormatter.string(from: date)
     }
-    
+
     private func getCurrentPriceFrom(_ price: Double) {
-        let priceWithTax = shared.includeTax ? price * shared.taxRate : price
-        let formattedPrice = shared.numberFormatter.string(from: NSNumber(value: priceWithTax / shared.divider))
-        self.currenPrice = formattedPrice ?? "---"
+        guard let settings = settings else { return }
+        let priceWithTax = settings.includeTax ? price * settings.taxRate : price
+        let formattedPrice = settings.numberFormatter.string(from: NSNumber(value: priceWithTax / settings.divider))
+        self.currentPrice = formattedPrice ?? "---"
     }
-    
+
     deinit {
-        updateTimer?.invalidate()
+        timerTask?.cancel()
     }
 }
-

@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @EnvironmentObject var shared: Globals
+    @EnvironmentObject var settings: AppSettings
     let unitsArray = ["€/kWh", "€/MWh", "cent/kWh"]
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
 
     init() {
         setupAppearance()
     }
-    
-    // Extracted UI appearance customization into a separate function
+
     private func setupAppearance() {
         let appearance = UINavigationBar.appearance()
         UITableView.appearance().backgroundColor = .clear
@@ -26,12 +25,12 @@ struct SettingsView: View {
         appearance.shadowImage = UIImage()
         appearance.tintColor = .blue
     }
-    
+
     var body: some View {
         Group {
             VStack(alignment: .center) {
-                TitleView(title: shared.localizedString("LABEL_SETTINGS"))
-                
+                TitleView(title: settings.localizedString("LABEL_SETTINGS"))
+
                 Form {
                     generalSettingsSection
                     payAttentionSection
@@ -42,64 +41,56 @@ struct SettingsView: View {
             }
         }
     }
-    
+
     private var generalSettingsSection: some View {
-        Section(header: Text(shared.localizedString("TITLE_GENERAL"))) {
-            Picker(shared.localizedString("TITLE_LANGUAGE"), selection: $shared.language) {
+        Section(header: Text(settings.localizedString("TITLE_GENERAL"))) {
+            Picker(settings.localizedString("TITLE_LANGUAGE"), selection: $settings.language) {
                 ForEach(Language.allLanguages, id: \.self) { language in
-                    Text(shared.localizedString(language.name))
+                    Text(settings.localizedString(language.name))
                 }
             }
-            Picker(shared.localizedString("TITLE_REGION"), selection: $shared.region) {
+            Picker(settings.localizedString("TITLE_REGION"), selection: $settings.region) {
                 ForEach(Region.allRegions, id: \.self) { region in
-                    Text(shared.localizedString(region.name))
+                    Text(settings.localizedString(region.name))
                 }
             }
-            .onChange(of: shared.region) { _ in
-                shared.todayDataUpdateMandatory = true
-                shared.tomorrowDataUpdateMandatory = true
-            }
-            Picker(shared.localizedString("TITLE_UNIT"), selection: $shared.unit) {
+            Picker(settings.localizedString("TITLE_UNIT"), selection: $settings.unit) {
                 ForEach(unitsArray, id: \.self) {
-                    Text(shared.localizedString($0))
+                    Text(settings.localizedString($0))
                 }
             }
-            Toggle(isOn: $shared.includeTax) {
-                Text(shared.localizedString("TITLE_INCLUDE_TAX"))
+            Toggle(isOn: $settings.includeTax) {
+                Text(settings.localizedString("TITLE_INCLUDE_TAX"))
             }
             HStack {
-                Text(shared.localizedString("TITLE_VAT"))
+                Text(settings.localizedString("TITLE_VAT"))
                 Spacer()
-                Text(shared.taxPercentage)
+                Text(settings.taxPercentage)
             }
-            
-            Toggle(isOn: $shared.alwaysOnDisplay) {
-                Text(shared.localizedString("TITLE_ALWAYS_ON_DISPLAY"))
+
+            Toggle(isOn: $settings.alwaysOnDisplay) {
+                Text(settings.localizedString("TITLE_ALWAYS_ON_DISPLAY"))
             }
-            
-            Picker(shared.localizedString("TITLE_CHART_RESOLUTION"), selection: $shared.chartResolution) {
+
+            Picker(settings.localizedString("TITLE_CHART_RESOLUTION"), selection: $settings.chartResolution) {
                 ForEach(ChartResolution.allCases, id: \.self) { resolution in
                     Text(resolution.label)
                 }
             }
-            .onChange(of: shared.chartResolution) { _ in
-                shared.todayDataUpdateMandatory = true
-                shared.tomorrowDataUpdateMandatory = true
-            }
         }
     }
-    
+
     private var payAttentionSection: some View {
-        Section(header: Text(shared.localizedString("TITLE_PAY_ATTENTION"))) {
-            Text(shared.localizedString("TEXT_INFORMATION_ABOUT_APP"))
-            Text(shared.localizedString("TEXT_IFORMATION_ABOUT_MARKET_TIME_UNIT"))
+        Section(header: Text(settings.localizedString("TITLE_PAY_ATTENTION"))) {
+            Text(settings.localizedString("TEXT_INFORMATION_ABOUT_APP"))
+            Text(settings.localizedString("TEXT_IFORMATION_ABOUT_MARKET_TIME_UNIT"))
         }
     }
-    
+
     private var appInfoSection: some View {
-        Section(header: Text(shared.localizedString("TITLE_APP_INFO"))) {
+        Section(header: Text(settings.localizedString("TITLE_APP_INFO"))) {
             HStack {
-                Text(shared.localizedString("TITLE_VERSION"))
+                Text(settings.localizedString("TITLE_VERSION"))
                 Spacer()
                 Text(appVersion ?? "")
             }
@@ -109,6 +100,6 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView().environmentObject(Globals())
+        SettingsView().environmentObject(AppSettings())
     }
 }
