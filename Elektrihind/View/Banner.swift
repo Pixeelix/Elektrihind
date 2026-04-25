@@ -5,71 +5,110 @@
 //  Created by Martin Pihooja on 08.02.2023.
 //
 
-import Foundation
 import SwiftUI
 import GoogleMobileAds
+import UIKit
 
-struct BannerAd: UIViewRepresentable {
-    
-    var unitID: String = "ca-app-pub-5431783362632568/4212512484"
-    
-    init() {
+struct FixedBannerAd: UIViewRepresentable {
+    let unitID: String
+
     #if DEBUG
-        self.unitID = "ca-app-pub-3940256099942544/2934735716"
+    private var resolvedUnitID: String { "ca-app-pub-3940256099942544/2934735716" } // test banner
+    #else
+    private var resolvedUnitID: String { unitID }
     #endif
+
+    func makeCoordinator() -> Coordinator { Coordinator() }
+
+    func makeUIView(context: Context) -> BannerView {
+        let banner = BannerView(adSize: AdSizeBanner) // 320x50
+        banner.adUnitID = resolvedUnitID
+        banner.rootViewController = context.coordinator.viewController
+        banner.delegate = context.coordinator
+        banner.load(Request())
+        return banner
     }
 
-    func makeCoordinator() -> Coordinator {
-        return Coordinator()
+    func updateUIView(_ uiView: BannerView, context: Context) {
+        // fixed size: nothing to update
     }
-    
-    func makeUIView(context: Context) -> GADBannerView {
-        let adView = GADBannerView(adSize: GADAdSizeBanner)
-        adView.adUnitID = unitID
-        adView.rootViewController = UIApplication.shared.getRootViewController()
-        adView.load(GADRequest())
-        return adView
-    }
-    
-    func updateUIView(_ uiView: UIViewType, context: Context) {
-        
-    }
-    
-    class Coordinator: NSObject, GADBannerViewDelegate {
-        
-        func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
-          print("bannerViewDidReceiveAd")
+
+    final class Coordinator: NSObject, BannerViewDelegate {
+        let viewController = UIViewController()
+
+        func bannerViewDidReceiveAd(_ bannerView: BannerView) {
+            print("✅ Fixed banner loaded")
         }
 
-        func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
-          print("bannerView:didFailToReceiveAdWithError: \(error.localizedDescription)")
-        }
-
-        func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
-          print("bannerViewDidRecordImpression")
-        }
-
-        func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
-          print("bannerViewWillPresentScreen")
-        }
-
-        func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
-          print("bannerViewWillDIsmissScreen")
-        }
-
-        func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
-          print("bannerViewDidDismissScreen")
+        func bannerView(_ bannerView: BannerView, didFailToReceiveAdWithError error: Error) {
+            print("❌ Fixed banner failed: \(error.localizedDescription)")
         }
     }
 }
 
-extension UIApplication {
-    func getRootViewController() -> UIViewController {
-        guard let screen = self.connectedScenes.first as? UIWindowScene,
-              let root = screen.windows.first?.rootViewController else {
-            return .init()
+
+
+struct AdaptiveBannerAd: View {
+    let unitID: String
+
+    var body: some View {
+        GeometryReader { geo in
+            AdaptiveBannerRepresentable(unitID: unitID, width: geo.size.width)
         }
-        
-        return root
+        // IMPORTANT:
+        // Don't hard-cap this if you want true adaptive (it can be 50–90).
+        // If you *do* cap it, it may clip on iPad/landscape.
+        .frame(minHeight: 50) // lets it expand if needed
     }
 }
+
+private struct AdaptiveBannerRepresentable: UIViewRepresentable {
+    let unitID: String
+    let width: CGFloat
+
+    #if DEBUG
+    private var resolvedUnitID: String { "ca-app-pub-3940256099942544/2934735716" } // test banner
+    #else
+    private var resolvedUnitID: String { unitID }
+    #endif
+
+    func makeCoordinator() -> Coordinator { Coordinator() }
+
+    func makeUIView(context: Context) -> BannerView {
+        let banner = BannerView()
+        banner.adUnitID = resolvedUnitID
+        banner.rootViewController = context.coordinator.viewController
+        banner.delegate = context.coordinator
+        return banner
+    }
+
+    func updateUIView(_ banner: BannerView, context: Context) {
+        guard width > 0 else { return }
+
+        // Avoid reloading if width didn't really change
+        if abs(width - context.coordinator.lastLoadedWidth) < 1 { return }
+        context.coordinator.lastLoadedWidth = width
+
+        // Anchored adaptive size for this width
+        // If your SDK exposes a different helper name, tell me and I’ll map it.
+        let gadAdSize = currentOrientationAnchoredAdaptiveBanner(width: width)
+
+        // Convert to the Swift AdSize wrapper you're using
+        banner.adSize = AdSize(size: gadAdSize.size, flags: 0)
+
+        banner.load(Request())
+    }
+
+    final class Coordinator: NSObject, BannerViewDelegate {
+        let viewController = UIViewController()
+        var lastLoadedWidth: CGFloat = 0
+
+        func bannerViewDidReceiveAd(_ bannerView: BannerView) {
+            print("✅ Adaptive banner loaded")
+        }
+
+        func bannerView(_ bannerView: BannerView, didFailToReceiveAdWithError error: Error) {
+            print("❌ Adaptive banner failed: \(error.localizedDescription)")
+        }
+    }
+} 

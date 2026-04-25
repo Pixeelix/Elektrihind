@@ -7,3 +7,4 @@
 */
 
 "CFBundleDisplayName" = "Elektrihind";
+"NSUserTrackingUsageDescription" = "Это позволяет нам показывать вам персонализированную рекламу, что делает приложение бесплатным для вас.";

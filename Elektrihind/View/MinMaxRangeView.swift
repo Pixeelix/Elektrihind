@@ -8,40 +8,48 @@
 import SwiftUI
 
 struct MinMaxRange: View {
-    @EnvironmentObject var shared: Globals
-    
+    @Binding var tabSelection: Int
+    @EnvironmentObject var settings: AppSettings
+    @ObservedObject var chartViewModel: ChartViewModel
+
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
             HStack(alignment: .top) {
-                Image(shared.region.rawValue)
-                    .resizable()
-                    .frame(width: 30, height: 22)
-                    .cornerRadius(6)
-                    .shadow(radius: 5)
+                Button {
+                    self.tabSelection = 3
+                } label: {
+                    Image(settings.region.rawValue)
+                        .resizable()
+                }
+                .frame(width: 30, height: 22)
+                .cornerRadius(6)
+                .shadow(radius: 5)
                 Spacer()
             }
             .frame(height: 22)
             .padding(.top, 8)
             .padding(.leading, 10)
             .padding(.trailing, 10)
+
             VStack {
-                Text("\(shared.minNextDayPrice) - \(shared.maxNextDayPrice)")
+                Text("\(chartViewModel.minPrice) - \(chartViewModel.maxPrice)")
                     .font(.system(size: 300, weight: .medium))
                     .minimumScaleFactor(0.01)
                     .lineLimit(1)
             }
-            .frame(height: UIScreen.is1stGenIphone ? 42 : 68)
+            .frame(height: UIScreen.isTallScreen ? 62 : 52)
             .padding(.horizontal, 30)
-            
+            .padding(.top, -12)
+
             VStack {
-                Text(shared.localizedString(shared.unit))
+                Text(settings.localizedString(settings.unit))
                     .font(.system(size: 24, weight: .medium))
             }
             Spacer()
         }
-        .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.is1stGenIphone ? 120 : 140)
+        .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.isTallScreen ? 120 : 100)
         .background(Color.contentBoxBackground)
         .foregroundColor(Color.bluewWhiteText)
-        .cornerRadius(20)
+        .cornerRadius(12)
     }
 }

@@ -8,49 +8,78 @@
 import SwiftUI
 
 struct TomorrowView: View {
+    @Binding var tabSelection: Int
     @Environment(\.scenePhase) var scenePhase
-    @EnvironmentObject var shared: Globals
+    @EnvironmentObject var settings: AppSettings
     @StateObject private var chartViewModel = ChartViewModel()
-    
+
     var body: some View {
-        HStack(alignment: .top) {
-            if shared.missingTomorrowData {
-                VStack(alignment: .center) {
-                    TitleView(title: shared.localizedString("TITLE_TOMORROWS_PRICE"))
-                    Text(shared.localizedString("TEXT_TOMORROWS_PRICE_WILL_APEAR"))
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
-                        .font(.system(size: 18, weight: .medium, design: .default))
-                        .foregroundColor(.white)
-                        .multilineTextAlignment(.center)
-                        .padding(EdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10))
-                    Spacer()
-                }
+        VStack {
+            TitleView(title: settings.localizedString("TITLE_TOMORROWS_PRICE"))
+
+            if chartViewModel.missingData {
+                noDataView
             } else {
-                VStack(alignment: .center) {
-                    TitleView(title: shared.localizedString("TITLE_TOMORROWS_PRICE"))
-                    MinMaxRange()
-                        .padding(.bottom, UIScreen.is1stGenIphone || UIScreen.isIphone8 ? 10 : 50)
-                    ChartView(day: .tomorrow, viewModel: chartViewModel)
-                    Spacer()
-                }
+                dataView
             }
         }
-        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .onAppear {
-            chartViewModel.setup(self.shared, day: .tomorrow)
-            chartViewModel.loadChartData()
+            chartViewModel.configure(settings: settings, day: Day.tomorrow)
         }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
-                chartViewModel.setup(self.shared, day: .tomorrow)
                 chartViewModel.loadChartData()
+            } else if newPhase == .background {
+                chartViewModel.cancelInFlight()
             }
         }
+    }
+
+    private var noDataView: some View {
+        GeometryReader { geo in
+            VStack(spacing: 0) {
+                VStack {
+                    Spacer()
+                    Text(settings.localizedString("TEXT_TOMORROWS_PRICE_WILL_APEAR"))
+                        .font(.system(size: 18, weight: .medium))
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                        .padding(.vertical, 20)
+                        .padding(.horizontal, 10)
+                    Spacer()
+                }
+                .frame(height: geo.size.height * 0.85)
+
+                VStack {
+                    Spacer()
+                    AdaptiveBannerAd(unitID: AdUnit.tomorrowNoDataBanner)
+                        .padding(.bottom, 15)
+                }
+                .frame(height: geo.size.height * 0.15)
+            }
+            .frame(width: geo.size.width, height: geo.size.height)
+        }
+    }
+
+    private var dataView: some View {
+        VStack {
+            MinMaxRange(tabSelection: $tabSelection, chartViewModel: chartViewModel)
+                .padding(.bottom, 0)
+
+            MinAvgMaxView(chartViewModel: chartViewModel)
+            ChartView(day: Day.tomorrow, viewModel: chartViewModel)
+            Spacer(minLength: 15)
+            AdaptiveBannerAd(unitID: AdUnit.tomorrowDataBanner)
+                .padding(.bottom, 15)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
 struct TomorrowView_Previews: PreviewProvider {
     static var previews: some View {
-        TomorrowView()
+        TomorrowView(tabSelection: .constant(0))
+            .environmentObject(AppSettings())
     }
 }

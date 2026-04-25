@@ -8,3 +8,4 @@
 
 "CFBundleDisplayName" = "Sähkön Hinta";
 "UILaunchStoryboardName" = "LaunchScreenFI";
+"NSUserTrackingUsageDescription" = "This allows us to show you personalized ads, which keeps the app free for you.";

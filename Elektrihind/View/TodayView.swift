@@ -8,33 +8,40 @@
 import SwiftUI
 
 struct TodayView: View {
+    @Binding var tabSelection: Int
     @Environment(\.scenePhase) var scenePhase
-    @EnvironmentObject var shared: Globals
+    @EnvironmentObject var settings: AppSettings
     @StateObject private var chartViewModel = ChartViewModel()
-    
+
     var body: some View {
         HStack(alignment: .top) {
             VStack(alignment: .center) {
-                TitleView(title: shared.localizedString("TITLE_TODAYS_PRICE"))
-                CurrentPriceView()
-                    .padding(.bottom, UIScreen.is1stGenIphone || UIScreen.isIphone8 ? 0 : 50)
-                ChartView(day: .today, viewModel: chartViewModel)
-                Spacer()
-                BannerAd().frame(maxHeight: 60)
-                    .padding(.bottom, 25)
+                TitleView(title: settings.localizedString("TITLE_TODAYS_PRICE"))
+                CurrentPriceView(tabSelection: $tabSelection)
+                    .padding(.bottom, 0)
+                MinAvgMaxView(chartViewModel: chartViewModel)
+                ChartView(day: Day.today, viewModel: chartViewModel)
+                Spacer(minLength: 15)
+                AdaptiveBannerAd(unitID: AdUnit.todayBanner)
+                    .padding(.bottom, 15)
             }
         }
-        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)
         .onAppear {
-            chartViewModel.setup(self.shared, day: .today)
-            chartViewModel.loadChartData()
+            chartViewModel.configure(settings: settings, day: Day.today)
         }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
-                chartViewModel.setup(self.shared, day: .today)
                 chartViewModel.loadChartData()
+            } else if newPhase == .background {
+                chartViewModel.cancelInFlight()
             }
         }
     }
-    
+}
+
+struct TodayView_Previews: PreviewProvider {
+    static var previews: some View {
+        TodayView(tabSelection: .constant(0))
+            .environmentObject(AppSettings())
+    }
 }

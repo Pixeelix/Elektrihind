@@ -8,34 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var shared: Globals
+    @EnvironmentObject var settings: AppSettings
     @EnvironmentObject var networkManager: NetworkManager
     @State private var tabBarSelection = 0
     
-    init() {
-        UITabBar.appearance().backgroundColor = UIColor(Color.tabBarBackground)
-    }
-    
     var body: some View {
         if networkManager.isConnected {
-            TabView(selection: $tabBarSelection) {
-                TodayView()
-                    .tag(0)
-                    .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
-                TomorrowView()
-                    .tag(1)
-                    .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
-    //          Text("Hea teada")
-    //              .tag(2)
-    //              .background(backGroundColor().edgesIgnoringSafeArea(.all))
-                SettingsView()
-                    .tag(2)
-                    .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
-            }
-            .onAppear() {
-                shared.getSavedSettings()
-            }
-            .overlay(TabBarView(selection: $tabBarSelection), alignment: .bottom)
+            TabBarView(selection: $tabBarSelection)
+                .onAppear() {
+                    settings.getSavedSettings()
+                }
         } else {
             ConnectionLostView()
         }
@@ -49,3 +31,4 @@ struct ContentView_Previews: PreviewProvider {
         }
     }
 }
+

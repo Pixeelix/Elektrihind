@@ -7,3 +7,4 @@
 */
 
 "CFBundleDisplayName" = "Elektrihind";
+"NSUserTrackingUsageDescription" = "See võimaldab meil näidata teile isikupärastatud reklaame, mis hoiab rakenduse teie jaoks tasuta.";

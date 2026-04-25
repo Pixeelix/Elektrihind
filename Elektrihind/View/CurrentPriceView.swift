@@ -8,20 +8,25 @@
 import SwiftUI
 
 struct CurrentPriceView: View {
+    @Binding var tabSelection: Int
     @Environment(\.scenePhase) var scenePhase
-    @EnvironmentObject var shared: Globals
+    @EnvironmentObject var settings: AppSettings
     @StateObject private var viewModel = CurrentPriceViewModel()
-    
+
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
             HStack(alignment: .top) {
-                Image(shared.region.rawValue)
-                    .resizable()
-                    .frame(width: 30, height: 22)
-                    .cornerRadius(6)
-                    .shadow(radius: 5)
+                Button {
+                    self.tabSelection = 3
+                } label: {
+                    Image(settings.region.rawValue)
+                        .resizable()
+                }
+                .frame(width: 30, height: 22)
+                .cornerRadius(6)
+                .shadow(radius: 5)
                 Spacer()
-                Text(viewModel.currenPriceTimeStamp)
+                Text(viewModel.currentPriceTimestamp)
                     .font(.system(size: 300))
                     .minimumScaleFactor(0.01)
             }
@@ -29,33 +34,33 @@ struct CurrentPriceView: View {
             .padding(.top, 8)
             .padding(.leading, 10)
             .padding(.trailing, 10)
-            
+
             VStack {
-                Text(viewModel.currenPrice)
+                Text(viewModel.currentPrice)
                     .font(.system(size: 300, weight: .medium))
                     .minimumScaleFactor(0.01)
             }
-            .frame(height: UIScreen.is1stGenIphone ? 56 : 82)
+            .frame(height: UIScreen.isTallScreen ? 62 : 52)
             .padding(.top, -12)
-            
+
             VStack {
                 Text(viewModel.unit)
                     .font(.system(size: 24, weight: .medium))
             }
             Spacer()
         }
-        .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.is1stGenIphone ? 120 : 140)
+        .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.isTallScreen ? 120 : 100)
         .background(Color.contentBoxBackground)
         .foregroundColor(Color.bluewWhiteText)
-        .cornerRadius(20)
+        .cornerRadius(12)
         .onAppear {
-            viewModel.setup(self.shared)
-            viewModel.loadCurrentPrice()
+            viewModel.configure(settings: settings)
         }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
-                viewModel.setup(self.shared)
                 viewModel.loadCurrentPrice()
+            } else if newPhase == .background {
+                viewModel.cancelInFlight()
             }
         }
     }
