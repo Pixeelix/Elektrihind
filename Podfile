@@ -8,4 +8,5 @@ target 'Elektrihind' do
   pod 'FBAudienceNetwork'
   pod 'GoogleUserMessagingPlatform'
   pod 'GoogleMobileAdsMediationFacebook'
+  pod 'GoogleMobileAdsMediationAppLovin'
 end

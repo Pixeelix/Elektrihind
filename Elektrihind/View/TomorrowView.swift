@@ -30,6 +30,8 @@ struct TomorrowView: View {
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
                 chartViewModel.loadChartData()
+            } else if newPhase == .background {
+                chartViewModel.cancelInFlight()
             }
         }
     }
@@ -47,14 +49,14 @@ struct TomorrowView: View {
                         .padding(.horizontal, 10)
                     Spacer()
                 }
-                .frame(height: geo.size.height * 0.4)
+                .frame(height: geo.size.height * 0.85)
 
                 VStack {
                     Spacer()
-                    AdaptiveBannerAd(unitID: "ca-app-pub-5431783362632568/8076084809")
-                        .padding(.bottom, 25)
+                    AdaptiveBannerAd(unitID: AdUnit.tomorrowNoDataBanner)
+                        .padding(.bottom, 15)
                 }
-                .frame(height: geo.size.height * 0.6)
+                .frame(height: geo.size.height * 0.15)
             }
             .frame(width: geo.size.width, height: geo.size.height)
         }
@@ -66,14 +68,10 @@ struct TomorrowView: View {
                 .padding(.bottom, 0)
 
             MinAvgMaxView(chartViewModel: chartViewModel)
-
             ChartView(day: Day.tomorrow, viewModel: chartViewModel)
-
-            Spacer()
-
-            FixedBannerAd(unitID: "ca-app-pub-5431783362632568/3104542071")
-                .frame(height: 50)
-                .padding(.bottom, 25)
+            Spacer(minLength: 15)
+            AdaptiveBannerAd(unitID: AdUnit.tomorrowDataBanner)
+                .padding(.bottom, 15)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }

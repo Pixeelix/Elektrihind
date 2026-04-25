@@ -58,6 +58,18 @@ class AppSettings: ObservableObject {
         }
     }
 
+    @Published var chartType: ChartType = {
+        if let saved = UserDefaults.standard.string(forKey: "chartType"),
+           let value = ChartType(rawValue: saved) {
+            return value
+        }
+        return .bar
+    }() {
+        didSet {
+            saveChartType()
+        }
+    }
+
     @Published var chartResolution: ChartResolution = {
         if let saved = UserDefaults.standard.string(forKey: "chartResolution"),
            let value = ChartResolution(rawValue: saved) {
@@ -90,6 +102,11 @@ class AppSettings: ObservableObject {
         if let savedResolution = UserDefaults.standard.string(forKey: "chartResolution"),
            let value = ChartResolution(rawValue: savedResolution) {
             chartResolution = value
+        }
+
+        if let savedChartType = UserDefaults.standard.string(forKey: "chartType"),
+           let value = ChartType(rawValue: savedChartType) {
+            chartType = value
         }
 
         // Mirror values to App Group so the widget can read them
@@ -157,6 +174,10 @@ class AppSettings: ObservableObject {
 
     func saveAlwaysOnDisplay() {
         UserDefaults.standard.set(alwaysOnDisplay, forKey: "alwaysOnDisplay")
+    }
+
+    func saveChartType() {
+        UserDefaults.standard.set(chartType.rawValue, forKey: "chartType")
     }
 
     func saveChartResolution() {

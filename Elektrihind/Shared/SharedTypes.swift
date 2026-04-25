@@ -29,6 +29,18 @@ enum Region: String {
     }
 }
 
+enum ChartType: String, CaseIterable, Hashable {
+    case bar = "bar"
+    case line = "line"
+
+    var systemImage: String {
+        switch self {
+        case .bar: return "chart.bar.fill"
+        case .line: return "chart.xyaxis.line"
+        }
+    }
+}
+
 enum ChartResolution: String, CaseIterable, Hashable {
     case fifteenMinutes = "15min"
     case oneHour = "1h"

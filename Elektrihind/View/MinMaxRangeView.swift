@@ -16,7 +16,7 @@ struct MinMaxRange: View {
         VStack(alignment: .center, spacing: 0) {
             HStack(alignment: .top) {
                 Button {
-                    self.tabSelection = 2
+                    self.tabSelection = 3
                 } label: {
                     Image(settings.region.rawValue)
                         .resizable()

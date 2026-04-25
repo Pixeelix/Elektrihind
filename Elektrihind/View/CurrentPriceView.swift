@@ -17,7 +17,7 @@ struct CurrentPriceView: View {
         VStack(alignment: .center, spacing: 0) {
             HStack(alignment: .top) {
                 Button {
-                    self.tabSelection = 2
+                    self.tabSelection = 3
                 } label: {
                     Image(settings.region.rawValue)
                         .resizable()
@@ -59,6 +59,8 @@ struct CurrentPriceView: View {
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
                 viewModel.loadCurrentPrice()
+            } else if newPhase == .background {
+                viewModel.cancelInFlight()
             }
         }
     }

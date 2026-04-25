@@ -1,6 +1,15 @@
 # Acknowledgements
 This application makes use of the following third party libraries:
 
+## AppLovinSDK
+
+
+Copyright 2025 AppLovin Corp. All rights reserved.
+
+The AppLovin SDK is available under a commercial license (https://www.applovin.com/eula).
+
+
+
 ## FBAudienceNetwork
 
 Copyright (c) Meta Platforms, Inc. and affiliates. All rights reserved.
@@ -861,6 +870,10 @@ Copyright 2024 Google
 ## GoogleAppMeasurement
 
 Copyright 2022 Google
+
+## GoogleMobileAdsMediationAppLovin
+
+Copyright 2017 Google LLC
 
 ## GoogleMobileAdsMediationFacebook
 

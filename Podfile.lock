@@ -1,4 +1,5 @@
 PODS:
+  - AppLovinSDK (13.5.0)
   - FBAudienceNetwork (6.21.0)
   - Firebase/Analytics (12.8.0):
     - Firebase/Core
@@ -65,7 +66,10 @@ PODS:
     - GoogleUtilities/Network (~> 8.1)
     - "GoogleUtilities/NSData+zlib (~> 8.1)"
     - nanopb (~> 3.30910.0)
-  - GoogleMobileAdsMediationFacebook (6.21.0.0):
+  - GoogleMobileAdsMediationAppLovin (13.5.0.0):
+    - AppLovinSDK (= 13.5.0)
+    - Google-Mobile-Ads-SDK (~> 12.0)
+  - GoogleMobileAdsMediationFacebook (6.21.0.1):
     - FBAudienceNetwork (= 6.21.0)
     - Google-Mobile-Ads-SDK (~> 12.0)
   - GoogleUserMessagingPlatform (3.1.0)
@@ -107,11 +111,13 @@ DEPENDENCIES:
   - FBAudienceNetwork
   - Firebase/Analytics
   - Google-Mobile-Ads-SDK
+  - GoogleMobileAdsMediationAppLovin
   - GoogleMobileAdsMediationFacebook
   - GoogleUserMessagingPlatform
 
 SPEC REPOS:
   trunk:
+    - AppLovinSDK
     - FBAudienceNetwork
     - Firebase
     - FirebaseAnalytics
@@ -121,6 +127,7 @@ SPEC REPOS:
     - Google-Mobile-Ads-SDK
     - GoogleAdsOnDeviceConversion
     - GoogleAppMeasurement
+    - GoogleMobileAdsMediationAppLovin
     - GoogleMobileAdsMediationFacebook
     - GoogleUserMessagingPlatform
     - GoogleUtilities
@@ -128,6 +135,7 @@ SPEC REPOS:
     - PromisesObjC
 
 SPEC CHECKSUMS:
+  AppLovinSDK: bf8974163120910e6b902e9610e7c5a2c0f577b6
   FBAudienceNetwork: f4ab9e073ab98c884dbdb5ffe7c861272b380bc2
   Firebase: 9a58fdbc9d8655ed7b79a19cf9690bb007d3d46d
   FirebaseAnalytics: f20bbad8cb7f65d8a5eaefeb424ae8800a31bdfc
@@ -137,12 +145,13 @@ SPEC CHECKSUMS:
   Google-Mobile-Ads-SDK: 4534fd2dfcd3f705c5485a6633c5188d03d4eed2
   GoogleAdsOnDeviceConversion: d68c69dd9581a0f5da02617b6f377e5be483970f
   GoogleAppMeasurement: 72c9a682fec6290327ea5e3c4b829b247fcb2c17
-  GoogleMobileAdsMediationFacebook: 664fd50364d36531196bf24fe62d2db84cad72d0
+  GoogleMobileAdsMediationAppLovin: 56b7465bf2afc594982b7820d8db8ea092a57ffc
+  GoogleMobileAdsMediationFacebook: a8379733e6e593e9a5ea278bdc16e747ec952a18
   GoogleUserMessagingPlatform: befe603da6501006420c206222acd449bba45a9c
   GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
 
-PODFILE CHECKSUM: 798d8734a7c5769d5a3ed3baca3435cd38583d38
+PODFILE CHECKSUM: add31dc77c8249df66c74ca2dc1174ebc2254999
 
 COCOAPODS: 1.16.2

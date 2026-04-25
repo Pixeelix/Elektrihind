@@ -27,7 +27,7 @@ struct SettingsView: View {
     }
 
     var body: some View {
-        Group {
+        VStack(spacing: 0) {
             VStack(alignment: .center) {
                 TitleView(title: settings.localizedString("LABEL_SETTINGS"))
 
@@ -35,6 +35,7 @@ struct SettingsView: View {
                     generalSettingsSection
                     payAttentionSection
                     appInfoSection
+                    adSection
                 }
                 .tint(.blue)
                 .scrollContentBackground(.hidden)
@@ -79,7 +80,7 @@ struct SettingsView: View {
             }
         }
     }
-
+    
     private var payAttentionSection: some View {
         Section(header: Text(settings.localizedString("TITLE_PAY_ATTENTION"))) {
             Text(settings.localizedString("TEXT_INFORMATION_ABOUT_APP"))
@@ -96,7 +97,19 @@ struct SettingsView: View {
             }
         }
     }
+    
+    private var adSection: some View {
+        Section() {
+            AdaptiveBannerAd(unitID: AdUnit.settingsBanner)
+                .frame(height: 60)
+                .frame(maxWidth: .infinity)
+                .listRowInsets(EdgeInsets())
+                .listRowBackground(Color.clear)
+        }
+    }
 }
+
+
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {

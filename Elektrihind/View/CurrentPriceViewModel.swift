@@ -20,6 +20,7 @@ class CurrentPriceViewModel: ObservableObject {
     private var settings: AppSettings?
     private let network = NetworkService()
     private var timerTask: Task<Void, Never>?
+    private var loadTask: Task<Void, Never>?
     private var isConfigured = false
     private var cancellables = Set<AnyCancellable>()
 
@@ -68,7 +69,9 @@ class CurrentPriceViewModel: ObservableObject {
     func loadCurrentPrice() {
         guard let settings = settings else { return }
         if shouldLoadData() {
-            Task {
+            loadTask?.cancel()
+            loadTask = Task { [weak self] in
+                guard let self else { return }
                 do {
                     let data = try await network.loadFullDayData(Day.today, region: settings.region)
                     let now = Date()
@@ -86,12 +89,20 @@ class CurrentPriceViewModel: ObservableObject {
                     self.updateCurrentPrice()
                     self.dataLastLoaded = Date()
                 } catch {
-                    self.errorMessage = error.localizedDescription
+                    let urlError = error as? URLError
+                    if !(error is CancellationError) && urlError?.code != .cancelled {
+                        self.errorMessage = error.localizedDescription
+                    }
                 }
             }
         } else {
             updateCurrentPrice()
         }
+    }
+
+    func cancelInFlight() {
+        loadTask?.cancel()
+        loadTask = nil
     }
 
     private func shouldLoadData() -> Bool {
@@ -185,5 +196,6 @@ class CurrentPriceViewModel: ObservableObject {
 
     deinit {
         timerTask?.cancel()
+        loadTask?.cancel()
     }
 }

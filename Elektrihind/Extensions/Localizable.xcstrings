@@ -540,6 +540,9 @@
         }
       }
     },
+    "Selected" : {
+
+    },
     "TEXT_CONNECTION_LOST" : {
       "extractionState" : "manual",
       "localizations" : {

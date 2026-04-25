@@ -76,6 +76,9 @@ struct ElektrihindApp: App {
                     }
                     print("STATUS: \(status)") })
             }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+                PriceAPI.resetSession()
+            }
         }
     }
 }

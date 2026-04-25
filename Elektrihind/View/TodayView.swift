@@ -21,10 +21,9 @@ struct TodayView: View {
                     .padding(.bottom, 0)
                 MinAvgMaxView(chartViewModel: chartViewModel)
                 ChartView(day: Day.today, viewModel: chartViewModel)
-                Spacer()
-                FixedBannerAd(unitID: "ca-app-pub-5431783362632568/4212512484")
-                    .frame(height: 50)
-                    .padding(.bottom, 25)
+                Spacer(minLength: 15)
+                AdaptiveBannerAd(unitID: AdUnit.todayBanner)
+                    .padding(.bottom, 15)
             }
         }
         .onAppear {
@@ -33,6 +32,8 @@ struct TodayView: View {
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
                 chartViewModel.loadChartData()
+            } else if newPhase == .background {
+                chartViewModel.cancelInFlight()
             }
         }
     }

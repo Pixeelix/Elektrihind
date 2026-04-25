@@ -9,6 +9,13 @@ import Foundation
 import SwiftUI
 import Combine
 
+struct PriceChartEntry: Identifiable {
+    let id: Int
+    let timeLabel: String
+    let price: Double
+    let isCurrent: Bool
+}
+
 @MainActor
 class ChartViewModel: ObservableObject {
     private var settings: AppSettings?
@@ -18,6 +25,7 @@ class ChartViewModel: ObservableObject {
     private var dataLastLoaded: Date? = nil
     private var isConfigured = false
     private var cancellables = Set<AnyCancellable>()
+    private var loadTask: Task<Void, Never>?
 
     @Published var isLoading: Bool = true
     @Published var data: ChartData = TestData.data
@@ -28,6 +36,27 @@ class ChartViewModel: ObservableObject {
     @Published var maxPrice: String = "---"
     @Published var missingData: Bool = false
     @Published var errorMessage: String? = nil
+
+    var chartEntries: [PriceChartEntry] {
+        let points = data.points
+        guard !points.isEmpty else { return [] }
+
+        let now = Date()
+        let hour = Calendar.current.component(.hour, from: now)
+        let minute = Calendar.current.component(.minute, from: now)
+        let minutesIntoDay = hour * 60 + minute
+        let totalPoints = points.count
+
+        return points.enumerated().map { index, point in
+            var isCurrent = false
+            if day == .today && totalPoints > 0 {
+                let proportionOfDay = Double(minutesIntoDay) / (24.0 * 60.0)
+                let currentIndex = min(totalPoints - 1, max(0, Int(floor(Double(totalPoints) * proportionOfDay))))
+                isCurrent = (index == currentIndex)
+            }
+            return PriceChartEntry(id: index, timeLabel: point.0, price: point.1, isCurrent: isCurrent)
+        }
+    }
 
     func configure(settings: AppSettings, day: Day) {
         self.settings = settings
@@ -92,7 +121,9 @@ class ChartViewModel: ObservableObject {
         guard let settings = settings else { return }
         if shouldLoadData() {
             isLoading = true
-            Task {
+            loadTask?.cancel()
+            loadTask = Task { [weak self] in
+                guard let self else { return }
                 do {
                     let data = try await network.loadFullDayData(day, region: settings.region)
                     if self.day == Day.tomorrow {
@@ -102,13 +133,22 @@ class ChartViewModel: ObservableObject {
                     self.updateChartData()
                     self.dataLastLoaded = Date()
                 } catch {
-                    self.errorMessage = error.localizedDescription
                     self.isLoading = false
+                    let urlError = error as? URLError
+                    if !(error is CancellationError) && urlError?.code != .cancelled {
+                        self.errorMessage = error.localizedDescription
+                    }
                 }
             }
         } else {
             updateChartData()
         }
+    }
+
+    func cancelInFlight() {
+        loadTask?.cancel()
+        loadTask = nil
+        isLoading = false
     }
 
     private func updateChartData() {
