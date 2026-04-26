@@ -13,6 +13,14 @@
 		<key>NSAllowsArbitraryLoadsUsageDescription</key>
 		<string>NSAllowsArbitraryLoadsInWebContent</string>
 	</dict>
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>fetch</string>
+    </array>
+    <key>BGTaskSchedulerPermittedIdentifiers</key>
+    <array>
+        <string>koodipardik.Elektrihind.priceCheck</string>
+    </array>
     <key>SKAdNetworkItems</key>
     <array>
       <dict>

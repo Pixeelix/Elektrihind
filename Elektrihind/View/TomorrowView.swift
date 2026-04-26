@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct TomorrowView: View {
-    @Binding var tabSelection: Int
     @Environment(\.scenePhase) var scenePhase
     @EnvironmentObject var settings: AppSettings
     @StateObject private var chartViewModel = ChartViewModel()
@@ -64,7 +63,7 @@ struct TomorrowView: View {
 
     private var dataView: some View {
         VStack {
-            MinMaxRange(tabSelection: $tabSelection, chartViewModel: chartViewModel)
+            MinMaxRange(chartViewModel: chartViewModel)
                 .padding(.bottom, 0)
 
             MinAvgMaxView(chartViewModel: chartViewModel)
@@ -79,7 +78,7 @@ struct TomorrowView: View {
 
 struct TomorrowView_Previews: PreviewProvider {
     static var previews: some View {
-        TomorrowView(tabSelection: .constant(0))
+        TomorrowView()
             .environmentObject(AppSettings())
     }
 }

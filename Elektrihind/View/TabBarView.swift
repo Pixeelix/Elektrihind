@@ -41,7 +41,7 @@ struct TabBarView: View {
     var body: some View {
         Group {
             TabView(selection: $selection) {
-                TodayView(tabSelection: $selection)
+                TodayView()
                     .tag(0)
                     .tabItem {
                         Image(systemName: "bolt.fill").symbolRenderingMode(.monochrome)
@@ -49,7 +49,7 @@ struct TabBarView: View {
                     }
                     .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
 
-                TomorrowView(tabSelection: $selection)
+                TomorrowView()
                     .tag(1)
                     .tabItem {
                         Image(systemName: "clock.fill").symbolRenderingMode(.monochrome)

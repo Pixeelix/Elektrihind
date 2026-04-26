@@ -114,6 +114,35 @@
         }
       }
     },
+    "BUTTON_CANCEL" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tühista"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peruuta"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отмена"
+          }
+        }
+      }
+    },
     "cent/kWh" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -139,6 +168,64 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "центt/kWh"
+          }
+        }
+      }
+    },
+    "CHART_TYPE_BAR" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bar"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tulpdiagramm"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pylväs"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Столбцы"
+          }
+        }
+      }
+    },
+    "CHART_TYPE_LINE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Line"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Joondiagramm"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viiva"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Линия"
           }
         }
       }
@@ -318,6 +405,151 @@
         }
       }
     },
+    "FOOTER_NOTIFICATIONS" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Background checks run periodically; deliveries follow the iOS schedule."
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Taustakontroll töötab perioodiliselt; teavituste edastus sõltub iOS-i ajakavast."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Taustatarkistukset suoritetaan ajoittain iOS:n aikataulun mukaisesti."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Фоновые проверки выполняются периодически по расписанию iOS."
+          }
+        }
+      }
+    },
+    "FOOTER_VAT" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The VAT rate depends on the selected region."
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Käibemaksumäär sõltub valitud regioonist."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ALV-prosentti määräytyy valitun alueen mukaan."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ставка НДС зависит от выбранного региона."
+          }
+        }
+      }
+    },
+    "HINT_NOTIFICATIONS_DENIED" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications are disabled. Open Settings to enable them."
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teavitused on keelatud. Ava Seaded nende lubamiseks."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ilmoitukset ovat pois käytöstä. Avaa Asetukset ottaaksesi ne käyttöön."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уведомления отключены. Откройте Настройки для их включения."
+          }
+        }
+      }
+    },
+    "LABEL_NOTIFY_MAX" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notify if tomorrow's price exceeds limit"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teavita kui homne hind ületab määratud piiri"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ilmoita, jos huomisen hinta ylittää rajan"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уведомить, если цена завтра превысит порог"
+          }
+        }
+      }
+    },
+    "LABEL_NOTIFY_MIN" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notify if tomorrow's price falls below limit"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teavita kui homne hind langeb alla määratud piiri"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ilmoita, jos huomisen hinta laskee rajan alle"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уведомить, если цена завтра упадёт ниже порога"
+          }
+        }
+      }
+    },
     "LABEL_SETTINGS" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -343,6 +575,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Настройки"
+          }
+        }
+      }
+    },
+    "LABEL_THRESHOLD" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limit"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piir"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Raja"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Порог"
           }
         }
       }
@@ -483,6 +744,122 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Loading..."
+          }
+        }
+      }
+    },
+    "NOTIF_BODY_MAX" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tomorrow's peak %1$@ at %2$@ exceeds your set limit (%3$@)."
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Homne tipp %1$@ kell %2$@ ületab su määratud piiri (%3$@)."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Huomisen huippu %1$@ klo %2$@ ylittää rajasi (%3$@)."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пик завтра %1$@ в %2$@ превысит ваш порог (%3$@)."
+          }
+        }
+      }
+    },
+    "NOTIF_BODY_MIN" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tomorrow's low %1$@ at %2$@ is below your set limit (%3$@)."
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Homne madalaim %1$@ kell %2$@ on alla su määratud piiri (%3$@)."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Huomisen alin %1$@ klo %2$@ on alle rajasi (%3$@)."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Минимум завтра %1$@ в %2$@ ниже вашего порога (%3$@)."
+          }
+        }
+      }
+    },
+    "NOTIF_TITLE_MAX" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "High electricity price tomorrow"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Homme on kõrge elektri hind"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Korkea sähkön hinta huomenna"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Высокая цена на электричество завтра"
+          }
+        }
+      }
+    },
+    "NOTIF_TITLE_MIN" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Low electricity price tomorrow"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Homme on madal elektri hind"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Matala sähkön hinta huomenna"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Низкая цена на электричество завтра"
           }
         }
       }
@@ -741,6 +1118,35 @@
         }
       }
     },
+    "TITLE_ABOUT" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rakendusest"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tietoja"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "О приложении"
+          }
+        }
+      }
+    },
     "TITLE_ALWAYS_ON_DISPLAY" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -853,6 +1259,64 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Рыночный временной интервал"
+          }
+        }
+      }
+    },
+    "TITLE_CHART_TYPE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chart type"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Graafiku tüüp"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaavion tyyppi"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тип графика"
+          }
+        }
+      }
+    },
+    "TITLE_DISPLAY" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Display"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kuva"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Näyttö"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отображение"
           }
         }
       }
@@ -1028,6 +1492,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Мин"
+          }
+        }
+      }
+    },
+    "TITLE_NOTIFICATIONS" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teavitused"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ilmoitukset"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уведомления"
           }
         }
       }

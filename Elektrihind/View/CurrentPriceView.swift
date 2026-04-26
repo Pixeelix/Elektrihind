@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct CurrentPriceView: View {
-    @Binding var tabSelection: Int
     @Environment(\.scenePhase) var scenePhase
     @EnvironmentObject var settings: AppSettings
     @StateObject private var viewModel = CurrentPriceViewModel()
+    @State private var showRegionPicker = false
 
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
             HStack(alignment: .top) {
                 Button {
-                    self.tabSelection = 3
+                    showRegionPicker = true
                 } label: {
                     Image(settings.region.rawValue)
                         .resizable()
@@ -52,7 +52,16 @@ struct CurrentPriceView: View {
         .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.isTallScreen ? 120 : 100)
         .background(Color.contentBoxBackground)
         .foregroundColor(Color.bluewWhiteText)
+        .tint(.blue)
         .cornerRadius(12)
+        .confirmationDialog(settings.localizedString("TITLE_REGION"), isPresented: $showRegionPicker, titleVisibility: .visible) {
+            ForEach(Region.allRegions, id: \.self) { region in
+                Button(settings.localizedString(region.name)) {
+                    settings.region = region
+                }
+            }
+            Button(settings.localizedString("BUTTON_CANCEL"), role: .cancel) {}
+        }
         .onAppear {
             viewModel.configure(settings: settings)
         }

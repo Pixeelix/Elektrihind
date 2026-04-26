@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct TodayView: View {
-    @Binding var tabSelection: Int
     @Environment(\.scenePhase) var scenePhase
     @EnvironmentObject var settings: AppSettings
     @StateObject private var chartViewModel = ChartViewModel()
@@ -17,7 +16,7 @@ struct TodayView: View {
         HStack(alignment: .top) {
             VStack(alignment: .center) {
                 TitleView(title: settings.localizedString("TITLE_TODAYS_PRICE"))
-                CurrentPriceView(tabSelection: $tabSelection)
+                CurrentPriceView()
                     .padding(.bottom, 0)
                 MinAvgMaxView(chartViewModel: chartViewModel)
                 ChartView(day: Day.today, viewModel: chartViewModel)
@@ -41,7 +40,7 @@ struct TodayView: View {
 
 struct TodayView_Previews: PreviewProvider {
     static var previews: some View {
-        TodayView(tabSelection: .constant(0))
+        TodayView()
             .environmentObject(AppSettings())
     }
 }

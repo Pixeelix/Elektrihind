@@ -10,6 +10,7 @@ import GoogleMobileAds
 import FirebaseCore
 import AppTrackingTransparency
 import FBAudienceNetwork
+import BackgroundTasks
 
 enum AdStatus {
     case initializing
@@ -26,8 +27,30 @@ struct ElektrihindApp: App {
     
     init() {
         FirebaseApp.configure()
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: BGScheduler.taskIdentifier, using: nil) { task in
+            BGScheduler.handle(task as! BGAppRefreshTask)
+        }
     }
     
+    private func requestATTIfNeeded() {
+        guard adStatus == .initializing else { return }
+        ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
+            FBAdSettings.setAdvertiserTrackingEnabled(status == .authorized)
+            switch status {
+            case .authorized:
+                adStatus = .authorized
+            case .notDetermined, .restricted, .denied:
+                adStatus = .restricted
+            @unknown default:
+                adStatus = .restricted
+            }
+            print("STATUS: \(status)")
+        })
+        Task { @MainActor in
+            await NotificationService.shared.runForegroundCheck(settings: settings)
+        }
+    }
+
     var body: some Scene {
         WindowGroup {
             ZStack {
@@ -65,18 +88,14 @@ struct ElektrihindApp: App {
                             }
                         }
                 }
-            }.onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-                ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
-                    FBAdSettings.setAdvertiserTrackingEnabled(status == .authorized)
-                    switch status {
-                    case .authorized:
-                        adStatus = .authorized
-                    case .notDetermined, .restricted, .denied:
-                        adStatus = .restricted
-                    @unknown default:
-                        adStatus = .restricted
-                    }
-                    print("STATUS: \(status)") })
+            }
+            .onAppear {
+                if UIApplication.shared.applicationState == .active {
+                    requestATTIfNeeded()
+                }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                requestATTIfNeeded()
             }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
                 PriceAPI.resetSession()

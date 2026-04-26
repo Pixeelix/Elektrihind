@@ -22,6 +22,7 @@
 		A258EFD229DDE00D00B0B27D /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258EFD129DDE00D00B0B27D /* ChartView.swift */; };
 		A258EFD429DDE06300B0B27D /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258EFD329DDE06300B0B27D /* ChartViewModel.swift */; };
 		A25AC1C72767FBC800C9610F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25AC1C62767FBC800C9610F /* SettingsView.swift */; };
+		EADADD37F10C4037AEA119F5 /* SettingsComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADE63F8345843C6BE1183EF /* SettingsComponents.swift */; };
 		A25AC1C92768009C00C9610F /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25AC1C82768009C00C9610F /* Globals.swift */; };
 		A26E31E629C5169500B080D4 /* UpdaterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26E31E529C5169500B080D4 /* UpdaterViewModel.swift */; };
 		A26F745E2E9017E80066EAB4 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A26F745D2E9017E80066EAB4 /* WidgetKit.framework */; };
@@ -57,6 +58,7 @@
 		A2CC01142EA30000AABB0007 /* PriceCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC01132EA30000AABB0007 /* PriceCache.swift */; };
 		A2CC01162EA30000AABB0008 /* PriceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC01152EA30000AABB0008 /* PriceAPI.swift */; };
 		A2CC01182EA30000AABB0009 /* PriceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC01172EA30000AABB0009 /* PriceRepository.swift */; };
+		A2CC01302EA30000AABB0030 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC01312EA30000AABB0030 /* NotificationService.swift */; };
 		A2CC011A2EA30000AABB000B /* SharedTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC011C2EA30000AABB000B /* SharedTypes.swift */; };
 		A2CC011B2EA30000AABB000B /* SharedTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC011C2EA30000AABB000B /* SharedTypes.swift */; };
 		A2CC011D2EA30000AABB000C /* NordPoolPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B155BF27459138004B1B02 /* NordPoolPrice.swift */; };
@@ -106,6 +108,7 @@
 		A258EFD129DDE00D00B0B27D /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		A258EFD329DDE06300B0B27D /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
 		A25AC1C62767FBC800C9610F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		EADE63F8345843C6BE1183EF /* SettingsComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsComponents.swift; sourceTree = "<group>"; };
 		A25AC1C82768009C00C9610F /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		A26E31E529C5169500B080D4 /* UpdaterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdaterViewModel.swift; sourceTree = "<group>"; };
 		A26F745C2E9017E80066EAB4 /* ElektrihindWidgetExtensionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ElektrihindWidgetExtensionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -139,6 +142,7 @@
 		A2CC01132EA30000AABB0007 /* PriceCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceCache.swift; sourceTree = "<group>"; };
 		A2CC01152EA30000AABB0008 /* PriceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceAPI.swift; sourceTree = "<group>"; };
 		A2CC01172EA30000AABB0009 /* PriceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceRepository.swift; sourceTree = "<group>"; };
+		A2CC01312EA30000AABB0030 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		A2CC011C2EA30000AABB000B /* SharedTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedTypes.swift; sourceTree = "<group>"; };
 		A2CC011F2EA30000AABB000D /* AdConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdConstants.swift; sourceTree = "<group>"; };
 		A2D6DD58279A061F0007B14A /* BarChartGlobals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartGlobals.swift; sourceTree = "<group>"; };
@@ -205,6 +209,7 @@
 				A22579F12767F74600F8E3AB /* TodayView.swift */,
 				A22579F32767F76E00F8E3AB /* TomorrowView.swift */,
 				A25AC1C62767FBC800C9610F /* SettingsView.swift */,
+				EADE63F8345843C6BE1183EF /* SettingsComponents.swift */,
 				A258EFD129DDE00D00B0B27D /* ChartView.swift */,
 				A258EFD329DDE06300B0B27D /* ChartViewModel.swift */,
 				A258EFCD29DB3E7700B0B27D /* ConnectionLostView.swift */,
@@ -229,6 +234,7 @@
 				A2CC01132EA30000AABB0007 /* PriceCache.swift */,
 				A2CC01152EA30000AABB0008 /* PriceAPI.swift */,
 				A2CC01172EA30000AABB0009 /* PriceRepository.swift */,
+			A2CC01312EA30000AABB0030 /* NotificationService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -547,6 +553,7 @@
 				A245280929943F5E0021661E /* Banner.swift in Sources */,
 				A2CC01202EA30000AABB000D /* AdConstants.swift in Sources */,
 				A25AC1C72767FBC800C9610F /* SettingsView.swift in Sources */,
+				EADADD37F10C4037AEA119F5 /* SettingsComponents.swift in Sources */,
 				A2B155B227458EE2004B1B02 /* ElektrihindApp.swift in Sources */,
 				A214595028E5DDCA00FDB205 /* MinMaxRangeView.swift in Sources */,
 				A22579F22767F74600F8E3AB /* TodayView.swift in Sources */,
@@ -561,6 +568,7 @@
 				A2CC01142EA30000AABB0007 /* PriceCache.swift in Sources */,
 				A2CC01162EA30000AABB0008 /* PriceAPI.swift in Sources */,
 				A2CC01182EA30000AABB0009 /* PriceRepository.swift in Sources */,
+			A2CC01302EA30000AABB0030 /* NotificationService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

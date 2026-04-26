@@ -75,7 +75,7 @@ class AppSettings: ObservableObject {
            let value = ChartResolution(rawValue: saved) {
             return value
         }
-        return .fifteenMinutes
+        return .oneHour
     }() {
         didSet {
             saveChartResolution()
@@ -87,6 +87,28 @@ class AppSettings: ObservableObject {
             saveAlwaysOnDisplay()
             UIApplication.shared.isIdleTimerDisabled = alwaysOnDisplay
         }
+    }
+
+    @Published var notifyMaxEnabled: Bool = false {
+        didSet { saveNotifyMaxEnabled() }
+    }
+    @Published var notifyMaxRawMWh: Double = 200 {
+        didSet { saveNotifyMaxRawMWh() }
+    }
+    @Published var notifyMinEnabled: Bool = false {
+        didSet { saveNotifyMinEnabled() }
+    }
+    @Published var notifyMinRawMWh: Double = 0 {
+        didSet { saveNotifyMinRawMWh() }
+    }
+
+    var notifyMaxDisplay: Double {
+        get { (notifyMaxRawMWh * (includeTax ? taxRate : 1)) / divider }
+        set { notifyMaxRawMWh = (newValue * divider) / (includeTax ? taxRate : 1) }
+    }
+    var notifyMinDisplay: Double {
+        get { (notifyMinRawMWh * (includeTax ? taxRate : 1)) / divider }
+        set { notifyMinRawMWh = (newValue * divider) / (includeTax ? taxRate : 1) }
     }
 
     func getSavedSettings() {
@@ -107,6 +129,16 @@ class AppSettings: ObservableObject {
         if let savedChartType = UserDefaults.standard.string(forKey: "chartType"),
            let value = ChartType(rawValue: savedChartType) {
             chartType = value
+        }
+
+        UserDefaults.standard.register(defaults: ["notifyMaxRawMWh": 200.0, "notifyMinRawMWh": 0.0])
+        notifyMaxEnabled = UserDefaults.standard.bool(forKey: "notifyMaxEnabled")
+        if UserDefaults.standard.object(forKey: "notifyMaxRawMWh") != nil {
+            notifyMaxRawMWh = UserDefaults.standard.double(forKey: "notifyMaxRawMWh")
+        }
+        notifyMinEnabled = UserDefaults.standard.bool(forKey: "notifyMinEnabled")
+        if UserDefaults.standard.object(forKey: "notifyMinRawMWh") != nil {
+            notifyMinRawMWh = UserDefaults.standard.double(forKey: "notifyMinRawMWh")
         }
 
         // Mirror values to App Group so the widget can read them
@@ -174,6 +206,22 @@ class AppSettings: ObservableObject {
 
     func saveAlwaysOnDisplay() {
         UserDefaults.standard.set(alwaysOnDisplay, forKey: "alwaysOnDisplay")
+    }
+
+    func saveNotifyMaxEnabled() {
+        UserDefaults.standard.set(notifyMaxEnabled, forKey: "notifyMaxEnabled")
+    }
+
+    func saveNotifyMaxRawMWh() {
+        UserDefaults.standard.set(notifyMaxRawMWh, forKey: "notifyMaxRawMWh")
+    }
+
+    func saveNotifyMinEnabled() {
+        UserDefaults.standard.set(notifyMinEnabled, forKey: "notifyMinEnabled")
+    }
+
+    func saveNotifyMinRawMWh() {
+        UserDefaults.standard.set(notifyMinRawMWh, forKey: "notifyMinRawMWh")
     }
 
     func saveChartType() {
