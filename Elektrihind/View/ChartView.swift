@@ -179,7 +179,7 @@ struct ChartView: View {
                         AxisTick()
                         AxisValueLabel {
                             if let idx = value.as(Int.self) {
-                                let hour = Int(round(Double(idx) / Double(max(count - 1, 1)) * 24.0))
+                                let hour = Int(round(Double(idx) * 24.0 / Double(max(count, 1))))
                                 Text(String(format: "%02d", hour))
                                     .font(.system(size: 11, weight: .semibold))
                                     .foregroundStyle(Color.secondary)
@@ -229,7 +229,7 @@ struct ChartView: View {
                     }
                 }
                 .padding(.leading, 10)
-                .padding(.trailing, 10)
+                .padding(.trailing, 20)
                 .padding(.bottom, 10)
             }
         }

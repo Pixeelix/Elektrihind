@@ -9,6 +9,7 @@ import SwiftUI
 import GoogleMobileAds
 import FirebaseCore
 import AppTrackingTransparency
+import FBAudienceNetwork
 
 enum AdStatus {
     case initializing
@@ -66,6 +67,7 @@ struct ElektrihindApp: App {
                 }
             }.onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
                 ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
+                    FBAdSettings.setAdvertiserTrackingEnabled(status == .authorized)
                     switch status {
                     case .authorized:
                         adStatus = .authorized
