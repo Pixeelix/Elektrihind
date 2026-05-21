@@ -11,6 +11,7 @@ import FirebaseCore
 import AppTrackingTransparency
 import FBAudienceNetwork
 import BackgroundTasks
+import UIKit
 
 enum AdStatus {
     case initializing
@@ -18,8 +19,25 @@ enum AdStatus {
     case restricted
 }
 
+final class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(
+        _ application: UIApplication,
+        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
+    ) {
+        NotificationService.shared.updateRemoteDeviceToken(deviceToken)
+    }
+
+    func application(
+        _ application: UIApplication,
+        didFailToRegisterForRemoteNotificationsWithError error: Error
+    ) {
+        NotificationService.shared.remoteRegistrationDidFail(error)
+    }
+}
+
 @main
 struct ElektrihindApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject var networkManager = NetworkManager()
     @StateObject var settings = AppSettings()
     @State private var adStatus: AdStatus = .initializing
@@ -103,5 +121,4 @@ struct ElektrihindApp: App {
         }
     }
 }
-
 

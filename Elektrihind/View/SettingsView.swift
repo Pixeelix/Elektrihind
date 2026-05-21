@@ -140,6 +140,12 @@ struct SettingsView: View {
                     Task {
                         let status = await NotificationService.shared.requestAuthorization()
                         notifDenied = status == .denied
+                        guard status != .denied else {
+                            settings.notifyMaxEnabled = false
+                            return
+                        }
+                        await NotificationService.shared.registerForRemoteNotificationsIfNeeded()
+                        settings.syncRemoteNotificationPreferences()
                     }
                     BGScheduler.scheduleIfNeeded()
                 } else if !settings.notifyMinEnabled {
@@ -175,6 +181,12 @@ struct SettingsView: View {
                     Task {
                         let status = await NotificationService.shared.requestAuthorization()
                         notifDenied = status == .denied
+                        guard status != .denied else {
+                            settings.notifyMinEnabled = false
+                            return
+                        }
+                        await NotificationService.shared.registerForRemoteNotificationsIfNeeded()
+                        settings.syncRemoteNotificationPreferences()
                     }
                     BGScheduler.scheduleIfNeeded()
                 } else if !settings.notifyMaxEnabled {

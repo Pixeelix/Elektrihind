@@ -17,6 +17,10 @@ struct ContentView: View {
             TabBarView(selection: $tabBarSelection)
                 .onAppear() {
                     settings.getSavedSettings()
+                    Task { @MainActor in
+                        await NotificationService.shared.registerForRemoteNotificationsIfNeeded()
+                        settings.syncRemoteNotificationPreferences()
+                    }
                 }
         } else {
             ConnectionLostView()
@@ -31,4 +35,3 @@ struct ContentView_Previews: PreviewProvider {
         }
     }
 }
-

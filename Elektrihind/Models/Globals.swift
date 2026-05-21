@@ -13,6 +13,7 @@ class AppSettings: ObservableObject {
 
     private let appGroupID = "group.koodipardik.Elektrihind"
     private var appGroupDefaults: UserDefaults? { UserDefaults(suiteName: appGroupID) }
+    private var isLoadingSavedSettings = false
 
     private func mirrorToAppGroup(key: String, value: Any) {
         guard let defaults = appGroupDefaults else { return }
@@ -112,6 +113,12 @@ class AppSettings: ObservableObject {
     }
 
     func getSavedSettings() {
+        isLoadingSavedSettings = true
+        defer {
+            isLoadingSavedSettings = false
+            syncRemoteNotificationPreferences()
+        }
+
         let languageString = UserDefaults.standard.string(forKey: "language") ?? getLanguageFromLocale()
         language = Language(rawValue: languageString) ?? .estonian
         let regionString = UserDefaults.standard.string(forKey: "region") ?? getRegionFromLocale()
@@ -178,11 +185,21 @@ class AppSettings: ObservableObject {
         return key.localized(language, in: .main)
     }
 
+    func syncRemoteNotificationPreferences() {
+        NotificationService.shared.syncRemoteSettings(settings: self)
+    }
+
+    private func syncRemoteNotificationPreferencesAfterChange() {
+        guard !isLoadingSavedSettings else { return }
+        syncRemoteNotificationPreferences()
+    }
+
     func saveLanguage() {
         UserDefaults.standard.set(language.rawValue, forKey: "language")
         mirrorToAppGroup(key: "language", value: language.rawValue)
         WidgetCenter.shared.reloadAllTimelines()
         UserDefaults.standard.synchronize()
+        syncRemoteNotificationPreferencesAfterChange()
     }
 
     func saveRegion() {
@@ -190,18 +207,21 @@ class AppSettings: ObservableObject {
         mirrorToAppGroup(key: "region", value: region.rawValue)
         WidgetCenter.shared.reloadAllTimelines()
         UserDefaults.standard.synchronize()
+        syncRemoteNotificationPreferencesAfterChange()
     }
 
     func saveUnit() {
         UserDefaults.standard.set(unit, forKey: "unit")
         mirrorToAppGroup(key: "unit", value: unit)
         WidgetCenter.shared.reloadAllTimelines()
+        syncRemoteNotificationPreferencesAfterChange()
     }
 
     func saveTaxValue() {
         UserDefaults.standard.set(includeTax, forKey: "includeTax")
         mirrorToAppGroup(key: "includeTax", value: includeTax)
         WidgetCenter.shared.reloadAllTimelines()
+        syncRemoteNotificationPreferencesAfterChange()
     }
 
     func saveAlwaysOnDisplay() {
@@ -210,18 +230,22 @@ class AppSettings: ObservableObject {
 
     func saveNotifyMaxEnabled() {
         UserDefaults.standard.set(notifyMaxEnabled, forKey: "notifyMaxEnabled")
+        syncRemoteNotificationPreferencesAfterChange()
     }
 
     func saveNotifyMaxRawMWh() {
         UserDefaults.standard.set(notifyMaxRawMWh, forKey: "notifyMaxRawMWh")
+        syncRemoteNotificationPreferencesAfterChange()
     }
 
     func saveNotifyMinEnabled() {
         UserDefaults.standard.set(notifyMinEnabled, forKey: "notifyMinEnabled")
+        syncRemoteNotificationPreferencesAfterChange()
     }
 
     func saveNotifyMinRawMWh() {
         UserDefaults.standard.set(notifyMinRawMWh, forKey: "notifyMinRawMWh")
+        syncRemoteNotificationPreferencesAfterChange()
     }
 
     func saveChartType() {

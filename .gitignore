@@ -1,1 +1,4 @@
-
+server/.env
+server/dist/
+server/node_modules/
+AuthKey_9SPN58723Z.p8

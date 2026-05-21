@@ -22,7 +22,6 @@
 		A258EFD229DDE00D00B0B27D /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258EFD129DDE00D00B0B27D /* ChartView.swift */; };
 		A258EFD429DDE06300B0B27D /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258EFD329DDE06300B0B27D /* ChartViewModel.swift */; };
 		A25AC1C72767FBC800C9610F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25AC1C62767FBC800C9610F /* SettingsView.swift */; };
-		EADADD37F10C4037AEA119F5 /* SettingsComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADE63F8345843C6BE1183EF /* SettingsComponents.swift */; };
 		A25AC1C92768009C00C9610F /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25AC1C82768009C00C9610F /* Globals.swift */; };
 		A26E31E629C5169500B080D4 /* UpdaterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26E31E529C5169500B080D4 /* UpdaterViewModel.swift */; };
 		A26F745E2E9017E80066EAB4 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A26F745D2E9017E80066EAB4 /* WidgetKit.framework */; };
@@ -58,13 +57,14 @@
 		A2CC01142EA30000AABB0007 /* PriceCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC01132EA30000AABB0007 /* PriceCache.swift */; };
 		A2CC01162EA30000AABB0008 /* PriceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC01152EA30000AABB0008 /* PriceAPI.swift */; };
 		A2CC01182EA30000AABB0009 /* PriceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC01172EA30000AABB0009 /* PriceRepository.swift */; };
-		A2CC01302EA30000AABB0030 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC01312EA30000AABB0030 /* NotificationService.swift */; };
 		A2CC011A2EA30000AABB000B /* SharedTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC011C2EA30000AABB000B /* SharedTypes.swift */; };
 		A2CC011B2EA30000AABB000B /* SharedTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC011C2EA30000AABB000B /* SharedTypes.swift */; };
 		A2CC011D2EA30000AABB000C /* NordPoolPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B155BF27459138004B1B02 /* NordPoolPrice.swift */; };
 		A2CC01202EA30000AABB000D /* AdConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC011F2EA30000AABB000D /* AdConstants.swift */; };
+		A2CC01302EA30000AABB0030 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC01312EA30000AABB0030 /* NotificationService.swift */; };
 		A2D6DD59279A061F0007B14A /* BarChartGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D6DD58279A061F0007B14A /* BarChartGlobals.swift */; };
 		A2F9DFBD27653EFB006E4730 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F9DFBC27653EFB006E4730 /* TabBarView.swift */; };
+		EADADD37F10C4037AEA119F5 /* SettingsComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADE63F8345843C6BE1183EF /* SettingsComponents.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,7 +108,6 @@
 		A258EFD129DDE00D00B0B27D /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		A258EFD329DDE06300B0B27D /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
 		A25AC1C62767FBC800C9610F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		EADE63F8345843C6BE1183EF /* SettingsComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsComponents.swift; sourceTree = "<group>"; };
 		A25AC1C82768009C00C9610F /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		A26E31E529C5169500B080D4 /* UpdaterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdaterViewModel.swift; sourceTree = "<group>"; };
 		A26F745C2E9017E80066EAB4 /* ElektrihindWidgetExtensionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ElektrihindWidgetExtensionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -142,13 +141,14 @@
 		A2CC01132EA30000AABB0007 /* PriceCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceCache.swift; sourceTree = "<group>"; };
 		A2CC01152EA30000AABB0008 /* PriceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceAPI.swift; sourceTree = "<group>"; };
 		A2CC01172EA30000AABB0009 /* PriceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceRepository.swift; sourceTree = "<group>"; };
-		A2CC01312EA30000AABB0030 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		A2CC011C2EA30000AABB000B /* SharedTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedTypes.swift; sourceTree = "<group>"; };
 		A2CC011F2EA30000AABB000D /* AdConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdConstants.swift; sourceTree = "<group>"; };
+		A2CC01312EA30000AABB0030 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		A2D6DD58279A061F0007B14A /* BarChartGlobals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartGlobals.swift; sourceTree = "<group>"; };
 		A2F9DFBC27653EFB006E4730 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		AFAE23AA583E94EC5C33D56B /* Pods-Elektrihind.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Elektrihind.release.xcconfig"; path = "Target Support Files/Pods-Elektrihind/Pods-Elektrihind.release.xcconfig"; sourceTree = "<group>"; };
 		D96A40C16271C0EB7F54BB06 /* Pods_Elektrihind.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Elektrihind.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EADE63F8345843C6BE1183EF /* SettingsComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsComponents.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -234,7 +234,7 @@
 				A2CC01132EA30000AABB0007 /* PriceCache.swift */,
 				A2CC01152EA30000AABB0008 /* PriceAPI.swift */,
 				A2CC01172EA30000AABB0009 /* PriceRepository.swift */,
-			A2CC01312EA30000AABB0030 /* NotificationService.swift */,
+				A2CC01312EA30000AABB0030 /* NotificationService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -484,9 +484,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Elektrihind/Pods-Elektrihind-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Elektrihind/Pods-Elektrihind-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -501,9 +505,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Elektrihind/Pods-Elektrihind-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Elektrihind/Pods-Elektrihind-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -568,7 +576,7 @@
 				A2CC01142EA30000AABB0007 /* PriceCache.swift in Sources */,
 				A2CC01162EA30000AABB0008 /* PriceAPI.swift in Sources */,
 				A2CC01182EA30000AABB0009 /* PriceRepository.swift in Sources */,
-			A2CC01302EA30000AABB0030 /* NotificationService.swift in Sources */,
+				A2CC01302EA30000AABB0030 /* NotificationService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -807,6 +815,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				APS_ENVIRONMENT = development;
 				CODE_SIGN_ENTITLEMENTS = Elektrihind/Elektrihind.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -852,6 +861,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				APS_ENVIRONMENT = production;
 				CODE_SIGN_ENTITLEMENTS = Elektrihind/Elektrihind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 52;

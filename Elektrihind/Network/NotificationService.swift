@@ -6,6 +6,25 @@
 import Foundation
 import UserNotifications
 import BackgroundTasks
+import UIKit
+
+struct RemoteNotificationSettingsSnapshot: Encodable {
+    let installationId: String
+    let platform: String
+    let bundleId: String
+    let apnsToken: String
+    let apnsEnvironment: String
+    let region: String
+    let language: String
+    let unit: String
+    let includeTax: Bool
+    let notifyMaxEnabled: Bool
+    let notifyMaxRawMWh: Double
+    let notifyMinEnabled: Bool
+    let notifyMinRawMWh: Double
+    let appVersion: String?
+    let buildNumber: String?
+}
 
 enum NotificationDecision {
     case noop
@@ -18,6 +37,8 @@ enum NotificationDecision {
 class NotificationService {
     static let shared = NotificationService()
     private let center = UNUserNotificationCenter.current()
+    private let installationIdKey = "remoteNotificationInstallationId"
+    private let apnsTokenKey = "remoteNotificationAPNSToken"
 
     @discardableResult
     func requestAuthorization() async -> UNAuthorizationStatus {
@@ -27,6 +48,37 @@ class NotificationService {
 
     func currentAuthorizationStatus() async -> UNAuthorizationStatus {
         return await center.notificationSettings().authorizationStatus
+    }
+
+    @MainActor
+    func registerForRemoteNotificationsIfNeeded() async {
+        let authStatus = await currentAuthorizationStatus()
+        guard authStatus == .authorized || authStatus == .provisional else { return }
+        UIApplication.shared.registerForRemoteNotifications()
+    }
+
+    func updateRemoteDeviceToken(_ deviceToken: Data) {
+        let token = deviceToken.map { String(format: "%02x", $0) }.joined()
+        UserDefaults.standard.set(token, forKey: apnsTokenKey)
+        Task {
+            await syncRemoteSettingsFromDefaults()
+        }
+    }
+
+    func remoteRegistrationDidFail(_ error: Error) {
+        debugPrint("APNs registration failed: \(error.localizedDescription)")
+    }
+
+    func syncRemoteSettings(settings: AppSettings) {
+        guard let snapshot = makeRemoteSettingsSnapshot(settings: settings) else { return }
+        Task {
+            await sendRemoteSettings(snapshot)
+        }
+    }
+
+    func syncRemoteSettingsFromDefaults() async {
+        guard let snapshot = makeRemoteSettingsSnapshotFromDefaults() else { return }
+        await sendRemoteSettings(snapshot)
     }
 
     func evaluateTomorrow(
@@ -190,6 +242,116 @@ class NotificationService {
 
     private func markFired(direction: NotificationDecision.Direction) {
         UserDefaults.standard.set(tomorrowDateString(), forKey: firedKey(for: direction))
+    }
+
+    // MARK: - Remote push backend
+
+    private var pushBackendBaseURL: URL? {
+        guard let raw = Bundle.main.object(forInfoDictionaryKey: "PushBackendBaseURL") as? String else {
+            return nil
+        }
+        let trimmed = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty, !trimmed.hasPrefix("$("), let url = URL(string: trimmed) else {
+            return nil
+        }
+        return url
+    }
+
+    private var storedAPNSToken: String? {
+        let token = UserDefaults.standard.string(forKey: apnsTokenKey) ?? ""
+        return token.isEmpty ? nil : token
+    }
+
+    private func installationId() -> String {
+        if let existing = UserDefaults.standard.string(forKey: installationIdKey), !existing.isEmpty {
+            return existing
+        }
+        let created = UUID().uuidString
+        UserDefaults.standard.set(created, forKey: installationIdKey)
+        return created
+    }
+
+    private func apnsEnvironment() -> String {
+        #if DEBUG
+        return "sandbox"
+        #else
+        return "production"
+        #endif
+    }
+
+    private func appVersion() -> String? {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+    }
+
+    private func buildNumber() -> String? {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String
+    }
+
+    private func bundleId() -> String {
+        Bundle.main.bundleIdentifier ?? "koodipardik.Elektrihind"
+    }
+
+    private func makeRemoteSettingsSnapshot(settings: AppSettings) -> RemoteNotificationSettingsSnapshot? {
+        guard let token = storedAPNSToken else { return nil }
+        return RemoteNotificationSettingsSnapshot(
+            installationId: installationId(),
+            platform: "ios",
+            bundleId: bundleId(),
+            apnsToken: token,
+            apnsEnvironment: apnsEnvironment(),
+            region: settings.region.rawValue,
+            language: settings.language.rawValue,
+            unit: settings.unit,
+            includeTax: settings.includeTax,
+            notifyMaxEnabled: settings.notifyMaxEnabled,
+            notifyMaxRawMWh: settings.notifyMaxRawMWh,
+            notifyMinEnabled: settings.notifyMinEnabled,
+            notifyMinRawMWh: settings.notifyMinRawMWh,
+            appVersion: appVersion(),
+            buildNumber: buildNumber()
+        )
+    }
+
+    private func makeRemoteSettingsSnapshotFromDefaults() -> RemoteNotificationSettingsSnapshot? {
+        guard let token = storedAPNSToken else { return nil }
+        let defaults = UserDefaults.standard
+        defaults.register(defaults: ["notifyMaxRawMWh": 200.0, "notifyMinRawMWh": 0.0])
+
+        return RemoteNotificationSettingsSnapshot(
+            installationId: installationId(),
+            platform: "ios",
+            bundleId: bundleId(),
+            apnsToken: token,
+            apnsEnvironment: apnsEnvironment(),
+            region: defaults.string(forKey: "region") ?? "EE",
+            language: defaults.string(forKey: "language") ?? "et",
+            unit: defaults.string(forKey: "unit") ?? "€/kWh",
+            includeTax: defaults.bool(forKey: "includeTax"),
+            notifyMaxEnabled: defaults.bool(forKey: "notifyMaxEnabled"),
+            notifyMaxRawMWh: defaults.double(forKey: "notifyMaxRawMWh"),
+            notifyMinEnabled: defaults.bool(forKey: "notifyMinEnabled"),
+            notifyMinRawMWh: defaults.double(forKey: "notifyMinRawMWh"),
+            appVersion: appVersion(),
+            buildNumber: buildNumber()
+        )
+    }
+
+    private func sendRemoteSettings(_ snapshot: RemoteNotificationSettingsSnapshot) async {
+        guard let baseURL = pushBackendBaseURL else { return }
+        let url = baseURL.appendingPathComponent("v1/devices")
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        do {
+            request.httpBody = try JSONEncoder().encode(snapshot)
+            let (_, response) = try await URLSession.shared.data(for: request)
+            if let http = response as? HTTPURLResponse, !(200..<300).contains(http.statusCode) {
+                debugPrint("Push backend sync failed with status \(http.statusCode)")
+            }
+        } catch {
+            debugPrint("Push backend sync failed: \(error.localizedDescription)")
+        }
     }
 }
 
