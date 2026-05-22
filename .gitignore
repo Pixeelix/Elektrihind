@@ -1,3 +1,4 @@
 functions/lib/
 functions/node_modules/
 AuthKey_*.p8
+*.xcuserstate
