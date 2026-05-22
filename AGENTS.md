@@ -4,14 +4,14 @@ This file provides guidance to Codex (Codex.ai/code) when working with code in t
 
 ## Project Overview
 
-Elektrihind is a SwiftUI iOS app that displays Nord Pool electricity prices for Baltic states and Finland. It includes a WidgetKit extension for home/lock screen widgets. The app fetches 15-minute interval price data from Elering's API and displays it as bar charts with current price highlights.
+NordPrice is a SwiftUI iOS app that displays Nord Pool electricity prices for Baltic states and Finland. It includes a WidgetKit extension for home/lock screen widgets. The app fetches 15-minute interval price data from Elering's API and displays it as bar charts with current price highlights.
 
 ## Build & Run
 
 - **Open**: `Elektrihind.xcworkspace` (not .xcodeproj — CocoaPods workspace)
 - **Install dependencies**: `pod install` (requires CocoaPods)
 - **Min deployment**: iOS 16.0
-- **Targets**: `Elektrihind` (main app), `ElektrihindWidgetExtensionExtension` (widget)
+- **Targets**: `NordPrice` app product (Xcode target `Elektrihind`), `NordPriceWidgetExtensionExtension` widget product (Xcode target `ElektrihindWidgetExtensionExtension`)
 - **No test targets** exist in this project
 
 ## Architecture
@@ -20,7 +20,7 @@ Elektrihind is a SwiftUI iOS app that displays Nord Pool electricity prices for 
 
 ### Data Flow
 
-`ElektrihindApp` → Firebase/ATT/UMP init → `ContentView` (network check) → `TabBarView` (3 tabs: Today, Tomorrow, Settings)
+`NordPriceApp` → Firebase/ATT/UMP init → `ContentView` (network check) → `TabBarView` (3 tabs: Today, Tomorrow, Settings)
 
 Each price view uses:
 - `ChartViewModel` — loads full-day price data, computes min/max/avg

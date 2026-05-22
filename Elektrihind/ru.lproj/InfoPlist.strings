@@ -1,10 +1,10 @@
 /* 
   InfoPlist.strings
-  Elektrihind
+  NordPrice
 
   Created by Martin Pihooja on 20.04.2023.
   
 */
 
-"CFBundleDisplayName" = "Elektrihind";
+"CFBundleDisplayName" = "NordPrice";
 "NSUserTrackingUsageDescription" = "Это позволяет нам показывать вам персонализированную рекламу, что делает приложение бесплатным для вас.";

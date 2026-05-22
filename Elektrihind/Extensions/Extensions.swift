@@ -1,6 +1,6 @@
 //
 //  Extensions.swift
-//  Elektrihind
+//  NordPrice
 //
 //  Created by Martin Pihooja on 17.11.2021.
 //

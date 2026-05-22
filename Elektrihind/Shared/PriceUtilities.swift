@@ -1,6 +1,6 @@
 //
 //  PriceUtilities.swift
-//  Elektrihind
+//  NordPrice
 //
 //  Shared utility for aggregating 15-minute price data into hourly averages.
 //

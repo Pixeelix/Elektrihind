@@ -1,6 +1,6 @@
 //
 //  MinAvgMaxView.swift
-//  Elektrihind
+//  NordPrice
 //
 //  Created by Martin Pihooja on 10.10.2023.
 //

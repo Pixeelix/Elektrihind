@@ -1,6 +1,6 @@
 //
 //  PriceRepository.swift
-//  Elektrihind
+//  NordPrice
 //
 //  Orchestrates cache and API: tries cache first, falls back to network, saves to cache.
 //

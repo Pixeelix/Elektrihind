@@ -1,6 +1,6 @@
 //
 //  PriceFormatter.swift
-//  Elektrihind
+//  NordPrice
 //
 //  Shared price formatting configuration.
 //

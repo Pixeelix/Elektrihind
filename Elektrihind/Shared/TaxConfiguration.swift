@@ -1,6 +1,6 @@
 //
 //  TaxConfiguration.swift
-//  Elektrihind
+//  NordPrice
 //
 //  Shared tax rate configuration for all regions.
 //

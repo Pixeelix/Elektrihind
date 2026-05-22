@@ -1,6 +1,6 @@
 //
 //  BarChartGlobals.swift
-//  Elektrihind
+//  NordPrice
 //
 //  Created by Martin Pihooja on 20.01.2022.
 //

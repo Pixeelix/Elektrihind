@@ -1,6 +1,6 @@
 //
 //  TimeZoneHelper.swift
-//  Elektrihind
+//  NordPrice
 //
 //  Region-aware timezone using IANA identifiers (handles DST correctly).
 //

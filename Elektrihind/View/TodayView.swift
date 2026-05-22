@@ -1,6 +1,6 @@
 //
 //  TodayView.swift
-//  Elektrihind
+//  NordPrice
 //
 //  Created by Martin Pihooja on 13.12.2021.
 //

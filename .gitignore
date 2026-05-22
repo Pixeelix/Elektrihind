@@ -1,4 +1,3 @@
-server/.env
-server/dist/
-server/node_modules/
-AuthKey_9SPN58723Z.p8
+functions/lib/
+functions/node_modules/
+AuthKey_*.p8

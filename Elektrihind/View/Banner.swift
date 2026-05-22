@@ -1,6 +1,6 @@
 //
 //  Banner.swift
-//  Elektrihind
+//  NordPrice
 //
 //  Created by Martin Pihooja on 08.02.2023.
 //

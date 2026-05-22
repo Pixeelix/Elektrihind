@@ -26,9 +26,9 @@
 		A26E31E629C5169500B080D4 /* UpdaterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26E31E529C5169500B080D4 /* UpdaterViewModel.swift */; };
 		A26F745E2E9017E80066EAB4 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A26F745D2E9017E80066EAB4 /* WidgetKit.framework */; };
 		A26F74602E9017E80066EAB4 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A26F745F2E9017E80066EAB4 /* SwiftUI.framework */; };
-		A26F74712E9017EA0066EAB4 /* ElektrihindWidgetExtensionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A26F745C2E9017E80066EAB4 /* ElektrihindWidgetExtensionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A26F74712E9017EA0066EAB4 /* NordPriceWidgetExtensionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A26F745C2E9017E80066EAB4 /* NordPriceWidgetExtensionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A28EE7932B48AFCB00762A71 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A28EE7922B48AFCB00762A71 /* AppTrackingTransparency.framework */; };
-		A2B155B227458EE2004B1B02 /* ElektrihindApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B155B127458EE2004B1B02 /* ElektrihindApp.swift */; };
+		A2B155B227458EE2004B1B02 /* NordPriceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B155B127458EE2004B1B02 /* NordPriceApp.swift */; };
 		A2B155B427458EE2004B1B02 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B155B327458EE2004B1B02 /* ContentView.swift */; };
 		A2B155B627458EE4004B1B02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B155B527458EE4004B1B02 /* Assets.xcassets */; };
 		A2B155B927458EE4004B1B02 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B155B827458EE4004B1B02 /* Preview Assets.xcassets */; };
@@ -84,7 +84,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				A26F74712E9017EA0066EAB4 /* ElektrihindWidgetExtensionExtension.appex in Embed Foundation Extensions */,
+				A26F74712E9017EA0066EAB4 /* NordPriceWidgetExtensionExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -110,14 +110,14 @@
 		A25AC1C62767FBC800C9610F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A25AC1C82768009C00C9610F /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		A26E31E529C5169500B080D4 /* UpdaterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdaterViewModel.swift; sourceTree = "<group>"; };
-		A26F745C2E9017E80066EAB4 /* ElektrihindWidgetExtensionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ElektrihindWidgetExtensionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A26F745C2E9017E80066EAB4 /* NordPriceWidgetExtensionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NordPriceWidgetExtensionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A26F745D2E9017E80066EAB4 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		A26F745F2E9017E80066EAB4 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		A28EE7922B48AFCB00762A71 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
-		A2A24C812E9450D2000D4E13 /* Elektrihind.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Elektrihind.entitlements; sourceTree = "<group>"; };
-		A2A24C822E94511C000D4E13 /* ElektrihindWidgetExtensionExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ElektrihindWidgetExtensionExtension.entitlements; sourceTree = "<group>"; };
-		A2B155AE27458EE2004B1B02 /* Elektrihind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Elektrihind.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A2B155B127458EE2004B1B02 /* ElektrihindApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElektrihindApp.swift; sourceTree = "<group>"; };
+		A2A24C812E9450D2000D4E13 /* NordPrice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NordPrice.entitlements; sourceTree = "<group>"; };
+		A2A24C822E94511C000D4E13 /* NordPriceWidgetExtensionExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NordPriceWidgetExtensionExtension.entitlements; sourceTree = "<group>"; };
+		A2B155AE27458EE2004B1B02 /* NordPrice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NordPrice.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2B155B127458EE2004B1B02 /* NordPriceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NordPriceApp.swift; sourceTree = "<group>"; };
 		A2B155B327458EE2004B1B02 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A2B155B527458EE4004B1B02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A2B155B827458EE4004B1B02 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -253,7 +253,7 @@
 		A2B155A527458EE2004B1B02 = {
 			isa = PBXGroup;
 			children = (
-				A2A24C822E94511C000D4E13 /* ElektrihindWidgetExtensionExtension.entitlements */,
+				A2A24C822E94511C000D4E13 /* NordPriceWidgetExtensionExtension.entitlements */,
 				A2B155B027458EE2004B1B02 /* Elektrihind */,
 				A26F74612E9017E80066EAB4 /* ElektrihindWidgetExtension */,
 				A2B155AF27458EE2004B1B02 /* Products */,
@@ -265,8 +265,8 @@
 		A2B155AF27458EE2004B1B02 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A2B155AE27458EE2004B1B02 /* Elektrihind.app */,
-				A26F745C2E9017E80066EAB4 /* ElektrihindWidgetExtensionExtension.appex */,
+				A2B155AE27458EE2004B1B02 /* NordPrice.app */,
+				A26F745C2E9017E80066EAB4 /* NordPriceWidgetExtensionExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -274,11 +274,11 @@
 		A2B155B027458EE2004B1B02 /* Elektrihind */ = {
 			isa = PBXGroup;
 			children = (
-				A2A24C812E9450D2000D4E13 /* Elektrihind.entitlements */,
+				A2A24C812E9450D2000D4E13 /* NordPrice.entitlements */,
 				A233FEE427669DE100FEDA9C /* Info.plist */,
 				A2BA07E729F0938A004BEC1F /* InfoPlist.strings */,
 				A245280A299827570021661E /* GoogleService-Info.plist */,
-				A2B155B127458EE2004B1B02 /* ElektrihindApp.swift */,
+				A2B155B127458EE2004B1B02 /* NordPriceApp.swift */,
 				A224648A2A6F17FD00B99250 /* UMPViewController.swift */,
 				A2B155B327458EE2004B1B02 /* ContentView.swift */,
 				A22579F62767F7B200F8E3AB /* Network */,
@@ -362,8 +362,8 @@
 				A26F74612E9017E80066EAB4 /* ElektrihindWidgetExtension */,
 			);
 			name = ElektrihindWidgetExtensionExtension;
-			productName = ElektrihindWidgetExtensionExtension;
-			productReference = A26F745C2E9017E80066EAB4 /* ElektrihindWidgetExtensionExtension.appex */;
+			productName = NordPriceWidgetExtensionExtension;
+			productReference = A26F745C2E9017E80066EAB4 /* NordPriceWidgetExtensionExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		A2B155AD27458EE2004B1B02 /* Elektrihind */ = {
@@ -384,8 +384,8 @@
 				A26F74702E9017EA0066EAB4 /* PBXTargetDependency */,
 			);
 			name = Elektrihind;
-			productName = Elektrihind;
-			productReference = A2B155AE27458EE2004B1B02 /* Elektrihind.app */;
+			productName = NordPrice;
+			productReference = A2B155AE27458EE2004B1B02 /* NordPrice.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -562,7 +562,7 @@
 				A2CC01202EA30000AABB000D /* AdConstants.swift in Sources */,
 				A25AC1C72767FBC800C9610F /* SettingsView.swift in Sources */,
 				EADADD37F10C4037AEA119F5 /* SettingsComponents.swift in Sources */,
-				A2B155B227458EE2004B1B02 /* ElektrihindApp.swift in Sources */,
+				A2B155B227458EE2004B1B02 /* NordPriceApp.swift in Sources */,
 				A214595028E5DDCA00FDB205 /* MinMaxRangeView.swift in Sources */,
 				A22579F22767F74600F8E3AB /* TodayView.swift in Sources */,
 				A22579F42767F76E00F8E3AB /* TomorrowView.swift in Sources */,
@@ -620,7 +620,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_ENTITLEMENTS = ElektrihindWidgetExtensionExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = NordPriceWidgetExtensionExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_TEAM = 39G5236S72;
@@ -628,7 +628,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ElektrihindWidgetExtension/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ElektrihindWidgetExtension;
+				INFOPLIST_KEY_CFBundleDisplayName = "NordPrice Widget";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -639,7 +639,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = koodipardik.Elektrihind.ElektrihindWidgetExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = NordPriceWidgetExtensionExtension;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
@@ -658,7 +658,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_ENTITLEMENTS = ElektrihindWidgetExtensionExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = NordPriceWidgetExtensionExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_TEAM = 39G5236S72;
@@ -666,7 +666,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ElektrihindWidgetExtension/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ElektrihindWidgetExtension;
+				INFOPLIST_KEY_CFBundleDisplayName = "NordPrice Widget";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -677,7 +677,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = koodipardik.Elektrihind.ElektrihindWidgetExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = NordPriceWidgetExtensionExtension;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -812,11 +812,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7ABE69831050B07759677553 /* Pods-Elektrihind.debug.xcconfig */;
 			buildSettings = {
+				APS_ENVIRONMENT = development;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				APS_ENVIRONMENT = development;
-				CODE_SIGN_ENTITLEMENTS = Elektrihind/Elektrihind.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Elektrihind/NordPrice.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 52;
@@ -826,7 +826,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Elektrihind/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Elektrihind;
+				INFOPLIST_KEY_CFBundleDisplayName = NordPrice;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This allows us to show you personalized ads, which keeps the app free for you.";
@@ -846,7 +846,7 @@
 				);
 				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = koodipardik.Elektrihind;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = NordPrice;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -858,11 +858,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AFAE23AA583E94EC5C33D56B /* Pods-Elektrihind.release.xcconfig */;
 			buildSettings = {
+				APS_ENVIRONMENT = production;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				APS_ENVIRONMENT = production;
-				CODE_SIGN_ENTITLEMENTS = Elektrihind/Elektrihind.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Elektrihind/NordPrice.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 52;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -871,7 +871,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Elektrihind/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Elektrihind;
+				INFOPLIST_KEY_CFBundleDisplayName = NordPrice;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This allows us to show you personalized ads, which keeps the app free for you.";
@@ -891,7 +891,7 @@
 				);
 				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = koodipardik.Elektrihind;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = NordPrice;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

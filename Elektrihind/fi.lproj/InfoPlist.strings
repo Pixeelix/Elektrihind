@@ -1,11 +1,11 @@
 /* 
   InfoPlist.strings
-  Elektrihind
+  NordPrice
 
   Created by Martin Pihooja on 20.04.2023.
   
 */
 
-"CFBundleDisplayName" = "Sähkön Hinta";
+"CFBundleDisplayName" = "NordPrice";
 "UILaunchStoryboardName" = "LaunchScreenFI";
 "NSUserTrackingUsageDescription" = "This allows us to show you personalized ads, which keeps the app free for you.";

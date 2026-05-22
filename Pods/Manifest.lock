@@ -3,11 +3,20 @@ PODS:
   - FBAudienceNetwork (6.21.0)
   - Firebase/Analytics (12.8.0):
     - Firebase/Core
+  - Firebase/Auth (12.8.0):
+    - Firebase/CoreOnly
+    - FirebaseAuth (~> 12.8.0)
   - Firebase/Core (12.8.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (~> 12.8.0)
   - Firebase/CoreOnly (12.8.0):
     - FirebaseCore (~> 12.8.0)
+  - Firebase/Functions (12.8.0):
+    - Firebase/CoreOnly
+    - FirebaseFunctions (~> 12.8.0)
+  - Firebase/Messaging (12.8.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (~> 12.8.0)
   - FirebaseAnalytics (12.8.0):
     - FirebaseAnalytics/Default (= 12.8.0)
     - FirebaseCore (~> 12.8.0)
@@ -26,17 +35,49 @@ PODS:
     - GoogleUtilities/Network (~> 8.1)
     - "GoogleUtilities/NSData+zlib (~> 8.1)"
     - nanopb (~> 3.30910.0)
+  - FirebaseAppCheckInterop (12.8.0)
+  - FirebaseAuth (12.8.0):
+    - FirebaseAppCheckInterop (~> 12.8.0)
+    - FirebaseAuthInterop (~> 12.8.0)
+    - FirebaseCore (~> 12.8.0)
+    - FirebaseCoreExtension (~> 12.8.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 8.1)
+    - GoogleUtilities/Environment (~> 8.1)
+    - GTMSessionFetcher/Core (< 6.0, >= 3.4)
+    - RecaptchaInterop (~> 101.0)
+  - FirebaseAuthInterop (12.8.0)
   - FirebaseCore (12.8.0):
     - FirebaseCoreInternal (~> 12.8.0)
     - GoogleUtilities/Environment (~> 8.1)
     - GoogleUtilities/Logger (~> 8.1)
+  - FirebaseCoreExtension (12.8.0):
+    - FirebaseCore (~> 12.8.0)
   - FirebaseCoreInternal (12.8.0):
     - "GoogleUtilities/NSData+zlib (~> 8.1)"
+  - FirebaseFunctions (12.8.0):
+    - FirebaseAppCheckInterop (~> 12.8.0)
+    - FirebaseAuthInterop (~> 12.8.0)
+    - FirebaseCore (~> 12.8.0)
+    - FirebaseCoreExtension (~> 12.8.0)
+    - FirebaseMessagingInterop (~> 12.8.0)
+    - FirebaseSharedSwift (~> 12.8.0)
+    - GTMSessionFetcher/Core (< 6.0, >= 3.4)
   - FirebaseInstallations (12.8.0):
     - FirebaseCore (~> 12.8.0)
     - GoogleUtilities/Environment (~> 8.1)
     - GoogleUtilities/UserDefaults (~> 8.1)
     - PromisesObjC (~> 2.4)
+  - FirebaseMessaging (12.8.0):
+    - FirebaseCore (~> 12.8.0)
+    - FirebaseInstallations (~> 12.8.0)
+    - GoogleDataTransport (~> 10.1)
+    - GoogleUtilities/AppDelegateSwizzler (~> 8.1)
+    - GoogleUtilities/Environment (~> 8.1)
+    - GoogleUtilities/Reachability (~> 8.1)
+    - GoogleUtilities/UserDefaults (~> 8.1)
+    - nanopb (~> 3.30910.0)
+  - FirebaseMessagingInterop (12.8.0)
+  - FirebaseSharedSwift (12.8.0)
   - Google-Mobile-Ads-SDK (12.14.0):
     - GoogleUserMessagingPlatform (>= 1.1)
   - GoogleAdsOnDeviceConversion (3.2.0):
@@ -66,6 +107,9 @@ PODS:
     - GoogleUtilities/Network (~> 8.1)
     - "GoogleUtilities/NSData+zlib (~> 8.1)"
     - nanopb (~> 3.30910.0)
+  - GoogleDataTransport (10.1.0):
+    - nanopb (~> 3.30910.0)
+    - PromisesObjC (~> 2.4)
   - GoogleMobileAdsMediationAppLovin (13.5.0.0):
     - AppLovinSDK (= 13.5.0)
     - Google-Mobile-Ads-SDK (~> 12.0)
@@ -103,17 +147,22 @@ PODS:
   - GoogleUtilities/UserDefaults (8.1.0):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
+  - GTMSessionFetcher/Core (5.2.0)
   - nanopb (3.30910.0):
     - nanopb/decode (= 3.30910.0)
     - nanopb/encode (= 3.30910.0)
   - nanopb/decode (3.30910.0)
   - nanopb/encode (3.30910.0)
   - PromisesObjC (2.4.0)
+  - RecaptchaInterop (101.0.0)
   - UnityAds (4.16.5)
 
 DEPENDENCIES:
   - FBAudienceNetwork
   - Firebase/Analytics
+  - Firebase/Auth
+  - Firebase/Functions
+  - Firebase/Messaging
   - Google-Mobile-Ads-SDK
   - GoogleMobileAdsMediationAppLovin
   - GoogleMobileAdsMediationFacebook
@@ -126,19 +175,30 @@ SPEC REPOS:
     - FBAudienceNetwork
     - Firebase
     - FirebaseAnalytics
+    - FirebaseAppCheckInterop
+    - FirebaseAuth
+    - FirebaseAuthInterop
     - FirebaseCore
+    - FirebaseCoreExtension
     - FirebaseCoreInternal
+    - FirebaseFunctions
     - FirebaseInstallations
+    - FirebaseMessaging
+    - FirebaseMessagingInterop
+    - FirebaseSharedSwift
     - Google-Mobile-Ads-SDK
     - GoogleAdsOnDeviceConversion
     - GoogleAppMeasurement
+    - GoogleDataTransport
     - GoogleMobileAdsMediationAppLovin
     - GoogleMobileAdsMediationFacebook
     - GoogleMobileAdsMediationUnity
     - GoogleUserMessagingPlatform
     - GoogleUtilities
+    - GTMSessionFetcher
     - nanopb
     - PromisesObjC
+    - RecaptchaInterop
     - UnityAds
 
 SPEC CHECKSUMS:
@@ -146,21 +206,32 @@ SPEC CHECKSUMS:
   FBAudienceNetwork: f4ab9e073ab98c884dbdb5ffe7c861272b380bc2
   Firebase: 9a58fdbc9d8655ed7b79a19cf9690bb007d3d46d
   FirebaseAnalytics: f20bbad8cb7f65d8a5eaefeb424ae8800a31bdfc
+  FirebaseAppCheckInterop: ba3dc604a89815379e61ec2365101608d365cf7d
+  FirebaseAuth: 4c289b1a43f5955283244a55cf6bd616de344be5
+  FirebaseAuthInterop: 95363fe96493cb4f106656666a0768b420cba090
   FirebaseCore: 0dbad74bda10b8fb9ca34ad8f375fb9dd3ebef7c
+  FirebaseCoreExtension: 6605938d51f765d8b18bfcafd2085276a252bee2
   FirebaseCoreInternal: fe5fa466aeb314787093a7dce9f0beeaad5a2a21
+  FirebaseFunctions: 65f773056cb7f654626e5fa4894b1d6539cb5feb
   FirebaseInstallations: 6a14ab3d694ebd9f839c48d330da5547e9ca9dc0
+  FirebaseMessaging: 7f42cfd10ec64181db4e01b305a613791c8e782c
+  FirebaseMessagingInterop: e27b8f42f682efdb101318a53c3f5316ce3402e6
+  FirebaseSharedSwift: f57ed48f4542b2d7eb4738f4f23ba443f78b3780
   Google-Mobile-Ads-SDK: 4534fd2dfcd3f705c5485a6633c5188d03d4eed2
   GoogleAdsOnDeviceConversion: d68c69dd9581a0f5da02617b6f377e5be483970f
   GoogleAppMeasurement: 72c9a682fec6290327ea5e3c4b829b247fcb2c17
+  GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
   GoogleMobileAdsMediationAppLovin: 56b7465bf2afc594982b7820d8db8ea092a57ffc
   GoogleMobileAdsMediationFacebook: a8379733e6e593e9a5ea278bdc16e747ec952a18
   GoogleMobileAdsMediationUnity: 85fd40e2b42371341446745899e2963faaaaaba9
   GoogleUserMessagingPlatform: befe603da6501006420c206222acd449bba45a9c
   GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
+  GTMSessionFetcher: 904bdd2a82c635bcd6f44edf94cc8775c5d1d6e6
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
+  RecaptchaInterop: 11e0b637842dfb48308d242afc3f448062325aba
   UnityAds: 8b9e0ecf7c4aa7334d15f81efb58db279e28f502
 
-PODFILE CHECKSUM: 6656c578f801f37e5818a4f36f452ad915fc4494
+PODFILE CHECKSUM: 6bd9bdc2726b415d05696a6261e9dafa1206b775
 
 COCOAPODS: 1.16.2

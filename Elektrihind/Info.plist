@@ -2,14 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<key>CFBundleURLTypes</key>
 	<array>
-		<string>koodipardik.Elektrihind.priceCheck</string>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>koodipardik.NordPrice</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>nordprice</string>
+			</array>
+		</dict>
 	</array>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-5431783362632568~5429121733</string>
-	<key>PushBackendBaseURL</key>
-	<string></string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -521,10 +526,6 @@
 			<key>SKAdNetworkIdentifier</key>
 			<string>f38h382jlk.skadnetwork</string>
 		</dict>
-	</array>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>fetch</string>
 	</array>
 </dict>
 </plist>

@@ -1,6 +1,6 @@
 //
 //  UMPViewController.swift
-//  Elektrihind
+//  NordPrice
 //
 //  Created by Martin Pihooja on 24.07.2023.
 //

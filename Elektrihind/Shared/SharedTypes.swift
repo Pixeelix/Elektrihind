@@ -1,6 +1,6 @@
 //
 //  SharedTypes.swift
-//  Elektrihind
+//  NordPrice
 //
 //  Shared type definitions used by both app and widget targets.
 //

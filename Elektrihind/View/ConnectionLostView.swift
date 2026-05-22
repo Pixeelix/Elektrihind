@@ -1,6 +1,6 @@
 //
 //  ConnectionLostView.swift
-//  Elektrihind
+//  NordPrice
 //
 //  Created by Martin Pihooja on 03.04.2023.
 //

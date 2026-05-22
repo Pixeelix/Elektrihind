@@ -1,6 +1,6 @@
 //
 //  TabBarView.swift
-//  Elektrihind
+//  NordPrice
 //
 //  Created by Martin Pihooja on 11.12.2021.
 //

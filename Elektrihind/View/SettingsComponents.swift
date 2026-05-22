@@ -1,6 +1,6 @@
 //
 //  SettingsComponents.swift
-//  Elektrihind
+//  NordPrice
 //
 
 import SwiftUI

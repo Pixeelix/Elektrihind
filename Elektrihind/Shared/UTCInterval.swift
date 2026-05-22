@@ -1,6 +1,6 @@
 //
 //  UTCInterval.swift
-//  Elektrihind
+//  NordPrice
 //
 //  Shared UTC interval calculation for API requests.
 //

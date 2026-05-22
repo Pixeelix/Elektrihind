@@ -1,6 +1,6 @@
 //
 //  PriceCache.swift
-//  Elektrihind
+//  NordPrice
 //
 //  Cache layer for price data using App Group UserDefaults.
 //

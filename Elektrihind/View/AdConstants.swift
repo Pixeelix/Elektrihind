@@ -1,6 +1,6 @@
 //
 //  AdConstants.swift
-//  Elektrihind
+//  NordPrice
 //
 //  Centralized ad unit IDs.
 //

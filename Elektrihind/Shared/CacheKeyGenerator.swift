@@ -1,6 +1,6 @@
 //
 //  CacheKeyGenerator.swift
-//  Elektrihind
+//  NordPrice
 //
 //  Shared cache key generation for price data.
 //

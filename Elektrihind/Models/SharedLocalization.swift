@@ -1,6 +1,6 @@
 //
 //  SharedLocalization.swift
-//  Elektrihind
+//  NordPrice
 //
 //  Created by Martin Pihooja on 08.10.2025.
 //

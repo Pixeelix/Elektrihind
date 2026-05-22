@@ -1,6 +1,6 @@
 //
 //  PriceAPI.swift
-//  Elektrihind
+//  NordPrice
 //
 //  HTTP layer for fetching price data from Elering API.
 //

@@ -1,6 +1,6 @@
 //
 //  SettingsView.swift
-//  Elektrihind
+//  NordPrice
 //
 //  Created by Martin Pihooja on 14.12.2021.
 //
@@ -147,9 +147,6 @@ struct SettingsView: View {
                         await NotificationService.shared.registerForRemoteNotificationsIfNeeded()
                         settings.syncRemoteNotificationPreferences()
                     }
-                    BGScheduler.scheduleIfNeeded()
-                } else if !settings.notifyMinEnabled {
-                    BGScheduler.cancel()
                 }
             }
             
@@ -188,9 +185,6 @@ struct SettingsView: View {
                         await NotificationService.shared.registerForRemoteNotificationsIfNeeded()
                         settings.syncRemoteNotificationPreferences()
                     }
-                    BGScheduler.scheduleIfNeeded()
-                } else if !settings.notifyMaxEnabled {
-                    BGScheduler.cancel()
                 }
             }
 
