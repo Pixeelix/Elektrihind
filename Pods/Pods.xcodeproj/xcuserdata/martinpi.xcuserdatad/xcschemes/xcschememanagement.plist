@@ -83,15 +83,11 @@
 		</dict>
 		<key>FirebaseCoreExtension-FirebaseCoreExtension_Privacy.xcscheme</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>13</integer>
 		</dict>
 		<key>FirebaseCoreExtension.xcscheme</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>12</integer>
 		</dict>
@@ -111,8 +107,6 @@
 		</dict>
 		<key>FirebaseFunctions.xcscheme</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>16</integer>
 		</dict>
@@ -132,15 +126,11 @@
 		</dict>
 		<key>FirebaseMessaging-FirebaseMessaging_Privacy.xcscheme</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>20</integer>
 		</dict>
 		<key>FirebaseMessaging.xcscheme</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>19</integer>
 		</dict>
@@ -153,22 +143,16 @@
 		</dict>
 		<key>FirebaseSharedSwift.xcscheme</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>22</integer>
 		</dict>
 		<key>GTMSessionFetcher-GTMSessionFetcher_Core_Privacy.xcscheme</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>37</integer>
 		</dict>
 		<key>GTMSessionFetcher.xcscheme</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>36</integer>
 		</dict>

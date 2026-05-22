@@ -13,7 +13,7 @@ enum Day {
 }
 
 enum Region: String {
-    case estonia = "EE"
+    case estonia = "EE" 
     case latvia = "LV"
     case lithuania = "LT"
     case finland = "FI"
