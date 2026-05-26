@@ -4,10 +4,15 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>ElektrihindWidgetExtensionExtension.xcscheme_^#shared#^_</key>
+		<key>Elektrihind.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>46</integer>
+		</dict>
+		<key>ElektrihindWidgetExtensionExtension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>47</integer>
 		</dict>
 		<key>NordPrice.xcscheme_^#shared#^_</key>
 		<dict>

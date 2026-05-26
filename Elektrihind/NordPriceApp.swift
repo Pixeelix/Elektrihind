@@ -20,6 +20,16 @@ enum AdStatus {
     case restricted
 }
 
+final class AppNavigation: ObservableObject {
+    static let shared = AppNavigation()
+
+    @Published var selectedTab = 0
+
+    func openTomorrowPrices() {
+        selectedTab = 1
+    }
+}
+
 final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
     func application(
         _ application: UIApplication,
@@ -55,17 +65,41 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
     ) async -> UNNotificationPresentationOptions {
         return [.banner, .list, .sound]
     }
+
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse
+    ) async {
+        guard response.actionIdentifier == UNNotificationDefaultActionIdentifier else { return }
+
+        let userInfo = response.notification.request.content.userInfo
+        guard Self.opensTomorrowPriceView(userInfo: userInfo) else { return }
+
+        await MainActor.run {
+            AppNavigation.shared.openTomorrowPrices()
+        }
+    }
+
+    private static func opensTomorrowPriceView(userInfo: [AnyHashable: Any]) -> Bool {
+        guard let type = userInfo["type"] as? String else { return false }
+        return type.hasPrefix("price_threshold_")
+    }
 }
 
 @main
 struct NordPriceApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject var networkManager = NetworkManager()
+    @StateObject var navigation = AppNavigation.shared
     @StateObject var settings = AppSettings()
-    @State private var adStatus: AdStatus = .initializing
+    @State private var adStatus: AdStatus = AppRuntimeConfiguration.skipsAdConsent ? .restricted : .initializing
     @State private var canLoadAds: Bool = false
     
     private func requestATTIfNeeded() {
+        guard !AppRuntimeConfiguration.skipsAdConsent else {
+            adStatus = .restricted
+            return
+        }
         guard adStatus == .initializing else { return }
         ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
             FBAdSettings.setAdvertiserTrackingEnabled(status == .authorized)
@@ -95,6 +129,7 @@ struct NordPriceApp: App {
                 case .authorized:
                     ContentView()
                         .environmentObject(networkManager)
+                        .environmentObject(navigation)
                         .environmentObject(settings)
                         .background(
                             UMPWrapper(canLoadAdsCallback: {
@@ -110,9 +145,10 @@ struct NordPriceApp: App {
                 case .restricted:
                     ContentView()
                         .environmentObject(networkManager)
+                        .environmentObject(navigation)
                         .environmentObject(settings)
                         .onAppear {
-                            if !canLoadAds {
+                            if !AppRuntimeConfiguration.skipsAdConsent && !canLoadAds {
                                 canLoadAds = true
                                 MobileAds.shared.start()
                             }

@@ -55,6 +55,18 @@ class CurrentPriceViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
+        #if DEBUG
+        settings.$debugUseTestData
+            .dropFirst()
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.dataLastLoaded = nil
+                self?.currentPriceData = nil
+                self?.loadCurrentPrice()
+            }
+            .store(in: &cancellables)
+        #endif
+
         Publishers.Merge(
             settings.$unit.dropFirst().map { _ in () },
             settings.$includeTax.dropFirst().map { _ in () }

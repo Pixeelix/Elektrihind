@@ -6,17 +6,21 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct ContentView: View {
     @EnvironmentObject var settings: AppSettings
+    @EnvironmentObject var navigation: AppNavigation
     @EnvironmentObject var networkManager: NetworkManager
-    @State private var tabBarSelection = 0
     
     var body: some View {
-        if networkManager.isConnected {
-            TabBarView(selection: $tabBarSelection)
+        if networkManager.isConnected || AppRuntimeConfiguration.usesSamplePriceData {
+            TabBarView(selection: $navigation.selectedTab)
                 .onAppear() {
                     settings.getSavedSettings()
+                    if AppRuntimeConfiguration.usesSamplePriceData {
+                        WidgetCenter.shared.reloadAllTimelines()
+                    }
                     Task { @MainActor in
                         await NotificationService.shared.registerForRemoteNotificationsIfNeeded()
                         settings.syncRemoteNotificationPreferences()

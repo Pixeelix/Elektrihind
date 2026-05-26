@@ -1,0 +1,11 @@
+{
+  "Simulator Target Bundle": "koodipardik.Elektrihind",
+  "aps": {
+    "alert": {
+      "title": "Kõrge elektrihind",
+      "body": "Homne kõrgeim hind 647 €/MWh kell 17:00 ületab sinu seatud piiri 200 €/MWh."
+    },
+    "sound": "default"
+  },
+  "type": "test_push"
+}

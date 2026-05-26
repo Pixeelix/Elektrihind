@@ -26,6 +26,16 @@ class AppSettings: ObservableObject {
     @Published var todayDataUpdateMandatory: Bool = false
     @Published var tomorrowDataUpdateMandatory: Bool = false
 
+    @Published var debugUseTestData: Bool = AppRuntimeConfiguration.usesSamplePriceData {
+        didSet {
+            #if DEBUG
+            saveDebugUseTestData()
+            todayDataUpdateMandatory = true
+            tomorrowDataUpdateMandatory = true
+            #endif
+        }
+    }
+
     var taxPercentage: String {
         TaxConfiguration.taxPercentage(for: region)
     }
@@ -125,6 +135,9 @@ class AppSettings: ObservableObject {
         region = Region(rawValue: regionString) ?? .estonia
         unit = UserDefaults.standard.string(forKey: "unit") ?? unit
         includeTax = UserDefaults.standard.bool(forKey: "includeTax")
+        #if DEBUG
+        debugUseTestData = AppRuntimeConfiguration.usesSamplePriceData
+        #endif
         alwaysOnDisplay = UserDefaults.standard.bool(forKey: "alwaysOnDisplay")
         UIApplication.shared.isIdleTimerDisabled = alwaysOnDisplay
 
@@ -154,6 +167,9 @@ class AppSettings: ObservableObject {
         mirrorToAppGroup(key: "unit", value: unit)
         mirrorToAppGroup(key: "includeTax", value: includeTax)
         mirrorToAppGroup(key: "chartResolution", value: chartResolution.rawValue)
+        #if DEBUG
+        mirrorToAppGroup(key: AppRuntimeConfiguration.debugUseTestDataKey, value: debugUseTestData)
+        #endif
     }
 
     private func getLanguageFromLocale() -> String {
@@ -228,6 +244,14 @@ class AppSettings: ObservableObject {
         UserDefaults.standard.set(alwaysOnDisplay, forKey: "alwaysOnDisplay")
     }
 
+    func saveDebugUseTestData() {
+        #if DEBUG
+        UserDefaults.standard.set(debugUseTestData, forKey: AppRuntimeConfiguration.debugUseTestDataKey)
+        mirrorToAppGroup(key: AppRuntimeConfiguration.debugUseTestDataKey, value: debugUseTestData)
+        WidgetCenter.shared.reloadAllTimelines()
+        #endif
+    }
+
     func saveNotifyMaxEnabled() {
         UserDefaults.standard.set(notifyMaxEnabled, forKey: "notifyMaxEnabled")
         syncRemoteNotificationPreferencesAfterChange()
@@ -256,6 +280,7 @@ class AppSettings: ObservableObject {
         UserDefaults.standard.set(chartResolution.rawValue, forKey: "chartResolution")
         mirrorToAppGroup(key: "chartResolution", value: chartResolution.rawValue)
         WidgetCenter.shared.reloadAllTimelines()
+        syncRemoteNotificationPreferencesAfterChange()
     }
 }
 

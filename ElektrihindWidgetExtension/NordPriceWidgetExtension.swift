@@ -10,6 +10,30 @@ import SwiftUI
 import WidgetKit
 import Charts
 
+private enum WidgetRuntimeConfiguration {
+    private static let appGroupID = "group.koodipardik.Elektrihind"
+    private static let debugUseTestDataKey = "debugUseTestData"
+
+    static var usesSamplePriceData: Bool {
+        #if DEBUG
+        if let saved = UserDefaults(suiteName: appGroupID)?.object(forKey: debugUseTestDataKey) as? Bool {
+            return saved
+        }
+        if let saved = UserDefaults.standard.object(forKey: debugUseTestDataKey) as? Bool {
+            return saved
+        }
+
+        #if targetEnvironment(simulator)
+        return true
+        #else
+        return ProcessInfo.processInfo.arguments.contains("-NordPriceScreenshotMode")
+        #endif
+        #else
+        return false
+        #endif
+    }
+}
+
 // MARK: - Settings bridge for Widget
 private enum WidgetSettings {
     
@@ -146,6 +170,11 @@ private enum PriceFetcher {
     }
 
     static func fetchDay(region: String, date: Date = Date(), completion: @escaping ([Point]) -> Void) {
+        if WidgetRuntimeConfiguration.usesSamplePriceData {
+            completion(ScreenshotWidgetPriceData.fullDayData(region: region, referenceDate: date))
+            return
+        }
+
         // 1) Try shared cache first
         if let cached = readCachedToday(region: region) {
             completion(cached)
@@ -218,6 +247,42 @@ private enum PriceFetcher {
             buckets.append((start: s, values: [avg]))
         }
         return buckets.map { Point(timestamp: $0.start, price: $0.values.first ?? 0) }
+    }
+}
+
+private enum ScreenshotWidgetPriceData {
+    static func fullDayData(region: String, referenceDate: Date = Date()) -> [PriceFetcher.Point] {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZoneHelper.timeZone(forCode: region)
+
+        let dayStart = calendar.startOfDay(for: referenceDate)
+        let nextDayStart = calendar.date(byAdding: .day, value: 1, to: dayStart) ?? dayStart.addingTimeInterval(24 * 3600)
+        let intervalSeconds: TimeInterval = 15 * 60
+        let intervalCount = max(1, Int(nextDayStart.timeIntervalSince(dayStart) / intervalSeconds))
+        let quarterAdjustments = [-1.8, 0.7, 2.2, -0.6]
+        let regionOffset = offset(for: region)
+
+        return (0..<intervalCount).map { index in
+            let hourIndex = min(hourlyPrices.count - 1, index / 4)
+            let timestamp = dayStart.addingTimeInterval(TimeInterval(index) * intervalSeconds).timeIntervalSince1970
+            let price = hourlyPrices[hourIndex] + quarterAdjustments[index % quarterAdjustments.count] + regionOffset
+            return PriceFetcher.Point(timestamp: timestamp, price: price)
+        }
+    }
+
+    private static let hourlyPrices: [Double] = [
+        54, 48, 43, 40, 46, 68, 112, 154,
+        139, 104, 82, 71, 64, 58, 55, 63,
+        91, 148, 183, 144, 101, 78, 65, 57
+    ]
+
+    private static func offset(for region: String) -> Double {
+        switch region.uppercased() {
+        case "LV": return 3
+        case "LT": return 5
+        case "FI": return -4
+        default: return 0
+        }
     }
 }
 

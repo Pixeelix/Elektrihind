@@ -11,6 +11,7 @@ const devicesCollection = "notificationDevices";
 const functionsRegion = "europe-west1";
 const priceTimeZone = "Europe/Tallinn";
 const regions = ["EE", "LV", "LT", "FI"];
+const chartResolutions = ["15min", "1h"];
 const regionKeys = {
     EE: "ee",
     LV: "lv",
@@ -126,12 +127,16 @@ async function runPriceCheck() {
     let failed = 0;
     let skippedAlreadySent = 0;
     for (const region of regions) {
-        const points = prices[region];
-        const highest = maxPrice(points);
-        const lowest = minPrice(points);
+        const pointsByResolution = {
+            "15min": prices[region],
+            "1h": aggregateToHourly(prices[region]),
+        };
         const devices = await activeDevices(region);
         for (const device of devices) {
             checkedDevices += 1;
+            const points = pointsByResolution[chartResolution(device)];
+            const highest = maxPrice(points);
+            const lowest = minPrice(points);
             if (device.notifyMaxEnabled && highest.price >= device.notifyMaxRawMWh) {
                 if (device.lastMaxNotifiedDate === window.date) {
                     skippedAlreadySent += 1;
@@ -218,6 +223,28 @@ function maxPrice(points) {
 }
 function minPrice(points) {
     return points.reduce((best, point) => (point.price < best.price ? point : best), points[0]);
+}
+function aggregateToHourly(points) {
+    const buckets = new Map();
+    for (const point of points) {
+        const hourStart = Math.floor(DateTime.fromSeconds(point.timestamp, { zone: "utc" })
+            .setZone(priceTimeZone)
+            .startOf("hour")
+            .toMillis() / 1000);
+        const bucket = buckets.get(hourStart) ?? { sum: 0, count: 0 };
+        bucket.sum += point.price;
+        bucket.count += 1;
+        buckets.set(hourStart, bucket);
+    }
+    return Array.from(buckets.entries())
+        .sort(([left], [right]) => left - right)
+        .map(([timestamp, bucket]) => ({
+        timestamp,
+        price: bucket.sum / bucket.count,
+    }));
+}
+function chartResolution(device) {
+    return device.chartResolution === "15min" ? "15min" : "1h";
 }
 async function sendPriceNotification(args) {
     const price = formatPrice(args.point.price, args.device);
@@ -379,6 +406,7 @@ function parseDeviceRegistration(data) {
             language: stringField(input, "language"),
             unit: stringField(input, "unit"),
             includeTax: booleanField(input, "includeTax"),
+            chartResolution: oneOf(optionalString(input, "chartResolution") ?? "1h", chartResolutions, "chartResolution"),
             notifyMaxEnabled,
             notifyMaxRawMWh: numberField(input, "notifyMaxRawMWh"),
             notifyMinEnabled,

@@ -52,8 +52,10 @@ struct TomorrowView: View {
 
                 VStack {
                     Spacer()
-                    AdaptiveBannerAd(unitID: AdUnit.tomorrowNoDataBanner)
-                        .padding(.bottom, 15)
+                    if !AppRuntimeConfiguration.hidesAdBanners {
+                        AdaptiveBannerAd(unitID: AdUnit.tomorrowNoDataBanner)
+                            .padding(.bottom, 15)
+                    }
                 }
                 .frame(height: geo.size.height * 0.15)
             }
@@ -69,8 +71,10 @@ struct TomorrowView: View {
             MinAvgMaxView(chartViewModel: chartViewModel)
             ChartView(day: Day.tomorrow, viewModel: chartViewModel)
             Spacer(minLength: 15)
-            AdaptiveBannerAd(unitID: AdUnit.tomorrowDataBanner)
-                .padding(.bottom, 15)
+            if !AppRuntimeConfiguration.hidesAdBanners {
+                AdaptiveBannerAd(unitID: AdUnit.tomorrowDataBanner)
+                    .padding(.bottom, 15)
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }

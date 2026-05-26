@@ -32,6 +32,9 @@ struct SettingsView: View {
             Form {
                 generalSection
                 displaySection
+                #if DEBUG
+                debugSection
+                #endif
                 notificationsSection
                 aboutSection
             }
@@ -41,7 +44,9 @@ struct SettingsView: View {
             .navigationTitle(settings.localizedString("LABEL_SETTINGS"))
             .navigationBarTitleDisplayMode(.large)
             .safeAreaInset(edge: .bottom) {
-                if !thresholdFocused { adBanner }
+                if !thresholdFocused && !AppRuntimeConfiguration.hidesAdBanners {
+                    adBanner
+                }
             }
         }
         .tint(.blue)
@@ -129,6 +134,19 @@ struct SettingsView: View {
                 .foregroundStyle(.white.opacity(0.7))
         }
     }
+
+    #if DEBUG
+    private var debugSection: some View {
+        Section {
+            Toggle(isOn: $settings.debugUseTestData) {
+                rowLabel("Näidisandmed", symbol: "testtube.2", tint: .pink)
+            }
+        } header: {
+            Text("DEBUG")
+                .foregroundStyle(.white.opacity(0.85))
+        }
+    }
+    #endif
 
     private var notificationsSection: some View {
         Section {

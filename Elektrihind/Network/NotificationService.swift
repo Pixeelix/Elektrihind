@@ -19,6 +19,7 @@ struct RemoteNotificationSettingsSnapshot {
     let language: String
     let unit: String
     let includeTax: Bool
+    let chartResolution: String
     let notifyMaxEnabled: Bool
     let notifyMaxRawMWh: Double
     let notifyMinEnabled: Bool
@@ -40,6 +41,7 @@ struct RemoteNotificationSettingsSnapshot {
             "language": language,
             "unit": unit,
             "includeTax": includeTax,
+            "chartResolution": chartResolution,
             "notifyMaxEnabled": notifyMaxEnabled,
             "notifyMaxRawMWh": notifyMaxRawMWh,
             "notifyMinEnabled": notifyMinEnabled,
@@ -112,6 +114,7 @@ final class NotificationService {
             language: settings.language.rawValue,
             unit: settings.unit,
             includeTax: settings.includeTax,
+            chartResolution: settings.chartResolution.rawValue,
             notifyMaxEnabled: settings.notifyMaxEnabled,
             notifyMaxRawMWh: settings.notifyMaxRawMWh,
             notifyMinEnabled: settings.notifyMinEnabled,
@@ -132,6 +135,7 @@ final class NotificationService {
             language: defaults.string(forKey: "language") ?? "et",
             unit: defaults.string(forKey: "unit") ?? "€/kWh",
             includeTax: defaults.bool(forKey: "includeTax"),
+            chartResolution: defaults.string(forKey: "chartResolution") ?? ChartResolution.oneHour.rawValue,
             notifyMaxEnabled: defaults.bool(forKey: "notifyMaxEnabled"),
             notifyMaxRawMWh: defaults.double(forKey: "notifyMaxRawMWh"),
             notifyMinEnabled: defaults.bool(forKey: "notifyMinEnabled"),
@@ -233,6 +237,7 @@ final class NotificationService {
             language: input.language,
             unit: input.unit,
             includeTax: input.includeTax,
+            chartResolution: input.chartResolution,
             notifyMaxEnabled: input.notifyMaxEnabled,
             notifyMaxRawMWh: input.notifyMaxRawMWh,
             notifyMinEnabled: input.notifyMinEnabled,
@@ -285,6 +290,7 @@ private struct NotificationSettingsInput {
     let language: String
     let unit: String
     let includeTax: Bool
+    let chartResolution: String
     let notifyMaxEnabled: Bool
     let notifyMaxRawMWh: Double
     let notifyMinEnabled: Bool

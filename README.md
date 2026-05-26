@@ -8,7 +8,7 @@ Price threshold notifications now use Firebase instead of the old Render backend
 
 - The app requests notification permission, registers with APNs, receives an FCM token, signs in anonymously with Firebase Auth, and calls `syncNotificationDevice`.
 - Firebase Functions stores each device's notification preferences in Firestore.
-- `checkTomorrowPrices` runs on Cloud Scheduler at `14:15`, `14:45`, `15:15`, `15:45`, `16:15`, and `16:45` Europe/Tallinn time, checks the complete 15-minute price set for tomorrow, and sends FCM notifications.
+- `checkTomorrowPrices` runs on Cloud Scheduler at `14:15`, `14:45`, `15:15`, `15:45`, `16:15`, and `16:45` Europe/Tallinn time, checks the complete 15-minute price set for tomorrow, compares each user's selected market time unit (`15min` or hourly average), and sends FCM notifications.
 - Firestore client access is disabled in `firestore.rules`; only Cloud Functions writes notification device documents.
 
 ### Firebase Setup

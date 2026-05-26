@@ -99,6 +99,19 @@ class ChartViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
+        #if DEBUG
+        settings.$debugUseTestData
+            .dropFirst()
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.settings?.todayDataUpdateMandatory = true
+                self?.settings?.tomorrowDataUpdateMandatory = true
+                self?.dataLastLoaded = nil
+                self?.loadChartData()
+            }
+            .store(in: &cancellables)
+        #endif
+
         settings.$unit
             .dropFirst()
             .receive(on: RunLoop.main)
