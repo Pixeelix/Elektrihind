@@ -1,4 +1,4 @@
-platform :ios, '16.0'
+platform :ios, '17.6'
 
 use_frameworks! :linkage => :static
 

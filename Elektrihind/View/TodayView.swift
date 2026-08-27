@@ -30,13 +30,26 @@ struct TodayView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .onAppear {
             chartViewModel.configure(settings: settings, day: Day.today)
+            prefetchTomorrow()
         }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
                 chartViewModel.loadChartData()
+                prefetchTomorrow()
             } else if newPhase == .background {
                 chartViewModel.cancelInFlight()
             }
+        }
+    }
+
+    /// Tomorrow's prices publish around 14:00 CET. Warm the cache for the next
+    /// day even if the user never opens the Tomorrow tab, so the widget has
+    /// something to read at midnight without needing the network. A cache hit
+    /// returns without a request, so this is cheap to repeat on every foreground.
+    private func prefetchTomorrow() {
+        let region = settings.region
+        Task.detached(priority: .background) {
+            _ = try? await PriceRepository().loadFullDayData(Day.tomorrow, region: region)
         }
     }
 }

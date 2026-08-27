@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import WidgetKit
 
 class PriceRepository {
     private let cache = PriceCache()
@@ -27,8 +28,12 @@ class PriceRepository {
         // 3) Decode and extract region-specific items
         let items = try PriceCache.extractItems(rawData, for: region)
 
-        // 4) Save to cache
-        cache.save(day: day, region: region, payload: rawData, itemsCount: items.count)
+        // 4) Save to cache. A complete day is new data the widget can use, so
+        //    nudge it to rebuild its timeline. Cache *hits* return above and
+        //    deliberately do not reload.
+        if cache.save(day: day, region: region, payload: rawData, items: items) {
+            WidgetCenter.shared.reloadAllTimelines()
+        }
 
         return items
     }

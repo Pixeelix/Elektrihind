@@ -18,9 +18,7 @@ struct ContentView: View {
             TabBarView(selection: $navigation.selectedTab)
                 .onAppear() {
                     settings.getSavedSettings()
-                    if AppRuntimeConfiguration.usesSamplePriceData {
-                        WidgetCenter.shared.reloadAllTimelines()
-                    }
+                    WidgetCenter.shared.reloadAllTimelines()
                     Task { @MainActor in
                         await NotificationService.shared.registerForRemoteNotificationsIfNeeded()
                         settings.syncRemoteNotificationPreferences()

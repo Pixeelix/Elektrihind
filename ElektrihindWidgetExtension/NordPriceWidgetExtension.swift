@@ -56,17 +56,11 @@ private enum WidgetSettings {
         if let region = groupDefaults?.string(forKey: "region"), !region.isEmpty {
             return region
         }
-        if let region = UserDefaults.standard.string(forKey: "region"), !region.isEmpty {
-            return region
-        }
-            return Locale.current.region?.identifier ?? "EE"
+        return Locale.current.region?.identifier ?? "EE"
     }
 
     static func unit() -> String {
         if let unit = groupDefaults?.string(forKey: "unit"), !unit.isEmpty {
-            return unit
-        }
-        if let unit = UserDefaults.standard.string(forKey: "unit"), !unit.isEmpty {
             return unit
         }
         return "€/kWh"
@@ -92,17 +86,11 @@ private enum WidgetSettings {
         if let value = groupDefaults?.string(forKey: "chartResolution"), !value.isEmpty {
             return value
         }
-        if let value = UserDefaults.standard.string(forKey: "chartResolution"), !value.isEmpty {
-            return value
-        }
-        return "15min"
+        return ChartResolution.oneHour.rawValue
     }
     
     static func language() -> Language {
         if let code = groupDefaults?.string(forKey: "language"), !code.isEmpty {
-            return Language(rawValue: code) ?? .estonian
-        }
-        if let code = UserDefaults.standard.string(forKey: "language"), !code.isEmpty {
             return Language(rawValue: code) ?? .estonian
         }
         return Language.estonian
@@ -111,142 +99,86 @@ private enum WidgetSettings {
 
 // MARK: - Networking
 private enum PriceFetcher {
-    struct Point: Decodable {
-        let timestamp: Double
-        let price: Double
-    }
+    /// The widget shares the app's price model so both sides read and write the
+    /// exact same cached payload (see SharedPriceCache).
+    typealias Point = PriceData
 
-    struct CountriesResponse: Decodable {
-        let data: CountriesData
-    }
-
-    struct CountriesData: Decodable {
-        let ee: [Point]
-        let lv: [Point]
-        let lt: [Point]
-        let fi: [Point]
-    }
+    /// Explicit timeouts: with `URLSession.shared` a hung request means the
+    /// extension is killed before `completion` ever fires and WidgetKit gets no
+    /// timeline at all. Mirrors PriceAPI in the app target.
+    private static let session: URLSession = {
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 15
+        config.timeoutIntervalForResource = 25
+        config.waitsForConnectivity = false
+        return URLSession(configuration: config)
+    }()
 
     static func timeZone(for region: String) -> TimeZone {
         return TimeZoneHelper.timeZone(forCode: region)
     }
 
-    private struct CachedPayload: Codable {
-        let startUTC: String
-        let isComplete: Bool
-        let payload: Data
-        let fetchedAt: Date
+    /// Complete cached day, or nil.
+    static func cachedDay(_ day: Day, region: String) -> [Point]? {
+        return SharedPriceCache.load(day: day, region: SharedPriceCache.region(forCode: region))
     }
 
-    private static func readCachedToday(region: String) -> [Point]? {
-        let key = WidgetSettings.cacheKeyForToday(regionCode: region)
-        guard let data = WidgetSettings.sharedDefaults().data(forKey: key) else { return nil }
-        guard let cached = try? JSONDecoder().decode(CachedPayload.self, from: data) else { return nil }
-        guard cached.isComplete else { return nil }
-        // Decode payload (same structure as CountriesResponse)
-        guard let decoded = try? JSONDecoder().decode(CountriesResponse.self, from: cached.payload) else { return nil }
-        switch region.uppercased() {
-        case "EE": return decoded.data.ee
-        case "LV": return decoded.data.lv
-        case "LT": return decoded.data.lt
-        case "FI": return decoded.data.fi
-        default: return decoded.data.ee
-        }
+    /// Anything cached for the day, complete or not. Stale-but-real prices beat
+    /// a blank widget when the network is unavailable.
+    static func cachedDayBestEffort(_ day: Day, region: String) -> [Point]? {
+        return SharedPriceCache.loadBestEffort(day: day, region: SharedPriceCache.region(forCode: region))
     }
 
-    private static func saveCachedToday(region: String, payload: Data, itemsCount: Int) {
-        // Determine expected hours in local day (handles DST 23/24/25)
-        let calendar = Calendar.current
-        let localStart = calendar.startOfDay(for: Date())
-        let nextLocalStart = calendar.date(byAdding: .day, value: 1, to: localStart)!
-        let hours = calendar.dateComponents([.hour], from: localStart, to: nextLocalStart).hour ?? 24
-        let isComplete = (itemsCount == hours)
-        let startUTC = UTCInterval.todayStartUTC()
-        let cached = CachedPayload(startUTC: startUTC, isComplete: isComplete, payload: payload, fetchedAt: Date())
-        if let blob = try? JSONEncoder().encode(cached) {
-            let key = WidgetSettings.cacheKeyForToday(regionCode: region)
-            WidgetSettings.sharedDefaults().set(blob, forKey: key)
-        }
-    }
-
-    static func fetchDay(region: String, date: Date = Date(), completion: @escaping ([Point]) -> Void) {
+    /// Loads today's prices.
+    /// - Parameter completion: `nil` means the fetch failed (no network, bad
+    ///   response, undecodable body); `[]` means the response was genuinely
+    ///   empty. The caller needs to tell those apart to pick a reload policy.
+    static func fetchDay(region: String, date: Date = Date(), completion: @escaping ([Point]?) -> Void) {
         if WidgetRuntimeConfiguration.usesSamplePriceData {
             completion(ScreenshotWidgetPriceData.fullDayData(region: region, referenceDate: date))
             return
         }
 
-        // 1) Try shared cache first
-        if let cached = readCachedToday(region: region) {
+        // 1) Try the shared cache first — after midnight this is yesterday's
+        //    "tomorrow" blob, which lands under today's key.
+        if let cached = cachedDay(.today, region: region) {
             completion(cached)
             return
         }
 
         // 2) Build the same UTC interval as the app's utcInterval(for: .today)
         let interval = UTCInterval.interval(for: .today)
-        let startString = interval.start
-        let endString = interval.end
-
-        let urlString = "https://dashboard.elering.ee/api/nps/price?start=\(startString)&end=\(endString)"
+        let urlString = "https://dashboard.elering.ee/api/nps/price?start=\(interval.start)&end=\(interval.end)"
         guard let url = URL(string: urlString) else {
-            completion([])
+            completion(nil)
             return
         }
 
-        URLSession.shared.dataTask(with: url) { data, response, error in
+        session.dataTask(with: url) { data, response, error in
             guard error == nil,
                   let http = response as? HTTPURLResponse, http.statusCode == 200,
                   let data = data else {
-                completion([])
+                completion(nil)
                 return
             }
             do {
-                let decoded = try JSONDecoder().decode(CountriesResponse.self, from: data)
-                let selected: [Point]
-                switch region.uppercased() {
-                case "EE": selected = decoded.data.ee
-                case "LV": selected = decoded.data.lv
-                case "LT": selected = decoded.data.lt
-                case "FI": selected = decoded.data.fi
-                default: selected = decoded.data.ee
-                }
-                // 3) Save payload to shared cache (mark complete if 23/24/25 points)
-                saveCachedToday(region: region, payload: data, itemsCount: selected.count)
+                let selected = try SharedPriceCache.extractItems(data, for: SharedPriceCache.region(forCode: region))
+                // 3) Share the payload with the app and future widget refreshes.
+                SharedPriceCache.save(day: .today,
+                                      region: SharedPriceCache.region(forCode: region),
+                                      payload: data,
+                                      items: selected)
                 completion(selected)
             } catch {
-                completion([])
+                completion(nil)
             }
         }.resume()
     }
-    
-    // Aggregate 15-minute points into hourly averages aligned to the start of the hour
+
+    /// Now that the widget shares the app's price model, hourly aggregation is
+    /// shared too instead of being reimplemented here.
     static func aggregateToHourly(_ points: [Point]) -> [Point] {
-        guard !points.isEmpty else { return [] }
-        let calendar = Calendar.current
-        var buckets: [(start: TimeInterval, values: [Double])] = []
-        var currentStart: TimeInterval? = nil
-        var currentValues: [Double] = []
-        for p in points.sorted(by: { $0.timestamp < $1.timestamp }) {
-            let date = Date(timeIntervalSince1970: p.timestamp)
-            let comps = calendar.dateComponents([.year, .month, .day, .hour], from: date)
-            guard let hourStartDate = calendar.date(from: comps) else { continue }
-            let hourStart = hourStartDate.timeIntervalSince1970
-            if currentStart == nil { currentStart = hourStart }
-            if hourStart != currentStart {
-                if let s = currentStart, !currentValues.isEmpty {
-                    let avg = currentValues.reduce(0, +) / Double(currentValues.count)
-                    buckets.append((start: s, values: [avg]))
-                }
-                currentStart = hourStart
-                currentValues = [p.price]
-            } else {
-                currentValues.append(p.price)
-            }
-        }
-        if let s = currentStart, !currentValues.isEmpty {
-            let avg = currentValues.reduce(0, +) / Double(currentValues.count)
-            buckets.append((start: s, values: [avg]))
-        }
-        return buckets.map { Point(timestamp: $0.start, price: $0.values.first ?? 0) }
+        return PriceUtilities.aggregateToHourly(points)
     }
 }
 
@@ -298,6 +230,16 @@ struct NordPriceEntry: TimelineEntry {
 
 // MARK: - Provider
 struct NordPriceProvider: TimelineProvider {
+    /// WidgetKit archives the whole timeline, and every entry carries its day's
+    /// price array for the chart. Capping the entry count keeps that payload
+    /// bounded at 15-minute resolution while still comfortably crossing midnight.
+    private static let maxEntries = 100
+
+    /// How long to wait before trying again after a failed fetch. Without this
+    /// the provider used tomorrow's midnight as the reload date, so a single
+    /// failure just after midnight pinned an empty widget for the whole day.
+    private static let retryInterval: TimeInterval = 15 * 60
+
     func placeholder(in context: Context) -> NordPriceEntry {
         NordPriceEntry(date: Date(), priceText: "--", unit: "€/kWh", timeText: "--:--", regionCode: "EE", prices: [])
     }
@@ -315,10 +257,22 @@ struct NordPriceProvider: TimelineProvider {
         let taxRate = WidgetSettings.taxRate(for: region)
         let (formatter, divider) = WidgetSettings.numberFormatter(for: unit)
 
-        PriceFetcher.fetchDay(region: region) { dayPoints in
+        PriceFetcher.fetchDay(region: region) { fetched in
+            let fetchFailed = (fetched == nil)
+            // On failure fall back to whatever is cached for today rather than
+            // rendering an empty chart.
+            let todayPoints = fetched ?? PriceFetcher.cachedDayBestEffort(.today, region: region) ?? []
+            // Tomorrow is never fetched from the extension — only read from the
+            // cache the app populates. When it is there we can keep generating
+            // entries past midnight, which is the real safety net: WidgetKit
+            // treats the reload policy as a hint, not a guarantee.
+            let tomorrowPoints = PriceFetcher.cachedDay(.tomorrow, region: region) ?? []
+
             let resolution = WidgetSettings.chartResolution()
-            let sourcePoints: [PriceFetcher.Point] = (resolution == "1h") ? PriceFetcher.aggregateToHourly(dayPoints) : dayPoints
-            let interval: TimeInterval = (resolution == "1h") ? 3600 : 900
+            let hourly = (resolution == ChartResolution.oneHour.rawValue)
+            let interval: TimeInterval = hourly ? 3600 : 900
+            let todaySource = hourly ? PriceFetcher.aggregateToHourly(todayPoints) : todayPoints
+            let tomorrowSource = hourly ? PriceFetcher.aggregateToHourly(tomorrowPoints) : tomorrowPoints
 
             let now = Date()
             let start = Date(timeIntervalSince1970: floor(now.timeIntervalSince1970 / interval) * interval)
@@ -326,41 +280,54 @@ struct NordPriceProvider: TimelineProvider {
             let calendar = Calendar.current
             let dayStart = calendar.startOfDay(for: now)
             let nextDayStart = calendar.date(byAdding: .day, value: 1, to: dayStart) ?? dayStart.addingTimeInterval(24 * 3600)
+            let dayAfterStart = calendar.date(byAdding: .day, value: 1, to: nextDayStart) ?? nextDayStart.addingTimeInterval(24 * 3600)
+            let timelineEnd = tomorrowSource.isEmpty ? nextDayStart : dayAfterStart
 
-            // Helper closures
-            let timeString: (Double?) -> String = { ts in
-                guard let ts = ts else { return "--:--" }
-                let df = DateFormatter()
-                df.timeZone = PriceFetcher.timeZone(for: region)
-                df.locale = Locale(identifier: WidgetSettings.language().rawValue)
-                df.dateFormat = "HH:mm"
-                return df.string(from: Date(timeIntervalSince1970: ts))
-            }
-            let priceString: (Double?) -> String = { price in
-                guard let price = price else { return "---" }
-                let adjusted = includeTax ? price * taxRate : price
-                return formatter.string(from: NSNumber(value: adjusted / divider)) ?? "---"
-            }
+            let timeString = Self.timeStringBuilder(region: region)
+            let priceString = Self.priceStringBuilder(includeTax: includeTax,
+                                                      taxRate: taxRate,
+                                                      formatter: formatter,
+                                                      divider: divider)
 
-            let sorted = sourcePoints.sorted(by: { $0.timestamp < $1.timestamp })
+            let sortedToday = todaySource.sorted(by: { $0.timestamp < $1.timestamp })
+            let sortedTomorrow = tomorrowSource.sorted(by: { $0.timestamp < $1.timestamp })
 
             var entries: [NordPriceEntry] = []
             var t = start
-            while t < nextDayStart {
-                let current = sorted.last { Date(timeIntervalSince1970: $0.timestamp) <= t } ?? sorted.last
-                let entry = NordPriceEntry(
+            while t < timelineEnd && entries.count < Self.maxEntries {
+                let afterMidnight = t >= nextDayStart
+                let points = afterMidnight ? sortedTomorrow : sortedToday
+                let current = points.last { Date(timeIntervalSince1970: $0.timestamp) <= t } ?? points.last
+                entries.append(NordPriceEntry(
                     date: t,
                     priceText: priceString(current?.price),
                     unit: unit,
                     timeText: timeString(current?.timestamp),
                     regionCode: region,
-                    prices: sourcePoints
-                )
-                entries.append(entry)
+                    prices: afterMidnight ? sortedTomorrow : sortedToday
+                ))
                 t = t.addingTimeInterval(interval)
             }
 
-            let policy: TimelineReloadPolicy = .after(nextDayStart.addingTimeInterval(5))
+            if entries.isEmpty {
+                // A timeline must contain at least one entry; without data this
+                // is a placeholder that the retry policy below will replace.
+                entries = [NordPriceEntry(
+                    date: start,
+                    priceText: priceString(nil),
+                    unit: unit,
+                    timeText: timeString(nil),
+                    regionCode: region,
+                    prices: []
+                )]
+            }
+
+            // A failed fetch means there was no complete cache to serve from
+            // either (fetchDay checks the cache first), so retry soon instead of
+            // waiting a full day.
+            let policy: TimelineReloadPolicy = fetchFailed
+                ? .after(now.addingTimeInterval(Self.retryInterval))
+                : .after(nextDayStart.addingTimeInterval(5))
             completion(Timeline(entries: entries, policy: policy))
         }
     }
@@ -372,43 +339,58 @@ struct NordPriceProvider: TimelineProvider {
         let taxRate = WidgetSettings.taxRate(for: region)
         let (formatter, divider) = WidgetSettings.numberFormatter(for: unit)
 
-        PriceFetcher.fetchDay(region: region) { dayPoints in
+        PriceFetcher.fetchDay(region: region) { fetched in
+            let dayPoints = fetched ?? PriceFetcher.cachedDayBestEffort(.today, region: region) ?? []
             let resolution = WidgetSettings.chartResolution()
-            let sourcePoints: [PriceFetcher.Point] = (resolution == "1h") ? PriceFetcher.aggregateToHourly(dayPoints) : dayPoints
+            let hourly = (resolution == ChartResolution.oneHour.rawValue)
+            let sourcePoints = hourly ? PriceFetcher.aggregateToHourly(dayPoints) : dayPoints
 
-            // Helper closures
-            let timeString: (Double?) -> String = { ts in
-                guard let ts = ts else { return "--:--" }
-                let df = DateFormatter()
-                df.timeZone = PriceFetcher.timeZone(for: region)
-                df.locale = Locale(identifier: WidgetSettings.language().rawValue)
-                df.dateFormat = "HH:mm"
-                return df.string(from: Date(timeIntervalSince1970: ts))
-            }
-            let priceString: (Double?) -> String = { price in
-                guard let price = price else { return "---" }
-                let adjusted = includeTax ? price * taxRate : price
-                return formatter.string(from: NSNumber(value: adjusted / divider)) ?? "---"
-            }
+            let timeString = Self.timeStringBuilder(region: region)
+            let priceString = Self.priceStringBuilder(includeTax: includeTax,
+                                                      taxRate: taxRate,
+                                                      formatter: formatter,
+                                                      divider: divider)
 
             let sorted = sourcePoints.sorted(by: { $0.timestamp < $1.timestamp })
             let now = Date()
             let current: PriceFetcher.Point?
-            if resolution == "1h" {
+            if hourly {
                 let hourStart = Calendar.current.dateInterval(of: .hour, for: now)?.start ?? now
                 current = sorted.last { Date(timeIntervalSince1970: $0.timestamp) <= hourStart } ?? sorted.last
             } else {
                 current = sorted.last { Date(timeIntervalSince1970: $0.timestamp) <= now } ?? sorted.last
             }
             let entry = NordPriceEntry(
-                date: Date(),
+                date: now,
                 priceText: priceString(current?.price),
                 unit: unit,
                 timeText: timeString(current?.timestamp),
                 regionCode: region,
-                prices: sourcePoints
+                prices: sorted
             )
             completion(entry)
+        }
+    }
+
+    private static func timeStringBuilder(region: String) -> (Double?) -> String {
+        let df = DateFormatter()
+        df.timeZone = PriceFetcher.timeZone(for: region)
+        df.locale = Locale(identifier: WidgetSettings.language().rawValue)
+        df.dateFormat = "HH:mm"
+        return { ts in
+            guard let ts = ts else { return "--:--" }
+            return df.string(from: Date(timeIntervalSince1970: ts))
+        }
+    }
+
+    private static func priceStringBuilder(includeTax: Bool,
+                                           taxRate: Double,
+                                           formatter: NumberFormatter,
+                                           divider: Double) -> (Double?) -> String {
+        return { price in
+            guard let price = price else { return "---" }
+            let adjusted = includeTax ? price * taxRate : price
+            return formatter.string(from: NSNumber(value: adjusted / divider)) ?? "---"
         }
     }
 }

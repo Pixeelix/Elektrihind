@@ -274,6 +274,7 @@ class AppSettings: ObservableObject {
 
     func saveChartType() {
         UserDefaults.standard.set(chartType.rawValue, forKey: "chartType")
+        mirrorToAppGroup(key: "chartType", value: chartType.rawValue)
     }
 
     func saveChartResolution() {
