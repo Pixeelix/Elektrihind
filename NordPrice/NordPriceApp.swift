@@ -10,7 +10,6 @@ import GoogleMobileAds
 import FirebaseCore
 import FirebaseMessaging
 import AppTrackingTransparency
-import FBAudienceNetwork
 import UIKit
 import UserNotifications
 
@@ -102,7 +101,6 @@ struct NordPriceApp: App {
         }
         guard adStatus == .initializing else { return }
         ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
-            FBAdSettings.setAdvertiserTrackingEnabled(status == .authorized)
             switch status {
             case .authorized:
                 adStatus = .authorized
