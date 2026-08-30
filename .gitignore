@@ -1,4 +1,42 @@
-functions/lib/
-functions/node_modules/
-AuthKey_*.p8
+# macOS
+.DS_Store
+
+# Xcode
+build/
+DerivedData/
+xcuserdata/
 *.xcuserstate
+*.moved-aside
+*.hmap
+*.ipa
+*.xcarchive
+*.dSYM
+*.dSYM.zip
+
+# Swift Package Manager
+.build/
+.swiftpm/
+# NOTE: Package.resolved is committed ON PURPOSE — reproducible dependency graph.
+
+# CocoaPods — removed in v4.0. Kept so a stray `pod install` cannot re-add 232 MB.
+Pods/
+Podfile
+Podfile.lock
+/*.xcworkspace/
+
+# Node / Firebase
+functions/node_modules/
+functions/lib/
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
+ui-debug.log
+
+# Secrets — NEVER commit
+AuthKey_*.p8
+*.p8
+*.p12
+*.cer
+*.mobileprovision
+.env
+.env.*
