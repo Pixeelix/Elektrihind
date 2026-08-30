@@ -2,7 +2,7 @@ platform :ios, '17.6'
 
 use_frameworks! :linkage => :static
 
-target 'Elektrihind' do
+target 'NordPrice' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
   pod 'Firebase/Functions'

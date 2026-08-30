@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A2B155AD27458EE2004B1B02"
                BuildableName = "NordPrice.app"
-               BlueprintName = "Elektrihind"
-               ReferencedContainer = "container:Elektrihind.xcodeproj">
+               BlueprintName = "NordPrice"
+               ReferencedContainer = "container:NordPrice.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -48,8 +48,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A2B155AD27458EE2004B1B02"
             BuildableName = "NordPrice.app"
-            BlueprintName = "Elektrihind"
-            ReferencedContainer = "container:Elektrihind.xcodeproj">
+            BlueprintName = "NordPrice"
+            ReferencedContainer = "container:NordPrice.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -65,8 +65,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A2B155AD27458EE2004B1B02"
             BuildableName = "NordPrice.app"
-            BlueprintName = "Elektrihind"
-            ReferencedContainer = "container:Elektrihind.xcodeproj">
+            BlueprintName = "NordPrice"
+            ReferencedContainer = "container:NordPrice.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
