@@ -20,13 +20,14 @@ struct TodayView: View {
                     .padding(.bottom, 0)
                 MinAvgMaxView(chartViewModel: chartViewModel)
                 ChartView(day: Day.today, viewModel: chartViewModel)
-                Spacer(minLength: 15)
+                    .padding(.bottom, 8)
                 if !AppRuntimeConfiguration.hidesAdBanners {
                     AdaptiveBannerAd(unitID: AdUnit.todayBanner)
-                        .padding(.bottom, 15)
+                        .padding(.bottom, 4)
                 }
             }
         }
+        .scrollsAtAccessibilitySizes()
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .onAppear {
             chartViewModel.configure(settings: settings, day: Day.today)

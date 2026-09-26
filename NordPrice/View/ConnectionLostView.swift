@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ConnectionLostView: View {
     @EnvironmentObject var settings: AppSettings
+    @ScaledMetric(relativeTo: .title3) private var messageFontSize: CGFloat = 20
     
     var body: some View {
         ZStack {
@@ -19,11 +20,13 @@ struct ConnectionLostView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 200, height: 200)
-                    .foregroundColor(.white)
+                    .foregroundColor(Color.textOnBackground)
+                    .accessibilityHidden(true)
                 
                 Text(settings.localizedString("TEXT_CONNECTION_LOST"))
-                    .font(.system(size: 20))
-                    .foregroundColor(.white)
+                    .font(.system(size: messageFontSize))
+                    .foregroundColor(Color.textOnBackground)
+                    .multilineTextAlignment(.center)
                     .padding()
                 
                 Button {
@@ -32,10 +35,12 @@ struct ConnectionLostView: View {
                     Text(settings.localizedString("TITLE_OPEN_SETTINGS"))
                         .padding()
                         .font(.headline)
-                        .foregroundColor(Color.blueGrayText)
+                        .foregroundColor(Color("pillButtonText"))
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
-                .frame(width: 160)
-                .background(Color.white)
+                .frame(minWidth: 160)
+                .background(Color("pillButtonBackground"))
                 .clipShape(Capsule())
                 .padding()
             }

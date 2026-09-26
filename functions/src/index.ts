@@ -460,8 +460,9 @@ function notificationBody(args: {
   time: string;
 }): string {
   const key = languageKey(args.language);
-  const price = `${args.price} ${args.unit}`;
-  const threshold = `${args.threshold} ${args.unit}`;
+  const unit = localizedUnit(args.unit, key);
+  const price = `${args.price} ${unit}`;
+  const threshold = `${args.threshold} ${unit}`;
 
   if (args.direction === "max") {
     switch (key) {
@@ -485,6 +486,20 @@ function notificationBody(args: {
       return `Завтрашний минимум ${price} в ${args.time} ниже заданного лимита (${threshold}).`;
     default:
       return `Tomorrow's low ${price} at ${args.time} is below your set limit (${threshold}).`;
+  }
+}
+
+function localizedUnit(unit: string, language: string): string {
+  if (unit !== "cent/kWh" && unit !== "senti/kWh") return unit;
+  switch (language) {
+    case "et":
+      return "senti/kWh";
+    case "fi":
+      return "snt/kWh";
+    case "ru":
+      return "цент/kWh";
+    default:
+      return "cent/kWh";
   }
 }
 

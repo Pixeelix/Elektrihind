@@ -9,40 +9,61 @@ import SwiftUI
 
 struct MinAvgMaxView: View {
     @EnvironmentObject var settings: AppSettings
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @ObservedObject var chartViewModel: ChartViewModel
+    @ScaledMetric(relativeTo: .body) private var fontSize: CGFloat = 18
+
+    private var items: [(key: String, value: String)] {
+        [("TITLE_MIN", chartViewModel.minPrice),
+         ("TITLE_AVG", chartViewModel.avgPrice),
+         ("TITLE_MAX", chartViewModel.maxPrice)]
+    }
 
     var body: some View {
-        VStack(alignment: .center, spacing: 0) {
-            HStack(alignment: .top) {
-                VStack(alignment: .center) {
-                    Text(settings.localizedString("TITLE_MIN"))
-                        .font(.system(size: 18, weight: .medium))
-                    Text(chartViewModel.minPrice)
-                        .font(.system(size: 18, weight: .bold))
+        Group {
+            if dynamicTypeSize.isAccessibilitySize {
+                // Three columns don't fit at accessibility sizes: one row per value.
+                VStack(alignment: .leading, spacing: 8) {
+                    ForEach(items, id: \.key) { item in
+                        HStack {
+                            label(item.key)
+                            Spacer()
+                            value(item.value)
+                        }
+                        .accessibilityElement(children: .combine)
+                    }
                 }
-                Spacer()
-                VStack(alignment: .center) {
-                    Text(settings.localizedString("TITLE_AVG"))
-                        .font(.system(size: 18, weight: .medium))
-                    Text(chartViewModel.avgPrice)
-                        .font(.system(size: 18, weight: .bold))
-                }
-                Spacer()
-                VStack(alignment: .center) {
-                    Text(settings.localizedString("TITLE_MAX"))
-                        .font(.system(size: 18, weight: .medium))
-                    Text(chartViewModel.maxPrice)
-                        .font(.system(size: 18, weight: .bold))
+            } else {
+                HStack(alignment: .top) {
+                    ForEach(Array(items.enumerated()), id: \.element.key) { index, item in
+                        if index > 0 { Spacer() }
+                        VStack(alignment: .center) {
+                            label(item.key)
+                            value(item.value)
+                        }
+                        .accessibilityElement(children: .combine)
+                    }
                 }
             }
-            .padding(.top, 8)
-            .padding(.leading, 16)
-            .padding(.trailing, 16)
-            .padding(.bottom, 8)
         }
-        .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.is1stGenIphone ? 50 : 60)
-        .background(Color.contentBoxBackground)
+        .padding(.top, 8)
+        .padding(.leading, 16)
+        .padding(.trailing, 16)
+        .padding(.bottom, 8)
+        .frame(width: UIScreen.main.bounds.width * 0.9)
+        .frame(minHeight: UIScreen.is1stGenIphone ? 50 : 60)
         .foregroundColor(Color.bluewWhiteText)
-        .cornerRadius(10)
+        .cardStyle(cornerRadius: 14)
+    }
+
+    private func label(_ key: String) -> some View {
+        Text(settings.localizedString(key))
+            .font(.system(size: fontSize, weight: .medium))
+            .foregroundColor(Color.cardLabelText)
+    }
+
+    private func value(_ text: String) -> some View {
+        Text(text)
+            .font(.system(size: fontSize, weight: .bold))
     }
 }

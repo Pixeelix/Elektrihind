@@ -9,10 +9,13 @@ import SwiftUI
 
 struct TitleView: View {
     var title: String
+    @ScaledMetric(relativeTo: .largeTitle) private var fontSize: CGFloat = 32
     var body: some View {
         Text(title)
-            .font(.system(size: 32, weight: .medium, design: .default))
-            .foregroundColor(.white)
-            .padding(EdgeInsets(top: 10, leading: 20, bottom: 20, trailing: 20))
+            .font(.system(size: fontSize, weight: .medium, design: .default))
+            .multilineTextAlignment(.center)
+            .accessibilityAddTraits(.isHeader)
+            .foregroundColor(Color.textOnBackground)
+            .padding(EdgeInsets(top: 10, leading: 20, bottom: 12, trailing: 20))
     }
 }

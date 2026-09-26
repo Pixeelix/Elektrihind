@@ -12,13 +12,9 @@ struct TabBarView: View {
     @Binding var selection: Int
     @EnvironmentObject var settings: AppSettings
     
+    /// Selected tab uses the website's brand blue in both light and dark mode.
     private var selectedTintColor: UIColor {
-        switch selection {
-        case 0: return UIColor.orange
-        case 1: return UIColor(red: 102/255, green: 212/255, blue: 207/255, alpha: 1)
-        case 2: return UIColor(red: 172/255, green: 142/255, blue: 104/255, alpha: 1)
-        default: return UIColor.systemBlue
-        }
+        UIColor(red: 0x7B/255, green: 0x8F/255, blue: 0xFF/255, alpha: 1)
     }
     
     private func setTabBarTransparentAppearance() {

@@ -432,6 +432,7 @@ struct NordPriceWidgetEntryView: View {
                     .fixedSize(horizontal: true, vertical: false)
                     .layoutPriority(1)
             }
+            .accessibilityElement(children: .combine)
             if !entry.prices.isEmpty {
                 DayPriceChart(points: entry.prices,
                               includeTax: WidgetSettings.includeTax(),
@@ -446,11 +447,11 @@ struct NordPriceWidgetEntryView: View {
 
         if #available(iOSApplicationExtension 17.0, *) {
             content
-                .containerBackground(for: .widget) { Color(.systemBackground) }
+                .containerBackground(for: .widget) { Color("WidgetBackground") }
                 .widgetURL(URL(string: "nordprice://today"))
         } else {
             content
-                .background(Color(.systemBackground))
+                .background(Color("WidgetBackground"))
                 .widgetURL(URL(string: "nordprice://today"))
         }
     }
@@ -557,27 +558,41 @@ private struct DayPriceChart: View {
             return f
         }()
 
+        // Bars colored by price level, like the app's bar chart. Display prices
+        // are converted back to raw €/MWh so levels ignore unit and VAT. The
+        // current interval is drawn at full strength, the elapsed part dimmed.
+        let vatFactor = includeTax ? taxMultiplier : 1
+        let interval: TimeInterval = resolution == "1h" ? 3600 : 900
+        let barGap: TimeInterval = interval * 0.25
+        let currentDate = currentPoint?.date
+        // Same scheme as the app: current bar full color, upcoming bars in level
+        // color, elapsed bars neutral gray.
+        func barColor(_ item: (date: Date, price: Double)) -> Color {
+            let color = PriceLevel(rawMWh: item.price * divider / vatFactor).color
+            guard let currentDate else { return color }
+            if item.date == currentDate { return color }
+            return item.date < currentDate ? Color.gray.opacity(0.35) : color.opacity(0.8)
+        }
+
         return Chart {
+            if let currentDate {
+                RuleMark(x: .value("Now", currentDate.addingTimeInterval((interval - barGap) / 2)))
+                    .lineStyle(StrokeStyle(lineWidth: 1, dash: [2, 2]))
+                    .foregroundStyle(Color.primary.opacity(0.35))
+            }
             ForEach(values, id: \.date) { item in
-                LineMark(
-                    x: .value("Time", item.date),
-                    y: .value("Price", item.price)
+                RectangleMark(
+                    xStart: .value("Start", item.date),
+                    xEnd: .value("End", item.date.addingTimeInterval(interval - barGap)),
+                    yStart: .value("Base", 0.0),
+                    yEnd: .value("Price", item.price)
                 )
-                .interpolationMethod(.linear)
-                .lineStyle(StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round))
-                .foregroundStyle(.tint)
+                .foregroundStyle(barColor(item))
+                .cornerRadius(1)
             }
             RuleMark(y: .value("Zero", 0))
                 .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 3]))
                 .foregroundStyle(.secondary)
-            if let current = currentPoint {
-                PointMark(
-                    x: .value("Time", current.date),
-                    y: .value("Price", current.price)
-                )
-                .symbol(.circle)
-                .foregroundStyle(.orange)
-            }
         }
         .chartXAxis {
             AxisMarks(values: xTicks) { value in
@@ -605,6 +620,10 @@ private struct DayPriceChart: View {
                 AxisValueLabel {
                     if let d = value.as(Double.self) {
                         Text(yAxisFormatter.string(from: NSNumber(value: d)) ?? String(format: unit == "€/kWh" ? "%.2f" : "%.0f", d))
+                            // The widget renders leading Y labels dimmer than the X
+                            // labels; `.primary` here matches the hour labels'
+                            // default look in both light and dark mode.
+                            .foregroundStyle(.primary)
                     }
                 }
             }

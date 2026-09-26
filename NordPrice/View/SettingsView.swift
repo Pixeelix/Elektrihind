@@ -16,12 +16,15 @@ struct SettingsView: View {
     @State private var thresholdFocused: Bool = false
     @State private var maxProxy = ThresholdFieldProxy()
     @State private var minProxy = ThresholdFieldProxy()
+    @ObservedObject private var consent = ConsentManager.shared
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     init() {
         let app = UINavigationBarAppearance()
         app.configureWithTransparentBackground()
-        app.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-        app.titleTextAttributes = [.foregroundColor: UIColor.white]
+        let ink = UIColor(named: "textOnBackground") ?? .white
+        app.largeTitleTextAttributes = [.foregroundColor: ink]
+        app.titleTextAttributes = [.foregroundColor: ink]
         UINavigationBar.appearance().standardAppearance = app
         UINavigationBar.appearance().scrollEdgeAppearance = app
         UINavigationBar.appearance().compactAppearance = app
@@ -49,13 +52,13 @@ struct SettingsView: View {
                 }
             }
         }
-        .tint(.blue)
+        .tint(.brand)
     }
 
     @ViewBuilder
     private var adBanner: some View {
         AdaptiveBannerAd(unitID: AdUnit.settingsBanner)
-            .frame(maxWidth: .infinity, maxHeight: 50)
+            .frame(maxWidth: .infinity)
             .background(.bar)
     }
 
@@ -66,7 +69,7 @@ struct SettingsView: View {
                     Text(settings.localizedString(lang.name)).tag(lang)
                 }
             } label: {
-                rowLabel(settings.localizedString("TITLE_LANGUAGE"), symbol: "globe", tint: .blue)
+                rowLabel(settings.localizedString("TITLE_LANGUAGE"), symbol: "globe", tint: .brand)
             }
             .pickerStyle(.navigationLink)
 
@@ -80,7 +83,7 @@ struct SettingsView: View {
             .pickerStyle(.navigationLink)
         } header: {
             Text(settings.localizedString("TITLE_GENERAL"))
-                .foregroundStyle(.white.opacity(0.85))
+                .foregroundStyle(Color.textOnBackground.opacity(0.85))
         }
     }
 
@@ -119,19 +122,23 @@ struct SettingsView: View {
                     Text(res.label).tag(res)
                 }
             } label: {
-                rowLabel(settings.localizedString("TITLE_CHART_RESOLUTION"), symbol: "chart.bar.fill", tint: .blue)
+                rowLabel(settings.localizedString("TITLE_CHART_RESOLUTION"), symbol: "chart.bar.fill", tint: .brand)
             }
             .pickerStyle(.navigationLink)
+
+            Toggle(isOn: $settings.colorfulChart) {
+                rowLabel(settings.localizedString("TITLE_COLORFUL_CHART"), symbol: "paintpalette.fill", tint: .pink)
+            }
 
             Toggle(isOn: $settings.alwaysOnDisplay) {
                 rowLabel(settings.localizedString("TITLE_ALWAYS_ON_DISPLAY"), symbol: "sun.max.fill", tint: .yellow)
             }
         } header: {
             Text(settings.localizedString("TITLE_DISPLAY"))
-                .foregroundStyle(.white.opacity(0.85))
+                .foregroundStyle(Color.textOnBackground.opacity(0.85))
         } footer: {
             Text(settings.localizedString("FOOTER_VAT"))
-                .foregroundStyle(.white.opacity(0.7))
+                .foregroundStyle(Color.textOnBackground.opacity(0.7))
         }
     }
 
@@ -143,7 +150,7 @@ struct SettingsView: View {
             }
         } header: {
             Text("DEBUG")
-                .foregroundStyle(.white.opacity(0.85))
+                .foregroundStyle(Color.textOnBackground.opacity(0.85))
         }
     }
     #endif
@@ -169,23 +176,13 @@ struct SettingsView: View {
             }
             
             if settings.notifyMaxEnabled {
-                HStack {
-                    Text(settings.localizedString("LABEL_THRESHOLD") + " (\(settings.unit))")
-                    Spacer()
-                    ThresholdTextField(
-                        value: Binding(
-                            get: { settings.notifyMaxDisplay },
-                            set: { settings.notifyMaxDisplay = $0 }
-                        ),
-                        formatter: settings.numberFormatter,
-                        proxy: maxProxy,
-                        onFocus: { thresholdFocused = true },
-                        onBlur: { thresholdFocused = false }
-                    )
-                    .frame(width: 110)
-                }
-                .contentShape(Rectangle())
-                .onTapGesture { maxProxy.focus() }
+                thresholdRow(
+                    value: Binding(
+                        get: { settings.notifyMaxDisplay },
+                        set: { settings.notifyMaxDisplay = $0 }
+                    ),
+                    proxy: maxProxy
+                )
             }
 
             Toggle(isOn: $settings.notifyMinEnabled) {
@@ -207,23 +204,13 @@ struct SettingsView: View {
             }
 
             if settings.notifyMinEnabled {
-                HStack {
-                    Text(settings.localizedString("LABEL_THRESHOLD") + " (\(settings.unit))")
-                    Spacer()
-                    ThresholdTextField(
-                        value: Binding(
-                            get: { settings.notifyMinDisplay },
-                            set: { settings.notifyMinDisplay = $0 }
-                        ),
-                        formatter: settings.numberFormatter,
-                        proxy: minProxy,
-                        onFocus: { thresholdFocused = true },
-                        onBlur: { thresholdFocused = false }
-                    )
-                    .frame(width: 110)
-                }
-                .contentShape(Rectangle())
-                .onTapGesture { minProxy.focus() }
+                thresholdRow(
+                    value: Binding(
+                        get: { settings.notifyMinDisplay },
+                        set: { settings.notifyMinDisplay = $0 }
+                    ),
+                    proxy: minProxy
+                )
             }
 
 //            Button {
@@ -246,11 +233,11 @@ struct SettingsView: View {
             }
         } header: {
             Text(settings.localizedString("TITLE_NOTIFICATIONS"))
-                .foregroundStyle(.white.opacity(0.85))
+                .foregroundStyle(Color.textOnBackground.opacity(0.85))
         }
 //        footer: {
 //            Text(settings.localizedString("FOOTER_NOTIFICATIONS"))
-//                .foregroundStyle(.white.opacity(0.7))
+//                .foregroundStyle(Color.textOnBackground.opacity(0.85))
 //        }
         .onAppear {
             Task {
@@ -268,6 +255,15 @@ struct SettingsView: View {
                 rowLabel(settings.localizedString("TITLE_VERSION"), symbol: "info.circle.fill", tint: .gray)
             }
 
+            if consent.privacyOptionsRequired {
+                Button {
+                    consent.presentPrivacyOptions()
+                } label: {
+                    rowLabel(settings.localizedString("LABEL_PRIVACY_OPTIONS"), symbol: "hand.raised.fill", tint: .blue)
+                }
+                .foregroundStyle(Color.primary)
+            }
+
             Text(settings.localizedString("TEXT_INFORMATION_ABOUT_APP"))
                 .font(.footnote)
                 .foregroundStyle(.secondary)
@@ -277,8 +273,32 @@ struct SettingsView: View {
                 .foregroundStyle(.secondary)
         } header: {
             Text(settings.localizedString("TITLE_ABOUT"))
-                .foregroundStyle(.white.opacity(0.85))
+                .foregroundStyle(Color.textOnBackground.opacity(0.85))
         }
+    }
+
+    /// Label and field side by side; at accessibility sizes the label gets the
+    /// full row width and the field moves below it.
+    private func thresholdRow(value: Binding<Double>, proxy: ThresholdFieldProxy) -> some View {
+        let isLarge = dynamicTypeSize.isAccessibilitySize
+        let layout = isLarge
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: 8))
+            : AnyLayout(HStackLayout())
+        return layout {
+            Text(settings.localizedString("LABEL_THRESHOLD") + " (\(settings.unit))")
+            if !isLarge { Spacer() }
+            ThresholdTextField(
+                value: value,
+                formatter: settings.numberFormatter,
+                proxy: proxy,
+                onFocus: { thresholdFocused = true },
+                onBlur: { thresholdFocused = false }
+            )
+            .frame(width: isLarge ? nil : 110)
+            .frame(maxWidth: isLarge ? .infinity : nil)
+        }
+        .contentShape(Rectangle())
+        .onTapGesture { proxy.focus() }
     }
 
     @ViewBuilder

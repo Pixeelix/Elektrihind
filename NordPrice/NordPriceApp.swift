@@ -6,18 +6,10 @@
 //
 
 import SwiftUI
-import GoogleMobileAds
 import FirebaseCore
 import FirebaseMessaging
-import AppTrackingTransparency
 import UIKit
 import UserNotifications
-
-enum AdStatus {
-    case initializing
-    case authorized
-    case restricted
-}
 
 final class AppNavigation: ObservableObject {
     static let shared = AppNavigation()
@@ -91,79 +83,25 @@ struct NordPriceApp: App {
     @StateObject var networkManager = NetworkManager()
     @StateObject var navigation = AppNavigation.shared
     @StateObject var settings = AppSettings()
-    @State private var adStatus: AdStatus = AppRuntimeConfiguration.skipsAdConsent ? .restricted : .initializing
-    @State private var canLoadAds: Bool = false
-    
-    private func requestATTIfNeeded() {
-        guard !AppRuntimeConfiguration.skipsAdConsent else {
-            adStatus = .restricted
-            return
-        }
-        guard adStatus == .initializing else { return }
-        ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
-            switch status {
-            case .authorized:
-                adStatus = .authorized
-            case .notDetermined, .restricted, .denied:
-                adStatus = .restricted
-            @unknown default:
-                adStatus = .restricted
-            }
-            print("STATUS: \(status)")
-        })
-    }
 
     var body: some Scene {
         WindowGroup {
-            ZStack {
-                switch adStatus {
-                case .initializing:
-                    ZStack {
-                        Color.backgroundColor.edgesIgnoringSafeArea(.all)
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle())
+            ContentView()
+                .environmentObject(networkManager)
+                .environmentObject(navigation)
+                .environmentObject(settings)
+                .onAppear {
+                    // UMP can only present its form while the app is active.
+                    if UIApplication.shared.applicationState == .active {
+                        ConsentManager.shared.gatherConsent()
                     }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                case .authorized:
-                    ContentView()
-                        .environmentObject(networkManager)
-                        .environmentObject(navigation)
-                        .environmentObject(settings)
-                        .background(
-                            UMPWrapper(canLoadAdsCallback: {
-                                debugPrint("Can load ads now")
-                                // Start AdMob once consent is available
-                                if !canLoadAds {
-                                    canLoadAds = true
-                                    MobileAds.shared.start()
-                                }
-                            })
-                            .allowsHitTesting(false)
-                        )
-                case .restricted:
-                    ContentView()
-                        .environmentObject(networkManager)
-                        .environmentObject(navigation)
-                        .environmentObject(settings)
-                        .onAppear {
-                            if !AppRuntimeConfiguration.skipsAdConsent && !canLoadAds {
-                                canLoadAds = true
-                                MobileAds.shared.start()
-                            }
-                        }
                 }
-            }
-            .onAppear {
-                if UIApplication.shared.applicationState == .active {
-                    requestATTIfNeeded()
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                    ConsentManager.shared.gatherConsent()
                 }
-            }
-            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-                requestATTIfNeeded()
-            }
-            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
-                PriceAPI.resetSession()
-            }
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+                    PriceAPI.resetSession()
+                }
         }
     }
 }

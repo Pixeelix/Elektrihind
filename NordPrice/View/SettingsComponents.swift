@@ -9,12 +9,14 @@ import UIKit
 struct SettingsIcon: View {
     let symbol: String
     let tint: Color
+    @ScaledMetric(relativeTo: .body) private var symbolSize: CGFloat = 15
+    @ScaledMetric(relativeTo: .body) private var boxSize: CGFloat = 28
 
     var body: some View {
         Image(systemName: symbol)
-            .font(.system(size: 15, weight: .semibold))
+            .font(.system(size: symbolSize, weight: .semibold))
             .foregroundStyle(.white)
-            .frame(width: 28, height: 28)
+            .frame(width: boxSize, height: boxSize)
             .background(
                 RoundedRectangle(cornerRadius: 6, style: .continuous)
                     .fill(tint)
@@ -41,7 +43,8 @@ struct ThresholdTextField: UIViewRepresentable {
         let tf = UITextField()
         tf.keyboardType = .decimalPad
         tf.textAlignment = .right
-        tf.font = .systemFont(ofSize: 17)
+        tf.font = .preferredFont(forTextStyle: .body)
+        tf.adjustsFontForContentSizeCategory = true
         tf.delegate = context.coordinator
         proxy.field = tf
 

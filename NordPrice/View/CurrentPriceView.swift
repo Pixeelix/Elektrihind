@@ -12,25 +12,22 @@ struct CurrentPriceView: View {
     @EnvironmentObject var settings: AppSettings
     @StateObject private var viewModel = CurrentPriceViewModel()
     @State private var showRegionPicker = false
+    /// Grows with Dynamic Type; the price text itself fits whatever height this gives.
+    @ScaledMetric(relativeTo: .largeTitle) private var priceHeight: CGFloat = UIScreen.isTallScreen ? 62 : 52
+    @ScaledMetric(relativeTo: .title2) private var unitFontSize: CGFloat = 24
 
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
             HStack(alignment: .top) {
-                Button {
+                RegionFlagButton(region: settings.region) {
                     showRegionPicker = true
-                } label: {
-                    Image(settings.region.rawValue)
-                        .resizable()
                 }
-                .frame(width: 30, height: 22)
-                .cornerRadius(6)
-                .shadow(radius: 5)
                 Spacer()
                 Text(viewModel.currentPriceTimestamp)
-                    .font(.system(size: 300))
-                    .minimumScaleFactor(0.01)
+                    .font(.subheadline)
+                    .accessibilityHidden(true)
             }
-            .frame(height: 22)
+            .frame(minHeight: 22)
             .padding(.top, 8)
             .padding(.leading, 10)
             .padding(.trailing, 10)
@@ -40,20 +37,23 @@ struct CurrentPriceView: View {
                     .font(.system(size: 300, weight: .medium))
                     .minimumScaleFactor(0.01)
             }
-            .frame(height: UIScreen.isTallScreen ? 62 : 52)
+            .frame(height: priceHeight)
             .padding(.top, -12)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(settings.localizedString("TEXT_CURRENT_PRICE"))
+            .accessibilityValue("\(viewModel.currentPrice) \(viewModel.unit), \(viewModel.currentPriceTimestamp)")
 
             VStack {
                 Text(viewModel.unit)
-                    .font(.system(size: 24, weight: .medium))
+                    .font(.system(size: unitFontSize, weight: .medium))
             }
-            Spacer()
+            .padding(.bottom, 8)
+            .accessibilityHidden(true)
         }
-        .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.isTallScreen ? 120 : 100)
-        .background(Color.contentBoxBackground)
-        .foregroundColor(Color.bluewWhiteText)
-        .tint(.blue)
-        .cornerRadius(12)
+        .frame(width: UIScreen.main.bounds.width * 0.9)
+        .frame(minHeight: UIScreen.isTallScreen ? 120 : 100, alignment: .top)
+        .heroCardStyle(cornerRadius: 16)
+        .tint(.brand)
         .confirmationDialog(settings.localizedString("TITLE_REGION"), isPresented: $showRegionPicker, titleVisibility: .visible) {
             ForEach(Region.allRegions, id: \.self) { region in
                 Button(settings.localizedString(region.name)) {
@@ -72,5 +72,29 @@ struct CurrentPriceView: View {
                 viewModel.cancelInFlight()
             }
         }
+    }
+}
+
+/// Region flag that opens the region picker. The flag stays small, but the tap
+/// target is padded out to 44pt and VoiceOver reads the region name.
+struct RegionFlagButton: View {
+    @EnvironmentObject var settings: AppSettings
+    let region: Region
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Image(region.rawValue)
+                .resizable()
+                .frame(width: 30, height: 22)
+                .cornerRadius(6)
+                .shadow(radius: 5)
+                .padding(.vertical, 11)
+                .padding(.trailing, 14)
+                .contentShape(Rectangle())
+        }
+        .padding(.vertical, -11)
+        .accessibilityLabel(settings.localizedString(region.name))
+        .accessibilityHint(settings.localizedString("A11Y_CHANGE_REGION"))
     }
 }

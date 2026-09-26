@@ -13,7 +13,14 @@ struct PriceChartEntry: Identifiable {
     let id: Int
     let timeLabel: String
     let price: Double
+    /// Raw Nord Pool price in €/MWh, before unit conversion and VAT. Nil when the
+    /// entry was built without API data (previews / test data).
+    let rawPriceMWh: Double?
     let isCurrent: Bool
+
+    var level: PriceLevel? {
+        rawPriceMWh.map { PriceLevel(rawMWh: $0) }
+    }
 }
 
 @MainActor
@@ -22,6 +29,8 @@ class ChartViewModel: ObservableObject {
     private let network = NetworkService()
     private var day: Day = Day.today
     private var dataArrayFromAPI: [PriceData] = []
+    /// Raw €/MWh per chart point, index-aligned with `data.points`.
+    var rawPricesMWh: [Double] = []
     private var dataLastLoaded: Date? = nil
     private var isConfigured = false
     private var cancellables = Set<AnyCancellable>()
@@ -54,7 +63,8 @@ class ChartViewModel: ObservableObject {
                 let currentIndex = min(totalPoints - 1, max(0, Int(floor(Double(totalPoints) * proportionOfDay))))
                 isCurrent = (index == currentIndex)
             }
-            return PriceChartEntry(id: index, timeLabel: point.0, price: point.1, isCurrent: isCurrent)
+            let raw: Double? = index < rawPricesMWh.count ? rawPricesMWh[index] : nil
+            return PriceChartEntry(id: index, timeLabel: point.0, price: point.1, rawPriceMWh: raw, isCurrent: isCurrent)
         }
     }
 
@@ -172,6 +182,7 @@ class ChartViewModel: ObservableObject {
         }
 
         var fullDayChartData: [(String, Double)] = []
+        var rawPrices: [Double] = []
         let formatter = DateFormatter()
         formatter.timeZone = TimeZoneHelper.timeZone(for: settings.region)
         formatter.locale = NSLocale.current
@@ -182,7 +193,9 @@ class ChartViewModel: ObservableObject {
             let price = settings.includeTax ? (data.price / settings.divider) * settings.taxRate : data.price / settings.divider
             let dataPoint = (stringTime, price)
             fullDayChartData.append(dataPoint)
+            rawPrices.append(data.price)
         }
+        self.rawPricesMWh = rawPrices
         self.data = ChartData(values: fullDayChartData)
         calculateMinMaxValues()
         isLoading = false

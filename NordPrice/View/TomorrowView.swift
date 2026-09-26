@@ -11,6 +11,7 @@ struct TomorrowView: View {
     @Environment(\.scenePhase) var scenePhase
     @EnvironmentObject var settings: AppSettings
     @StateObject private var chartViewModel = ChartViewModel()
+    @ScaledMetric(relativeTo: .body) private var messageFontSize: CGFloat = 18
 
     var body: some View {
         VStack {
@@ -41,8 +42,8 @@ struct TomorrowView: View {
                 VStack {
                     Spacer()
                     Text(settings.localizedString("TEXT_TOMORROWS_PRICE_WILL_APEAR"))
-                        .font(.system(size: 18, weight: .medium))
-                        .foregroundColor(.white)
+                        .font(.system(size: messageFontSize, weight: .medium))
+                        .foregroundColor(Color.textOnBackground)
                         .multilineTextAlignment(.center)
                         .padding(.vertical, 20)
                         .padding(.horizontal, 10)
@@ -70,12 +71,13 @@ struct TomorrowView: View {
 
             MinAvgMaxView(chartViewModel: chartViewModel)
             ChartView(day: Day.tomorrow, viewModel: chartViewModel)
-            Spacer(minLength: 15)
+                .padding(.bottom, 8)
             if !AppRuntimeConfiguration.hidesAdBanners {
                 AdaptiveBannerAd(unitID: AdUnit.tomorrowDataBanner)
-                    .padding(.bottom, 15)
+                    .padding(.bottom, 4)
             }
         }
+        .scrollsAtAccessibilitySizes()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

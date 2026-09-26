@@ -7,16 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5EB417883044EC7EBC1F0C62 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 45273829608A461349E5E505 /* FirebaseAnalytics */; };
-		E5184D2AED887307BFAFB865 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 32BD6F780AE4BF701EDE06DB /* FirebaseAuth */; };
-		A3D378A64DF165925E836A37 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 25A67A0FB6667D7C0BA0922F /* FirebaseAppCheck */; };
 		165FA27183FC904565AE858F /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = E9AED7DF8A6D8590C3F649EF /* FirebaseFunctions */; };
-		A2234DF0D538B9F8A2B1B8A3 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = FDAACC2BF482FB6D2C26979A /* FirebaseMessaging */; };
 		52A98B7EC5FCAB45D8B3169F /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 638AEB253AAA672CB6DE0AD6 /* GoogleMobileAds */; };
+		5EB417883044EC7EBC1F0C62 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 45273829608A461349E5E505 /* FirebaseAnalytics */; };
 		A214594C28E5DD4C00FDB205 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A214594B28E5DD4C00FDB205 /* TitleView.swift */; };
 		A214594E28E5DD9B00FDB205 /* CurrentPriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A214594D28E5DD9B00FDB205 /* CurrentPriceView.swift */; };
 		A214595028E5DDCA00FDB205 /* MinMaxRangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A214594F28E5DDCA00FDB205 /* MinMaxRangeView.swift */; };
-		A224648B2A6F17FD00B99250 /* UMPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A224648A2A6F17FD00B99250 /* UMPViewController.swift */; };
+		A2234DF0D538B9F8A2B1B8A3 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = FDAACC2BF482FB6D2C26979A /* FirebaseMessaging */; };
+		A224648B2A6F17FD00B99250 /* ConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A224648A2A6F17FD00B99250 /* ConsentManager.swift */; };
 		A22579F22767F74600F8E3AB /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22579F12767F74600F8E3AB /* TodayView.swift */; };
 		A22579F42767F76E00F8E3AB /* TomorrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22579F32767F76E00F8E3AB /* TomorrowView.swift */; };
 		A22A6CC02AD5C823006C752E /* MinAvgMaxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22A6CBF2AD5C823006C752E /* MinAvgMaxView.swift */; };
@@ -71,6 +69,8 @@
 		A2CC01302EA30000AABB0030 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC01312EA30000AABB0030 /* NotificationService.swift */; };
 		A2D6DD59279A061F0007B14A /* BarChartGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D6DD58279A061F0007B14A /* BarChartGlobals.swift */; };
 		A2F9DFBD27653EFB006E4730 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F9DFBC27653EFB006E4730 /* TabBarView.swift */; };
+		A3D378A64DF165925E836A37 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 25A67A0FB6667D7C0BA0922F /* FirebaseAppCheck */; };
+		E5184D2AED887307BFAFB865 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 32BD6F780AE4BF701EDE06DB /* FirebaseAuth */; };
 		EADADD37F10C4037AEA119F5 /* SettingsComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADE63F8345843C6BE1183EF /* SettingsComponents.swift */; };
 /* End PBXBuildFile section */
 
@@ -102,7 +102,7 @@
 		A214594B28E5DD4C00FDB205 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		A214594D28E5DD9B00FDB205 /* CurrentPriceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPriceView.swift; sourceTree = "<group>"; };
 		A214594F28E5DDCA00FDB205 /* MinMaxRangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinMaxRangeView.swift; sourceTree = "<group>"; };
-		A224648A2A6F17FD00B99250 /* UMPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UMPViewController.swift; sourceTree = "<group>"; };
+		A224648A2A6F17FD00B99250 /* ConsentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentManager.swift; sourceTree = "<group>"; };
 		A22579F12767F74600F8E3AB /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
 		A22579F32767F76E00F8E3AB /* TomorrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TomorrowView.swift; sourceTree = "<group>"; };
 		A22A6CBF2AD5C823006C752E /* MinAvgMaxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinAvgMaxView.swift; sourceTree = "<group>"; };
@@ -160,7 +160,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
-				NordPriceWidget.entitlements,
 			);
 			target = A26F745B2E9017E80066EAB4 /* NordPriceWidget */;
 		};
@@ -204,13 +203,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4C0010EB2A6C3A8C41613926 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		A22579F52767F79700F8E3AB /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -264,7 +256,6 @@
 				A2B155B027458EE2004B1B02 /* NordPrice */,
 				A26F74612E9017E80066EAB4 /* NordPriceWidget */,
 				A2B155AF27458EE2004B1B02 /* Products */,
-				4C0010EB2A6C3A8C41613926 /* Pods */,
 				BF448718BAF2504A454FE01A /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -286,7 +277,7 @@
 				A2BA07E729F0938A004BEC1F /* InfoPlist.strings */,
 				A245280A299827570021661E /* GoogleService-Info.plist */,
 				A2B155B127458EE2004B1B02 /* NordPriceApp.swift */,
-				A224648A2A6F17FD00B99250 /* UMPViewController.swift */,
+				A224648A2A6F17FD00B99250 /* ConsentManager.swift */,
 				A2B155B327458EE2004B1B02 /* ContentView.swift */,
 				A22579F62767F7B200F8E3AB /* Network */,
 				A2D6DD57279A06070007B14A /* BarChartView */,
@@ -429,12 +420,12 @@
 				ru,
 			);
 			mainGroup = A2B155A527458EE2004B1B02;
+			packageReferences = (
+				CBB56A50A42AAA849650554F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				95CAC243F4EACBD360977697 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A2B155AF27458EE2004B1B02 /* Products */;
-			packageReferences = (
-				CBB56A50A42AAA849650554F /* XCRemoteSwiftPackageReference */,
-				95CAC243F4EACBD360977697 /* XCRemoteSwiftPackageReference */,
-			);
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -504,7 +495,7 @@
 				A2B155C027459138004B1B02 /* NordPoolPrice.swift in Sources */,
 				A214594C28E5DD4C00FDB205 /* TitleView.swift in Sources */,
 				A2B155C2274599E7004B1B02 /* NetworkManager.swift in Sources */,
-				A224648B2A6F17FD00B99250 /* UMPViewController.swift in Sources */,
+				A224648B2A6F17FD00B99250 /* ConsentManager.swift in Sources */,
 				A25AC1C92768009C00C9610F /* Globals.swift in Sources */,
 				A258EFCE29DB3E7700B0B27D /* ConnectionLostView.swift in Sources */,
 				A22A6CC02AD5C823006C752E /* MinAvgMaxView.swift in Sources */,
@@ -787,6 +778,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -830,6 +822,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -876,14 +869,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		CBB56A50A42AAA849650554F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 12.18.0;
-			};
-		};
 		95CAC243F4EACBD360977697 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads";
@@ -892,38 +877,46 @@
 				minimumVersion = 13.9.0;
 			};
 		};
+		CBB56A50A42AAA849650554F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.18.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		45273829608A461349E5E505 /* FirebaseAnalytics */ = {
+		25A67A0FB6667D7C0BA0922F /* FirebaseAppCheck */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CBB56A50A42AAA849650554F /* XCRemoteSwiftPackageReference */;
-			productName = FirebaseAnalytics;
+			package = CBB56A50A42AAA849650554F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAppCheck;
 		};
 		32BD6F780AE4BF701EDE06DB /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CBB56A50A42AAA849650554F /* XCRemoteSwiftPackageReference */;
+			package = CBB56A50A42AAA849650554F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
-		25A67A0FB6667D7C0BA0922F /* FirebaseAppCheck */ = {
+		45273829608A461349E5E505 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CBB56A50A42AAA849650554F /* XCRemoteSwiftPackageReference */;
-			productName = FirebaseAppCheck;
+			package = CBB56A50A42AAA849650554F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		638AEB253AAA672CB6DE0AD6 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 95CAC243F4EACBD360977697 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
 		};
 		E9AED7DF8A6D8590C3F649EF /* FirebaseFunctions */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CBB56A50A42AAA849650554F /* XCRemoteSwiftPackageReference */;
+			package = CBB56A50A42AAA849650554F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFunctions;
 		};
 		FDAACC2BF482FB6D2C26979A /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CBB56A50A42AAA849650554F /* XCRemoteSwiftPackageReference */;
+			package = CBB56A50A42AAA849650554F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
-		};
-		638AEB253AAA672CB6DE0AD6 /* GoogleMobileAds */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 95CAC243F4EACBD360977697 /* XCRemoteSwiftPackageReference */;
-			productName = GoogleMobileAds;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

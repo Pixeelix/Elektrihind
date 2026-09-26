@@ -61,7 +61,55 @@ extension Color {
     static let bluewWhiteText = Color("blueWhiteText")
     static let contentBoxBackground = Color("contentBoxBackground")
     static let tabBarBackground = Color("tabBarBackground")
+    /// Accent: system blue in light mode (original look), website brand blue in dark.
+    static let brand = Color("brandAccent")
+    /// Text placed directly on the page background: white in light, ink in dark.
+    static let textOnBackground = Color("textOnBackground")
+    /// Small labels inside cards: blue in light, muted ink in dark.
+    static let cardLabelText = Color("cardLabelText")
+    /// Thin ring around cards, only visible in dark mode (website's `ring-ink/8`).
+    static let cardStroke = Color("cardStroke")
     static let backgroundColor = LinearGradient(gradient: Gradient(colors: [Color("backgroundTop"), Color("backgroundBottom")]), startPoint: .topLeading, endPoint: .bottomTrailing)
+}
+
+extension View {
+    /// Card with rounded corners; in dark mode also a subtle ring, like the website cards.
+    func cardStyle(cornerRadius: CGFloat) -> some View {
+        self
+            .background(Color.contentBoxBackground)
+            .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                    .strokeBorder(Color.cardStroke, lineWidth: 1)
+            )
+    }
+
+    /// Current-price card: same card as the others, with the primary text color.
+    func heroCardStyle(cornerRadius: CGFloat) -> some View {
+        self
+            .foregroundColor(Color.bluewWhiteText)
+            .cardStyle(cornerRadius: cornerRadius)
+    }
+
+    /// The price screens are laid out to fill exactly one screen. At accessibility
+    /// text sizes that no longer fits, so the content scrolls instead.
+    func scrollsAtAccessibilitySizes() -> some View {
+        modifier(ScrollsAtAccessibilitySizes())
+    }
+}
+
+private struct ScrollsAtAccessibilitySizes: ViewModifier {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    func body(content: Content) -> some View {
+        if dynamicTypeSize.isAccessibilitySize {
+            ScrollView {
+                content.frame(maxWidth: .infinity)
+            }
+        } else {
+            content
+        }
+    }
 }
 
 extension Data {

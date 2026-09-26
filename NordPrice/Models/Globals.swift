@@ -93,6 +93,13 @@ class AppSettings: ObservableObject {
         }
     }
 
+    /// Price-level colors in the chart. Off restores the original single-color chart.
+    @Published var colorfulChart: Bool = UserDefaults.standard.object(forKey: "colorfulChart") as? Bool ?? true {
+        didSet {
+            UserDefaults.standard.set(colorfulChart, forKey: "colorfulChart")
+        }
+    }
+
     @Published var alwaysOnDisplay: Bool = UserDefaults.standard.bool(forKey: "alwaysOnDisplay") {
         didSet {
             saveAlwaysOnDisplay()
