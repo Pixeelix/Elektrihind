@@ -574,6 +574,24 @@ private struct DayPriceChart: View {
             return item.date < currentDate ? Color.gray.opacity(0.35) : color.opacity(0.8)
         }
 
+        func yLabel(_ d: Double) -> String {
+            yAxisFormatter.string(from: NSNumber(value: d)) ?? String(format: unit == "€/kWh" ? "%.2f" : "%.0f", d)
+        }
+
+        // Explicit Y ticks (~3 "nice" steps) so the overlay below knows where
+        // the labels go.
+        let yTicks: [Double] = {
+            let raw = (yMax - yMin) / 3
+            guard raw > 0 else { return [] }
+            let mag = pow(10, floor(log10(raw)))
+            let n = raw / mag
+            let step = (n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10) * mag
+            let first = Int(ceil(yMin / step))
+            let last = Int(floor(yMax / step))
+            guard first <= last else { return [] }
+            return (first...last).map { Double($0) * step }
+        }()
+
         return Chart {
             if let currentDate {
                 RuleMark(x: .value("Now", currentDate.addingTimeInterval((interval - barGap) / 2)))
@@ -602,6 +620,7 @@ private struct DayPriceChart: View {
                     if let date = value.as(Date.self) {
                         let hour = Calendar.current.component(.hour, from: date)
                         Text(String(format: "%02d", hour))
+                            .font(.caption2)
                     }
                 }
             }
@@ -614,16 +633,35 @@ private struct DayPriceChart: View {
                 .cornerRadius(4)
         }
         .chartYAxis {
-            AxisMarks(position: .leading) { value in
+            AxisMarks(position: .leading, values: yTicks) { value in
                 AxisGridLine()
                 AxisTick()
+                // Invisible: only reserves the label space. The widget renders
+                // leading Charts labels nearly invisible in dark mode whatever
+                // style is set, so the overlay draws them as plain Text.
                 AxisValueLabel {
                     if let d = value.as(Double.self) {
-                        Text(yAxisFormatter.string(from: NSNumber(value: d)) ?? String(format: unit == "€/kWh" ? "%.2f" : "%.0f", d))
-                            // The widget renders leading Y labels dimmer than the X
-                            // labels; `.primary` here matches the hour labels'
-                            // default look in both light and dark mode.
-                            .foregroundStyle(.primary)
+                        Text(yLabel(d))
+                    }
+                }
+                .foregroundStyle(Color.clear)
+            }
+        }
+        .chartOverlay { proxy in
+            GeometryReader { geo in
+                if let plotFrame = proxy.plotFrame {
+                    let plot = geo[plotFrame]
+                    let labelWidth = max(plot.minX - 4, 0)
+                    ForEach(yTicks, id: \.self) { tick in
+                        if let y = proxy.position(forY: tick) {
+                            Text(yLabel(tick))
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                                .lineLimit(1)
+                                .fixedSize()
+                                .frame(width: labelWidth, alignment: .trailing)
+                                .position(x: labelWidth / 2, y: plot.minY + y)
+                        }
                     }
                 }
             }
