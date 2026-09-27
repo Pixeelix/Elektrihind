@@ -96,16 +96,12 @@ struct ChartView: View {
         self.viewModel = viewModel
     }
 
-    private var chartSize: CGSize {
-        CGSize(width: UIScreen.main.bounds.width * 0.9, height: ChartForm.barChartHeight)
-    }
-
     /// The chart grows to fill whatever the screen leaves after the cards and
     /// the ad banner; this is only the floor for very small screens.
     private var minChartHeight: CGFloat {
         // At accessibility sizes the screen scrolls, so the chart gets a fixed,
         // readable height instead of filling the leftover space.
-        dynamicTypeSize.isAccessibilitySize ? 380 : min(chartSize.height, 220)
+        dynamicTypeSize.isAccessibilitySize ? 380 : min(ChartForm.barChartHeight, 220)
     }
 
     var body: some View {
@@ -116,7 +112,7 @@ struct ChartView: View {
                 }
                 .progressViewStyle(CircularProgressViewStyle(tint: .brand))
                 .foregroundColor(.bluewWhiteText)
-                .frame(width: chartSize.width)
+                .cardWidth()
                 .frame(minHeight: minChartHeight, maxHeight: .infinity)
                 .cardStyle(cornerRadius: 14)
             } else {
@@ -372,7 +368,7 @@ struct ChartView: View {
                 }
             }
         }
-        .frame(width: chartSize.width)
+        .cardWidth()
         .frame(minHeight: minChartHeight, maxHeight: .infinity)
         .cardStyle(cornerRadius: 14)
     }

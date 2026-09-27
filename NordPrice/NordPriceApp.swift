@@ -14,7 +14,14 @@ import UserNotifications
 final class AppNavigation: ObservableObject {
     static let shared = AppNavigation()
 
-    @Published var selectedTab = 0
+    @Published var selectedTab: Int = {
+        #if DEBUG
+        // Lets screenshot automation open a specific tab: -NordPriceInitialTab 1
+        return UserDefaults.standard.integer(forKey: "NordPriceInitialTab")
+        #else
+        return 0
+        #endif
+    }()
 
     func openTomorrowPrices() {
         selectedTab = 1

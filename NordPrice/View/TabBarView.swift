@@ -11,6 +11,23 @@ import UIKit
 struct TabBarView: View {
     @Binding var selection: Int
     @EnvironmentObject var settings: AppSettings
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
+
+    /// Full-screen iPad: today and tomorrow share one dashboard tab. Split View
+    /// and phones keep the separate tabs.
+    private var usesDashboard: Bool {
+        horizontalSizeClass == .regular && verticalSizeClass == .regular
+    }
+
+    /// The dashboard has no tomorrow tab, so a request for it (e.g. from a price
+    /// notification) shows the dashboard, which contains tomorrow's prices.
+    private var tabSelection: Binding<Int> {
+        Binding(
+            get: { usesDashboard && selection == 1 ? 0 : selection },
+            set: { selection = $0 }
+        )
+    }
     
     /// Selected tab uses the website's brand blue in both light and dark mode.
     private var selectedTintColor: UIColor {
@@ -36,22 +53,32 @@ struct TabBarView: View {
     
     var body: some View {
         Group {
-            TabView(selection: $selection) {
-                TodayView()
-                    .tag(0)
-                    .tabItem {
-                        Image(systemName: "bolt.fill").symbolRenderingMode(.monochrome)
-                        Text(settings.localizedString("LABEL_TODAY"))
-                    }
-                    .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
+            TabView(selection: tabSelection) {
+                if usesDashboard {
+                    DashboardView()
+                        .tag(0)
+                        .tabItem {
+                            Image(systemName: "bolt.fill").symbolRenderingMode(.monochrome)
+                            Text(settings.localizedString("LABEL_PRICES"))
+                        }
+                        .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
+                } else {
+                    TodayView()
+                        .tag(0)
+                        .tabItem {
+                            Image(systemName: "bolt.fill").symbolRenderingMode(.monochrome)
+                            Text(settings.localizedString("LABEL_TODAY"))
+                        }
+                        .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
 
-                TomorrowView()
-                    .tag(1)
-                    .tabItem {
-                        Image(systemName: "clock.fill").symbolRenderingMode(.monochrome)
-                        Text(settings.localizedString("LABEL_TOMORROW"))
-                    }
-                    .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
+                    TomorrowView()
+                        .tag(1)
+                        .tabItem {
+                            Image(systemName: "clock.fill").symbolRenderingMode(.monochrome)
+                            Text(settings.localizedString("LABEL_TOMORROW"))
+                        }
+                        .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
+                }
 
                 SettingsView()
                     .tag(2)

@@ -50,7 +50,7 @@ struct CurrentPriceView: View {
             .padding(.bottom, 8)
             .accessibilityHidden(true)
         }
-        .frame(width: UIScreen.main.bounds.width * 0.9)
+        .cardWidth()
         .frame(minHeight: UIScreen.isTallScreen ? 120 : 100, alignment: .top)
         .heroCardStyle(cornerRadius: 16)
         .tint(.brand)

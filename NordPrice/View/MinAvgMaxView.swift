@@ -50,7 +50,7 @@ struct MinAvgMaxView: View {
         .padding(.leading, 16)
         .padding(.trailing, 16)
         .padding(.bottom, 8)
-        .frame(width: UIScreen.main.bounds.width * 0.9)
+        .cardWidth()
         .frame(minHeight: UIScreen.is1stGenIphone ? 50 : 60)
         .foregroundColor(Color.bluewWhiteText)
         .cardStyle(cornerRadius: 14)

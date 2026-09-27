@@ -16,6 +16,7 @@
 		A2234DF0D538B9F8A2B1B8A3 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = FDAACC2BF482FB6D2C26979A /* FirebaseMessaging */; };
 		A224648B2A6F17FD00B99250 /* ConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A224648A2A6F17FD00B99250 /* ConsentManager.swift */; };
 		A22579F22767F74600F8E3AB /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22579F12767F74600F8E3AB /* TodayView.swift */; };
+		D45B0A012E9F000100C0FFEE /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45B0A022E9F000100C0FFEE /* DashboardView.swift */; };
 		A22579F42767F76E00F8E3AB /* TomorrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22579F32767F76E00F8E3AB /* TomorrowView.swift */; };
 		A22A6CC02AD5C823006C752E /* MinAvgMaxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22A6CBF2AD5C823006C752E /* MinAvgMaxView.swift */; };
 		A245280929943F5E0021661E /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A245280829943F5D0021661E /* Banner.swift */; };
@@ -104,6 +105,7 @@
 		A214594F28E5DDCA00FDB205 /* MinMaxRangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinMaxRangeView.swift; sourceTree = "<group>"; };
 		A224648A2A6F17FD00B99250 /* ConsentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentManager.swift; sourceTree = "<group>"; };
 		A22579F12767F74600F8E3AB /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
+		D45B0A022E9F000100C0FFEE /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		A22579F32767F76E00F8E3AB /* TomorrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TomorrowView.swift; sourceTree = "<group>"; };
 		A22A6CBF2AD5C823006C752E /* MinAvgMaxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinAvgMaxView.swift; sourceTree = "<group>"; };
 		A233FEE427669DE100FEDA9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				A22579F12767F74600F8E3AB /* TodayView.swift */,
+				D45B0A022E9F000100C0FFEE /* DashboardView.swift */,
 				A22579F32767F76E00F8E3AB /* TomorrowView.swift */,
 				A25AC1C62767FBC800C9610F /* SettingsView.swift */,
 				EADE63F8345843C6BE1183EF /* SettingsComponents.swift */,
@@ -506,6 +509,7 @@
 				A2B155B227458EE2004B1B02 /* NordPriceApp.swift in Sources */,
 				A214595028E5DDCA00FDB205 /* MinMaxRangeView.swift in Sources */,
 				A22579F22767F74600F8E3AB /* TodayView.swift in Sources */,
+				D45B0A012E9F000100C0FFEE /* DashboardView.swift in Sources */,
 				A22579F42767F76E00F8E3AB /* TomorrowView.swift in Sources */,
 				A2CC011A2EA30000AABB000B /* SharedTypes.swift in Sources */,
 				A2CC01022EA30000AABB0001 /* PriceUtilities.swift in Sources */,

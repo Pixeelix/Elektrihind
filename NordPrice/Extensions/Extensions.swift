@@ -98,6 +98,37 @@ extension View {
     }
 }
 
+private struct CardWidthKey: EnvironmentKey {
+    static let defaultValue: CGFloat? = UIScreen.main.bounds.width * 0.9
+}
+
+extension EnvironmentValues {
+    /// Width of the price cards and the chart. The phone layout uses 90% of the
+    /// screen; `nil` lets the card fill its container (the iPad dashboard).
+    var cardWidth: CGFloat? {
+        get { self[CardWidthKey.self] }
+        set { self[CardWidthKey.self] = newValue }
+    }
+}
+
+extension View {
+    func cardWidth() -> some View {
+        modifier(CardWidthModifier())
+    }
+}
+
+private struct CardWidthModifier: ViewModifier {
+    @Environment(\.cardWidth) private var width
+
+    func body(content: Content) -> some View {
+        if let width {
+            content.frame(width: width)
+        } else {
+            content.frame(maxWidth: .infinity)
+        }
+    }
+}
+
 private struct ScrollsAtAccessibilitySizes: ViewModifier {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 

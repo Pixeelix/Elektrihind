@@ -720,6 +720,35 @@
         }
       }
     },
+    "LABEL_PRICES" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prices"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hinnad"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hinnat"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Цены"
+          }
+        }
+      }
+    },
     "LABEL_PRIVACY_OPTIONS" : {
       "extractionState" : "manual",
       "localizations" : {
