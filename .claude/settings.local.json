@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "Bash(grep -r \"class\\\\|struct\" /Users/martinpi/App/Elektrihind/NordPrice/View/*.swift | head -20)",
-      "Bash(git *)"
+      "Bash(git *)",
+      "Bash(xcodebuild -project NordPrice.xcodeproj -scheme NordPrice -configuration Release -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/np-dd build CODE_SIGNING_ALLOWED=NO)",
+      "Bash(grep -c 'OBJC_CLASS_$_FIRA')",
+      "Bash(grep -i 'OBJC_CLASS_$_FIR')",
+      "Bash(xcrun simctl *)",
+      "Bash(D=B1BEA496-C5C3-42B6-B2F2-E89CD5A9F1DD; A=/tmp/np-dd/Build/Products/Debug-iphonesimulator/NordPrice.app; xcrun simctl install $D $A && xcrun simctl terminate $D koodipardik.Elektrihind 2>/dev/null; xcrun simctl launch --console-pty --terminate-running-process $D koodipardik.Elektrihind -FIRAnalyticsDebugEnabled -FIRDebugEnabled > /tmp/np-log.txt 2>&1 & sleep 25; kill %1 2>/dev/null; grep -iE \"Analytics|Measurement|I-ACS|Logging event|session_start\" /tmp/np-log.txt | head -30)"
     ]
   }
 }
