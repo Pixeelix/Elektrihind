@@ -89,6 +89,14 @@ private enum WidgetSettings {
         return ChartResolution.oneHour.rawValue
     }
     
+    /// Bar or line, the same choice as the app's charts.
+    static func chartType() -> ChartType {
+        if let value = groupDefaults?.string(forKey: "chartType"), let type = ChartType(rawValue: value) {
+            return type
+        }
+        return .bar
+    }
+
     static func language() -> Language {
         if let code = groupDefaults?.string(forKey: "language"), !code.isEmpty {
             return Language(rawValue: code) ?? .estonian
@@ -439,7 +447,8 @@ struct NordPriceWidgetEntryView: View {
                               taxMultiplier: WidgetSettings.taxRate(for: entry.regionCode),
                               unit: entry.unit,
                               now: entry.date,
-                              resolution: WidgetSettings.chartResolution())
+                              resolution: WidgetSettings.chartResolution(),
+                              chartType: WidgetSettings.chartType())
                 .frame(height: family == .systemSmall ? 60 : 80)
                 .padding(.top, 12)
             }
@@ -466,6 +475,16 @@ private struct DayPriceChart: View {
     let unit: String
     let now: Date
     let resolution: String
+    let chartType: ChartType
+    @Environment(\.colorScheme) private var colorScheme
+
+    /// The app's `brandAccent` (not in the widget's asset catalog): system blue
+    /// in light mode, the website's brand blue in dark mode.
+    private var lineColor: Color {
+        colorScheme == .dark ? Color(red: 0x7B/255, green: 0x8F/255, blue: 0xFF/255) : .blue
+    }
+    /// Elapsed part of the line chart, as in the app.
+    private let pastOpacity: Double = 0.4
 
     var body: some View {
         let nfTuple = WidgetSettings.numberFormatter(for: unit)
@@ -592,21 +611,82 @@ private struct DayPriceChart: View {
             return (first...last).map { Double($0) * step }
         }()
 
+        // Line chart, same style as the app: one-color line and area, a dot per
+        // interval in its level color, the elapsed part dimmed and the current
+        // interval marked with a larger ringed dot.
+        let barCenter = (interval - barGap) / 2
+        let currentIndex = currentDate.flatMap { date in values.firstIndex { $0.date == date } }
+        let lineGradient: LinearGradient = {
+            let future = lineColor
+            guard values.count > 1, let currentIndex, currentIndex > 0 else {
+                return LinearGradient(colors: [future, future], startPoint: .leading, endPoint: .trailing)
+            }
+            let past = lineColor.opacity(pastOpacity)
+            let split = Double(currentIndex) / Double(values.count - 1)
+            return LinearGradient(stops: [.init(color: past, location: 0),
+                                          .init(color: past, location: split),
+                                          .init(color: future, location: split),
+                                          .init(color: future, location: 1)],
+                                  startPoint: .leading, endPoint: .trailing)
+        }()
+        let areaGradient = LinearGradient(colors: [lineColor.opacity(0.3), lineColor.opacity(0.03)],
+                                          startPoint: .top, endPoint: .bottom)
+        let dotSize: CGFloat = values.count > 48 ? 2.5 : 4
+        func dotColor(_ item: (date: Date, price: Double)) -> Color {
+            let color = PriceLevel(rawMWh: item.price * divider / vatFactor).color
+            guard let currentDate, item.date < currentDate else { return color }
+            return color.opacity(pastOpacity)
+        }
+
         return Chart {
-            if let currentDate {
-                RuleMark(x: .value("Now", currentDate.addingTimeInterval((interval - barGap) / 2)))
+            if chartType == .bar, let currentDate {
+                RuleMark(x: .value("Now", currentDate.addingTimeInterval(barCenter)))
                     .lineStyle(StrokeStyle(lineWidth: 1, dash: [2, 2]))
                     .foregroundStyle(Color.primary.opacity(0.35))
             }
             ForEach(values, id: \.date) { item in
-                RectangleMark(
-                    xStart: .value("Start", item.date),
-                    xEnd: .value("End", item.date.addingTimeInterval(interval - barGap)),
-                    yStart: .value("Base", 0.0),
-                    yEnd: .value("Price", item.price)
-                )
-                .foregroundStyle(barColor(item))
-                .cornerRadius(1)
+                if chartType == .bar {
+                    RectangleMark(
+                        xStart: .value("Start", item.date),
+                        xEnd: .value("End", item.date.addingTimeInterval(interval - barGap)),
+                        yStart: .value("Base", 0.0),
+                        yEnd: .value("Price", item.price)
+                    )
+                    .foregroundStyle(barColor(item))
+                    .cornerRadius(1)
+                } else {
+                    LineMark(
+                        x: .value("Time", item.date.addingTimeInterval(barCenter)),
+                        y: .value("Price", item.price)
+                    )
+                    .foregroundStyle(lineGradient)
+                    .lineStyle(StrokeStyle(lineWidth: 1.5, lineCap: .round, lineJoin: .round))
+                    .interpolationMethod(.monotone)
+
+                    AreaMark(
+                        x: .value("Time", item.date.addingTimeInterval(barCenter)),
+                        y: .value("Price", item.price)
+                    )
+                    .foregroundStyle(areaGradient)
+                    .interpolationMethod(.monotone)
+
+                    PointMark(
+                        x: .value("Time", item.date.addingTimeInterval(barCenter)),
+                        y: .value("Price", item.price)
+                    )
+                    .symbol {
+                        if item.date == currentDate {
+                            Circle()
+                                .fill(PriceLevel(rawMWh: item.price * divider / vatFactor).color)
+                                .frame(width: 7, height: 7)
+                                .overlay(Circle().strokeBorder(.white, lineWidth: 1.5))
+                        } else {
+                            Circle()
+                                .fill(dotColor(item))
+                                .frame(width: dotSize, height: dotSize)
+                        }
+                    }
+                }
             }
             RuleMark(y: .value("Zero", 0))
                 .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 3]))

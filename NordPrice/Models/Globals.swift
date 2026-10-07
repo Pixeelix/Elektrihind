@@ -282,6 +282,8 @@ class AppSettings: ObservableObject {
     func saveChartType() {
         UserDefaults.standard.set(chartType.rawValue, forKey: "chartType")
         mirrorToAppGroup(key: "chartType", value: chartType.rawValue)
+        // The widget draws the same chart type.
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
     func saveChartResolution() {

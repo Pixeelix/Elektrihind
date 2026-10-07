@@ -35,7 +35,19 @@ class PriceAPI {
 
     func fetchDayData(_ day: Day) async throws -> Data {
         let interval = UTCInterval.interval(for: day)
-        guard let url = URL(string: "https://dashboard.elering.ee/api/nps/price?start=\(interval.start)&end=\(interval.end)") else {
+        return try await fetch(start: interval.start, end: interval.end)
+    }
+
+    /// Prices for an arbitrary period. Elering allows at most one year per request.
+    func fetchRange(start: Date, end: Date) async throws -> Data {
+        let formatter = ISO8601DateFormatter()
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        return try await fetch(start: formatter.string(from: start), end: formatter.string(from: end))
+    }
+
+    private func fetch(start: String, end: String) async throws -> Data {
+        guard let url = URL(string: "https://dashboard.elering.ee/api/nps/price?start=\(start)&end=\(end)") else {
             throw PriceAPIError.badURL
         }
 

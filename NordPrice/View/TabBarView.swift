@@ -80,6 +80,16 @@ struct TabBarView: View {
                         .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
                 }
 
+                // Tag 3 rather than 2, so existing tab indices (notifications,
+                // -NordPriceInitialTab) keep pointing at the same screens.
+                HistoryView()
+                    .tag(3)
+                    .tabItem {
+                        Image(systemName: "chart.bar.xaxis").symbolRenderingMode(.monochrome)
+                        Text(settings.localizedString("LABEL_HISTORY"))
+                    }
+                    .background(Color.backgroundColor.edgesIgnoringSafeArea(.all))
+
                 SettingsView()
                     .tag(2)
                     .tabItem {

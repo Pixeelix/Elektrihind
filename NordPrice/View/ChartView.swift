@@ -46,11 +46,25 @@ struct ChartView: View {
 
     private func barStyle(for entry: PriceChartEntry, currentIndex: Int?) -> Color {
         let color = levelColor(for: entry)
+        // While dragging, the selected bar shows its level color at full strength
+        // (even if its interval is over) and every other bar fades back.
+        if let selected = activeSelection {
+            return entry.id == selected ? color : restingBarStyle(for: entry, color: color, currentIndex: currentIndex)
+                .opacity(unselectedBarOpacity)
+        }
+        return restingBarStyle(for: entry, color: color, currentIndex: currentIndex)
+    }
+
+    private func restingBarStyle(for entry: PriceChartEntry, color: Color, currentIndex: Int?) -> Color {
         // Tomorrow (or any day without a current interval): all bars upcoming.
         guard let currentIndex else { return color }
         if entry.id == currentIndex { return color }
         return entry.id < currentIndex ? pastBarColor : color.opacity(futureBarOpacity)
     }
+
+    /// Index of the bar under the finger, same as the history chart's selection.
+    private var activeSelection: Int? { showSelection ? selectedIndex : nil }
+    private let unselectedBarOpacity: Double = 0.45
 
     /// Small capsule above the current bar, in the bar's own level color.
     private func nowBadge(for entry: PriceChartEntry) -> some View {
@@ -63,32 +77,36 @@ struct ChartView: View {
             .accessibilityHidden(true)
     }
 
-    /// Line chart: opacity of the current/future part vs. the part of the day
-    /// that has already passed (mirrors the website's past/future split).
+    /// Line chart (same style as the history chart): a brand-blue line over a
+    /// one-color area, with a dot per interval in its price-level color. The part
+    /// of the day that has already passed is dimmed (the website's past/future split).
     private let lineFutureOpacity: Double = 1.0
     private let linePastOpacity: Double = 0.4
-    private var areaFutureOpacity: Double { colorScheme == .dark ? 0.3 : 0.25 }
-    private var areaPastOpacity: Double { colorScheme == .dark ? 0.12 : 0.1 }
+    private let areaGradient = LinearGradient(colors: [Color.brand.opacity(0.3), Color.brand.opacity(0.03)],
+                                              startPoint: .top, endPoint: .bottom)
 
-    /// Horizontal gradient with one stop per data point, colored by that
-    /// interval's price level. Swift Charts maps a gradient on a line/area series
-    /// to the series' own bounds, so point `i` sits at `i / (n - 1)`. Between two
-    /// points the color blends linearly, i.e. a level change fades over exactly
-    /// one interval: smooth, but never out of step with the legend.
-    private func levelGradient(_ entries: [PriceChartEntry], future: Double, past: Double) -> LinearGradient {
+    /// Brand-blue line, dimmed up to the current interval. Swift Charts maps a
+    /// gradient on a line series to the series' own bounds, so point `i` sits at
+    /// `i / (n - 1)`; two stops at the same location give a hard edge.
+    private func pastFutureLineGradient(_ entries: [PriceChartEntry]) -> LinearGradient {
         let n = entries.count
-        guard n > 1 else {
-            let color = entries.first.map { levelColor(for: $0) } ?? lineColor
-            return LinearGradient(colors: [color.opacity(future), color.opacity(future)],
-                                  startPoint: .leading, endPoint: .trailing)
+        let future = lineColor.opacity(lineFutureOpacity)
+        guard n > 1, let currentIndex = entries.firstIndex(where: \.isCurrent), currentIndex > 0 else {
+            return LinearGradient(colors: [future, future], startPoint: .leading, endPoint: .trailing)
         }
-        let currentIndex = entries.firstIndex(where: \.isCurrent)
-        let stops = entries.enumerated().map { index, entry in
-            let isPast = currentIndex.map { index < $0 } ?? false
-            return Gradient.Stop(color: levelColor(for: entry).opacity(isPast ? past : future),
-                                 location: Double(index) / Double(n - 1))
-        }
-        return LinearGradient(stops: stops, startPoint: .leading, endPoint: .trailing)
+        let past = lineColor.opacity(linePastOpacity)
+        let split = Double(currentIndex) / Double(n - 1)
+        return LinearGradient(stops: [.init(color: past, location: 0),
+                                      .init(color: past, location: split),
+                                      .init(color: future, location: split),
+                                      .init(color: future, location: 1)],
+                              startPoint: .leading, endPoint: .trailing)
+    }
+
+    /// Dots get smaller as the intervals get denser, so 15-minute data still
+    /// reads as a line rather than a row of overlapping circles.
+    private func levelDotSize(count: Int) -> CGFloat {
+        count > 48 ? 4 : (count > 20 ? 6 : 9)
     }
 
     init(day: Day, viewModel: ChartViewModel) {
@@ -155,8 +173,7 @@ struct ChartView: View {
             }
         }
 
-        let lineGradient = levelGradient(entries, future: lineFutureOpacity, past: linePastOpacity)
-        let areaGradient = levelGradient(entries, future: areaFutureOpacity, past: areaPastOpacity)
+        let lineGradient = pastFutureLineGradient(entries)
 
         return ZStack {
             VStack(alignment: .leading, spacing: 0) {
@@ -225,38 +242,8 @@ struct ChartView: View {
                             .accessibilityLabel(accessibilityLabel(for: entry))
                             .accessibilityValue(accessibilityValue(for: entry))
                         } else {
-                            LineMark(
-                                x: .value("Time", entry.id),
-                                y: .value("Price", entry.price)
-                            )
-                            .foregroundStyle(lineGradient)
-                            .lineStyle(StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round))
-                            .interpolationMethod(.catmullRom)
-                            .accessibilityLabel(accessibilityLabel(for: entry))
-                            .accessibilityValue(accessibilityValue(for: entry))
-
-                            AreaMark(
-                                x: .value("Time", entry.id),
-                                y: .value("Price", entry.price)
-                            )
-                            .foregroundStyle(areaGradient)
-                            .interpolationMethod(.catmullRom)
-                            .accessibilityHidden(true)
-
-                            if entry.isCurrent {
-                                PointMark(
-                                    x: .value("Time", entry.id),
-                                    y: .value("Price", entry.price)
-                                )
-                                .symbol {
-                                    Circle()
-                                        .fill(levelColor(for: entry))
-                                        .frame(width: 11, height: 11)
-                                        .overlay(Circle().strokeBorder(.white, lineWidth: 2))
-                                        .shadow(color: .black.opacity(0.25), radius: 2)
-                                }
-                                .accessibilityHidden(true)
-                            }
+                            levelLineMarks(for: entry, lineGradient: lineGradient,
+                                           currentIndex: currentIndex, count: count)
                         }
                     }
 
@@ -346,9 +333,10 @@ struct ChartView: View {
                                         }
                                     }
                                     .onEnded { _ in
-                                        withAnimation(.easeOut(duration: 0.3)) {
-                                            showSelection = false
-                                        }
+                                        // No animation: the selection rule leaving the
+                                        // chart changes its content, and an animated
+                                        // transaction cross-fades the whole chart (a flash).
+                                        showSelection = false
                                         selectedIndex = nil
                                     }
                             )
@@ -373,6 +361,58 @@ struct ChartView: View {
         .cardStyle(cornerRadius: 14)
     }
 
+    /// Marks of the colorful line chart: line, one-color area and a level-colored
+    /// dot per interval; the current interval gets a larger ringed dot.
+    @ChartContentBuilder
+    private func levelLineMarks(for entry: PriceChartEntry, lineGradient: LinearGradient,
+                                currentIndex: Int?, count: Int) -> some ChartContent {
+        let isPast = currentIndex.map { entry.id < $0 } ?? false
+        let dotSize = levelDotSize(count: count)
+
+        LineMark(
+            x: .value("Time", entry.id),
+            y: .value("Price", entry.price)
+        )
+        .foregroundStyle(lineGradient)
+        .lineStyle(StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round))
+        .interpolationMethod(.monotone)
+        .accessibilityLabel(accessibilityLabel(for: entry))
+        .accessibilityValue(accessibilityValue(for: entry))
+
+        AreaMark(
+            x: .value("Time", entry.id),
+            y: .value("Price", entry.price)
+        )
+        .foregroundStyle(areaGradient)
+        .interpolationMethod(.monotone)
+        .accessibilityHidden(true)
+
+        PointMark(
+            x: .value("Time", entry.id),
+            y: .value("Price", entry.price)
+        )
+        .symbol {
+            if entry.isCurrent {
+                Circle()
+                    .fill(levelColor(for: entry))
+                    .frame(width: 11, height: 11)
+                    .overlay(Circle().strokeBorder(.white, lineWidth: 2))
+                    .shadow(color: .black.opacity(0.25), radius: 2)
+            } else {
+                Circle()
+                    .fill(levelColor(for: entry).opacity(isPast ? linePastOpacity : 1))
+                    .frame(width: dotSize, height: dotSize)
+            }
+        }
+        .accessibilityHidden(true)
+    }
+
+    private func plainBarStyle(for entry: PriceChartEntry) -> Color {
+        let color = entry.isCurrent ? currentColor : barColor
+        guard let selected = activeSelection, entry.id != selected else { return color }
+        return color.opacity(unselectedBarOpacity)
+    }
+
     /// Marks of the single-color chart, as it looked before price-level colors:
     /// bars/line in the text color, only the current interval highlighted.
     @ChartContentBuilder
@@ -383,7 +423,7 @@ struct ChartView: View {
                 y: .value("Price", entry.price),
                 width: isFifteenMin ? .fixed(2) : .automatic
             )
-            .foregroundStyle(entry.isCurrent ? currentColor : barColor)
+            .foregroundStyle(plainBarStyle(for: entry))
             .accessibilityLabel(accessibilityLabel(for: entry))
             .accessibilityValue(accessibilityValue(for: entry))
         } else {
