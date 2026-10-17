@@ -16,7 +16,6 @@
 		A2234DF0D538B9F8A2B1B8A3 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = FDAACC2BF482FB6D2C26979A /* FirebaseMessaging */; };
 		A224648B2A6F17FD00B99250 /* ConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A224648A2A6F17FD00B99250 /* ConsentManager.swift */; };
 		A22579F22767F74600F8E3AB /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22579F12767F74600F8E3AB /* TodayView.swift */; };
-		D45B0A012E9F000100C0FFEE /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45B0A022E9F000100C0FFEE /* DashboardView.swift */; };
 		A22579F42767F76E00F8E3AB /* TomorrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22579F32767F76E00F8E3AB /* TomorrowView.swift */; };
 		A22A6CC02AD5C823006C752E /* MinAvgMaxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22A6CBF2AD5C823006C752E /* MinAvgMaxView.swift */; };
 		A245280929943F5E0021661E /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A245280829943F5D0021661E /* Banner.swift */; };
@@ -71,11 +70,12 @@
 		A2D6DD59279A061F0007B14A /* BarChartGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D6DD58279A061F0007B14A /* BarChartGlobals.swift */; };
 		A2F9DFBD27653EFB006E4730 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F9DFBC27653EFB006E4730 /* TabBarView.swift */; };
 		A3D378A64DF165925E836A37 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 25A67A0FB6667D7C0BA0922F /* FirebaseAppCheck */; };
-		E5184D2AED887307BFAFB865 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 32BD6F780AE4BF701EDE06DB /* FirebaseAuth */; };
-		EADADD37F10C4037AEA119F5 /* SettingsComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADE63F8345843C6BE1183EF /* SettingsComponents.swift */; };
+		D45B0A012E9F000100C0FFEE /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45B0A022E9F000100C0FFEE /* DashboardView.swift */; };
 		D45B0A032E9F000100C0FFEE /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45B0A042E9F000100C0FFEE /* HistoryView.swift */; };
 		D45B0A052E9F000100C0FFEE /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45B0A062E9F000100C0FFEE /* HistoryViewModel.swift */; };
 		D45B0A072E9F000100C0FFEE /* HistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45B0A082E9F000100C0FFEE /* HistoryRepository.swift */; };
+		E5184D2AED887307BFAFB865 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 32BD6F780AE4BF701EDE06DB /* FirebaseAuth */; };
+		EADADD37F10C4037AEA119F5 /* SettingsComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADE63F8345843C6BE1183EF /* SettingsComponents.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,7 +108,6 @@
 		A214594F28E5DDCA00FDB205 /* MinMaxRangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinMaxRangeView.swift; sourceTree = "<group>"; };
 		A224648A2A6F17FD00B99250 /* ConsentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentManager.swift; sourceTree = "<group>"; };
 		A22579F12767F74600F8E3AB /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
-		D45B0A022E9F000100C0FFEE /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		A22579F32767F76E00F8E3AB /* TomorrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TomorrowView.swift; sourceTree = "<group>"; };
 		A22A6CBF2AD5C823006C752E /* MinAvgMaxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinAvgMaxView.swift; sourceTree = "<group>"; };
 		A233FEE427669DE100FEDA9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -157,10 +156,11 @@
 		A2CC01312EA30000AABB0030 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		A2D6DD58279A061F0007B14A /* BarChartGlobals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartGlobals.swift; sourceTree = "<group>"; };
 		A2F9DFBC27653EFB006E4730 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
-		EADE63F8345843C6BE1183EF /* SettingsComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsComponents.swift; sourceTree = "<group>"; };
+		D45B0A022E9F000100C0FFEE /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		D45B0A042E9F000100C0FFEE /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		D45B0A062E9F000100C0FFEE /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
 		D45B0A082E9F000100C0FFEE /* HistoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRepository.swift; sourceTree = "<group>"; };
+		EADE63F8345843C6BE1183EF /* SettingsComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsComponents.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -580,7 +580,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = NordPriceWidget/NordPriceWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 66;
+				CURRENT_PROJECT_VERSION = 67;
 				DEVELOPMENT_TEAM = 39G5236S72;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -594,7 +594,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 4.0.1;
+				MARKETING_VERSION = 4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = koodipardik.Elektrihind.ElektrihindWidgetExtension;
 				PRODUCT_NAME = NordPriceWidget;
 				SKIP_INSTALL = YES;
@@ -617,7 +617,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = NordPriceWidget/NordPriceWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 66;
+				CURRENT_PROJECT_VERSION = 67;
 				DEVELOPMENT_TEAM = 39G5236S72;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -631,7 +631,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 4.0.1;
+				MARKETING_VERSION = 4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = koodipardik.Elektrihind.ElektrihindWidgetExtension;
 				PRODUCT_NAME = NordPriceWidget;
 				SKIP_INSTALL = YES;
@@ -774,7 +774,7 @@
 				CODE_SIGN_ENTITLEMENTS = NordPrice/NordPrice.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 66;
+				CURRENT_PROJECT_VERSION = 67;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"NordPrice/Preview Content\"";
 				DEVELOPMENT_TEAM = 39G5236S72;
@@ -799,7 +799,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.0.1;
+				MARKETING_VERSION = 4.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -822,7 +822,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = NordPrice/NordPrice.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 66;
+				CURRENT_PROJECT_VERSION = 67;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"NordPrice/Preview Content\"";
 				DEVELOPMENT_TEAM = 39G5236S72;
@@ -847,7 +847,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.0.1;
+				MARKETING_VERSION = 4.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
