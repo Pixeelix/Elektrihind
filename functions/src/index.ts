@@ -26,7 +26,7 @@ interface PricePoint {
 
 interface DeviceRegistration {
   installationId: string;
-  platform: "ios";
+  platform: "ios" | "android";
   bundleId: string;
   fcmToken: string;
   region: Region;
@@ -548,7 +548,7 @@ function parseDeviceRegistration(data: unknown): DeviceRegistration {
 
     const registration: DeviceRegistration = {
       installationId: stringField(input, "installationId"),
-      platform: oneOf(stringField(input, "platform"), ["ios"] as const, "platform"),
+      platform: oneOf(stringField(input, "platform"),  ["ios", "android"] as const, "platform"),
       bundleId: stringField(input, "bundleId"),
       fcmToken: stringField(input, "fcmToken"),
       region: oneOf(stringField(input, "region"), regions, "region"),
