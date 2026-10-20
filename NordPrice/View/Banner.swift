@@ -9,27 +9,50 @@ import SwiftUI
 import GoogleMobileAds
 import UIKit
 
+/// Bottom banner for one of the tabs.
+///
+/// A banner only exists while its own tab is what the user is looking at, and it only
+/// requests while the app is foregrounded. Both matter: a `BannerView` that stays alive
+/// keeps refreshing into its ad unit whether anyone can see it or not, and AdMob answers
+/// those invisible requests with no-fills and unwinnable auctions. The home unit was at
+/// ~7 requests per impression and a 48% match rate because of it, while the low-volume
+/// settings unit — one request per visit, always on screen — matched 94% and earned
+/// nearly 3x the eCPM.
 struct AdaptiveBannerAd: View {
     let unitID: String
+    /// Tab indices this banner is on. A set because the iPad dashboard answers both the
+    /// today and the tomorrow index (`TabBarView.tabSelection`).
+    let tabs: Set<Int>
+
     @ObservedObject private var consent = ConsentManager.shared
-    /// Height of the loaded ad; 0 until one arrives.
+    @ObservedObject private var navigation = AppNavigation.shared
+    @Environment(\.scenePhase) private var scenePhase
+    /// Height of the loaded ad; 0 until one arrives. Deliberately held here rather than in
+    /// the representable, so it survives the tab switches that tear the view down — the
+    /// space stays reserved and the screen does not reflow when the user comes back.
     @State private var adHeight: CGFloat = 0
 
     var body: some View {
-        GeometryReader { geo in
-            AdaptiveBannerRepresentable(
-                unitID: unitID,
-                width: geo.size.width,
-                canRequestAds: consent.canRequestAds,
-                onAdLoaded: { height in
-                    withAnimation(.easeInOut(duration: 0.25)) { adHeight = height }
+        Group {
+            if tabs.contains(navigation.selectedTab) {
+                GeometryReader { geo in
+                    AdaptiveBannerRepresentable(
+                        unitID: unitID,
+                        width: geo.size.width,
+                        // Requesting before UMP consent is gathered only yields limited ads.
+                        // Going inactive keeps the current ad on screen and only pauses the
+                        // cadence, so a quick trip to Control Center costs no request.
+                        canRequestAds: scenePhase == .active && consent.canRequestAds,
+                        onAdLoaded: { height in
+                            withAnimation(.easeInOut(duration: 0.25)) { adHeight = height }
+                        }
+                    )
                 }
-            )
+            }
         }
-        // Collapsed until an ad actually arrives, so on "No fill" (or before consent)
-        // the content above takes the space instead of leaving an empty gap. Giving
-        // the view an exact height also stops the GeometryReader from swallowing all
-        // leftover space in the parent stack.
+        // Same width as the price cards and the chart, so the ad does not stick out past
+        // them. On the iPad layouts `cardWidth` is nil and the banner fills its container.
+        .cardWidth()
         .frame(height: adHeight)
         .clipped()
     }
@@ -41,14 +64,22 @@ private struct AdaptiveBannerRepresentable: UIViewRepresentable {
     let canRequestAds: Bool
     let onAdLoaded: (CGFloat) -> Void
 
-    /// Inline adaptive ads are never taller than this.
-    static let maxAdHeight: CGFloat = 50
-
     #if DEBUG
     private var resolvedUnitID: String { "ca-app-pub-3940256099942544/2934735716" } // test banner
     #else
     private var resolvedUnitID: String { unitID }
     #endif
+
+    /// Height budget for the adaptive size on the current device. A 50 pt strip earns the
+    /// least of any banner height, so the budget grows with the room the device has; small
+    /// phones keep 50 pt because the price screens are laid out to fill exactly one screen
+    /// and the chart must not be squeezed past its minimum.
+    static func maxHeight() -> CGFloat {
+        let screenHeight = UIScreen.main.bounds.height
+        if screenHeight >= 800 { return 110 }
+        if screenHeight >= 700 { return 90 }
+        return 50
+    }
 
     func makeCoordinator() -> Coordinator { Coordinator() }
 
@@ -69,35 +100,126 @@ private struct AdaptiveBannerRepresentable: UIViewRepresentable {
 
     /// Always take exactly the space SwiftUI offers, never the ad's intrinsic size.
     func sizeThatFits(_ proposal: ProposedViewSize, uiView: BannerView, context: Context) -> CGSize? {
-        CGSize(width: proposal.width ?? width, height: proposal.height ?? Self.maxAdHeight)
+        CGSize(width: proposal.width ?? width, height: proposal.height ?? Self.maxHeight())
+    }
+
+    static func dismantleUIView(_ banner: BannerView, coordinator: Coordinator) {
+        coordinator.stop()
     }
 
     func updateUIView(_ banner: BannerView, context: Context) {
-        context.coordinator.onAdLoaded = onAdLoaded
-
-        // Requesting before UMP consent is gathered only yields limited ads.
-        guard width > 0, canRequestAds else { return }
-
-        // Avoid reloading if width didn't really change
-        if abs(width - context.coordinator.lastLoadedWidth) < 1 { return }
-        context.coordinator.lastLoadedWidth = width
-
-        // Use the returned AdSize as-is: its flags mark it as adaptive. Rebuilding it
-        // from `.size` alone yields an invalid custom size ("Invalid ad width or height").
-        // Inline adaptive keeps the full width but caps the height; the SDK picks the
-        // actual height (at most maxAdHeight) when the ad loads.
-        banner.adSize = inlineAdaptiveBanner(width: width, maxHeight: Self.maxAdHeight)
-
-        banner.load(Request())
+        let coordinator = context.coordinator
+        coordinator.onAdLoaded = onAdLoaded
+        coordinator.width = width
+        coordinator.canRequestAds = canRequestAds
+        coordinator.refresh(banner, unit: resolvedUnitID)
     }
 
+    /// Owns the request cadence: one request per appearance, then one per interval, never
+    /// more. A failed load is retried on the next tick rather than immediately, so a
+    /// no-fill cannot turn into a request storm.
+    @MainActor
     final class Coordinator: NSObject, BannerViewDelegate {
-        var lastLoadedWidth: CGFloat = 0
+        private weak var banner: BannerView?
+        private var timer: Timer?
+        private var spacingTimer: Timer?
+        private var lastRequest: Date?
+        /// Size the requested ad was sized for; a change means a new request is needed.
+        private var requestedWidth: CGFloat = 0
+        private var requestedMaxHeight: CGFloat = 0
+        private var unitID: String = ""
+
         var onAdLoaded: ((CGFloat) -> Void)?
+        var width: CGFloat = 0
+        var canRequestAds = false
+
+        /// Reload cadence while this banner is on the visible tab and the app is active.
+        private static let refreshInterval: TimeInterval = 60
+        /// Last request per ad unit, shared by every instance: a coordinator is rebuilt on
+        /// each tab switch, so per-instance state cannot space out requests that share a unit.
+        private static var lastRequestByUnit: [String: Date] = [:]
+        /// AdMob expects no more than roughly one request per 10 s per ad unit.
+        private static let requestSpacing: TimeInterval = 10
+
+        /// Height budget for the ad currently being requested.
+        private var maxHeightBudget: CGFloat { AdaptiveBannerRepresentable.maxHeight() }
+
+        func refresh(_ banner: BannerView, unit: String) {
+            self.banner = banner
+            unitID = unit
+            armTimer()
+            guard canRequestAds else { return }
+
+            let height = maxHeightBudget
+            let sizeChanged = abs(width - requestedWidth) >= 1 || abs(height - requestedMaxHeight) >= 1
+            let stale = lastRequest.map { Date().timeIntervalSince($0) >= Self.refreshInterval } ?? true
+            guard sizeChanged || stale else { return }
+
+            // Keep whatever is on screen and come back for the new size once the unit has
+            // had its rest, rather than firing a request per tab switch.
+            let since = Self.lastRequestByUnit[unit].map { Date().timeIntervalSince($0) } ?? .infinity
+            if since < Self.requestSpacing {
+                armSpacingRetry(banner, after: Self.requestSpacing - since)
+                return
+            }
+            request(banner, maxHeight: height)
+        }
+
+        /// Called when SwiftUI drops the banner (tab switched away): no refreshes without
+        /// a banner on screen.
+        func stop() {
+            timer?.invalidate()
+            timer = nil
+            spacingTimer?.invalidate()
+            spacingTimer = nil
+            banner?.delegate = nil
+        }
+
+        private func request(_ banner: BannerView, maxHeight: CGFloat) {
+            requestedWidth = width
+            requestedMaxHeight = maxHeight
+            lastRequest = Date()
+            if !unitID.isEmpty { Self.lastRequestByUnit[unitID] = Date() }
+
+            // Use the returned AdSize as-is: its flags mark it as adaptive. Rebuilding it
+            // from `.size` alone yields an invalid custom size ("Invalid ad width or height").
+            // Inline adaptive keeps the full width but caps the height; the SDK picks the
+            // actual height (at most `maxHeight`) when the ad loads.
+            banner.adSize = inlineAdaptiveBanner(width: width, maxHeight: maxHeight)
+            banner.load(Request())
+        }
+
+        /// One-shot retry once the unit's 10 s spacing has passed.
+        private func armSpacingRetry(_ banner: BannerView, after delay: TimeInterval) {
+            spacingTimer?.invalidate()
+            spacingTimer = Timer.scheduledTimer(withTimeInterval: delay, repeats: false) { [weak self] _ in
+                Task { @MainActor in
+                    guard let self, self.canRequestAds, let banner = self.banner else { return }
+                    self.request(banner, maxHeight: self.maxHeightBudget)
+                }
+            }
+        }
+
+        /// Runs only while the app is active and the tab is showing; `refresh(_:unit:)`'s
+        /// age check catches up on the way back.
+        private func armTimer() {
+            if !canRequestAds {
+                timer?.invalidate()
+                timer = nil
+                return
+            }
+            guard timer == nil else { return }
+            timer = Timer.scheduledTimer(withTimeInterval: Self.refreshInterval, repeats: true) { [weak self] _ in
+                Task { @MainActor in
+                    guard let self, self.canRequestAds, let banner = self.banner else { return }
+                    self.request(banner, maxHeight: self.maxHeightBudget)
+                }
+            }
+        }
 
         func bannerViewDidReceiveAd(_ bannerView: BannerView) {
             // For inline adaptive the SDK updates adSize to the served ad's real size.
-            let maxHeight = AdaptiveBannerRepresentable.maxAdHeight
+            let maxHeight = maxHeightBudget
             let reported = bannerView.adSize.size.height
             let height = reported > 0 ? min(reported, maxHeight) : maxHeight
             print("✅ Adaptive banner loaded (\(Int(height)) pt)")

@@ -13,7 +13,6 @@ struct SettingsView: View {
     let unitsArray = ["€/kWh", "€/MWh", "cent/kWh"]
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
     @State private var notifDenied: Bool = false
-    @State private var thresholdFocused: Bool = false
     @State private var maxProxy = ThresholdFieldProxy()
     @State private var minProxy = ThresholdFieldProxy()
     @ObservedObject private var consent = ConsentManager.shared
@@ -46,20 +45,8 @@ struct SettingsView: View {
             .background { Color.backgroundColor.ignoresSafeArea() }
             .navigationTitle(settings.localizedString("LABEL_SETTINGS"))
             .navigationBarTitleDisplayMode(.large)
-            .safeAreaInset(edge: .bottom) {
-                if !thresholdFocused && !AppRuntimeConfiguration.hidesAdBanners {
-                    adBanner
-                }
-            }
         }
         .tint(.brand)
-    }
-
-    @ViewBuilder
-    private var adBanner: some View {
-        AdaptiveBannerAd(unitID: AdUnit.settingsBanner)
-            .frame(maxWidth: .infinity)
-            .background(.bar)
     }
 
     private var generalSection: some View {
@@ -290,9 +277,7 @@ struct SettingsView: View {
             ThresholdTextField(
                 value: value,
                 formatter: settings.numberFormatter,
-                proxy: proxy,
-                onFocus: { thresholdFocused = true },
-                onBlur: { thresholdFocused = false }
+                proxy: proxy
             )
             .frame(width: isLarge ? nil : 110)
             .frame(maxWidth: isLarge ? .infinity : nil)

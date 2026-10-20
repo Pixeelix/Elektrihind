@@ -22,7 +22,7 @@ struct TodayView: View {
                 ChartView(day: Day.today, viewModel: chartViewModel)
                     .padding(.bottom, 8)
                 if !AppRuntimeConfiguration.hidesAdBanners {
-                    AdaptiveBannerAd(unitID: AdUnit.todayBanner)
+                    AdaptiveBannerAd(unitID: AdUnit.todayBanner, tabs: [0])
                         .padding(.bottom, 4)
                 }
             }

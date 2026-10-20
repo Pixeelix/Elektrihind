@@ -45,7 +45,8 @@ struct DashboardView: View {
             }
 
             if !AppRuntimeConfiguration.hidesAdBanners {
-                AdaptiveBannerAd(unitID: AdUnit.todayBanner)
+                // The dashboard answers both tab indices on iPad (TabBarView.tabSelection).
+                AdaptiveBannerAd(unitID: AdUnit.todayBanner, tabs: [0, 1])
             }
         }
         .environment(\.cardWidth, nil)

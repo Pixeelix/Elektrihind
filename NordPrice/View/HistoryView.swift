@@ -59,7 +59,7 @@ struct HistoryView: View {
             HistoryChartView(viewModel: viewModel)
                 .padding(.bottom, 8)
             if !AppRuntimeConfiguration.hidesAdBanners {
-                AdaptiveBannerAd(unitID: AdUnit.historyBanner)
+                AdaptiveBannerAd(unitID: AdUnit.historyBanner, tabs: [3])
                     .padding(.bottom, 4)
             }
         }
@@ -81,7 +81,7 @@ struct HistoryView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
 
             if !AppRuntimeConfiguration.hidesAdBanners {
-                AdaptiveBannerAd(unitID: AdUnit.historyBanner)
+                AdaptiveBannerAd(unitID: AdUnit.historyBanner, tabs: [3])
             }
         }
         .environment(\.cardWidth, nil)

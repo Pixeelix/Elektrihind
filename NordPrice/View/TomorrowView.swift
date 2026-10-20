@@ -54,7 +54,7 @@ struct TomorrowView: View {
                 VStack {
                     Spacer()
                     if !AppRuntimeConfiguration.hidesAdBanners {
-                        AdaptiveBannerAd(unitID: AdUnit.tomorrowNoDataBanner)
+                        AdaptiveBannerAd(unitID: AdUnit.tomorrowNoDataBanner, tabs: [1])
                             .padding(.bottom, 15)
                     }
                 }
@@ -73,7 +73,7 @@ struct TomorrowView: View {
             ChartView(day: Day.tomorrow, viewModel: chartViewModel)
                 .padding(.bottom, 8)
             if !AppRuntimeConfiguration.hidesAdBanners {
-                AdaptiveBannerAd(unitID: AdUnit.tomorrowDataBanner)
+                AdaptiveBannerAd(unitID: AdUnit.tomorrowDataBanner, tabs: [1])
                     .padding(.bottom, 4)
             }
         }
