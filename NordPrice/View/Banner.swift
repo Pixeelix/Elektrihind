@@ -23,6 +23,12 @@ struct AdaptiveBannerAd: View {
     /// Tab indices this banner is on. A set because the iPad dashboard answers both the
     /// today and the tomorrow index (`TabBarView.tabSelection`).
     let tabs: Set<Int>
+    /// Ceiling for this placement. Google serves an ad no taller than this and never
+    /// shorter than the classic 50 pt banner, so a generous ceiling costs nothing when the
+    /// auction returns a small ad — the space reserved below follows the served height.
+    /// Ask per screen: a screen whose chart must stay readable (Today) gets a small value,
+    /// a screen that scrolls or has empty space to fill gets a large one.
+    let maxHeight: CGFloat
 
     @ObservedObject private var consent = ConsentManager.shared
     @ObservedObject private var navigation = AppNavigation.shared
@@ -39,6 +45,7 @@ struct AdaptiveBannerAd: View {
                     AdaptiveBannerRepresentable(
                         unitID: unitID,
                         width: geo.size.width,
+                        maxHeight: maxHeight,
                         // Requesting before UMP consent is gathered only yields limited ads.
                         // Going inactive keeps the current ad on screen and only pauses the
                         // cadence, so a quick trip to Control Center costs no request.
@@ -61,6 +68,7 @@ struct AdaptiveBannerAd: View {
 private struct AdaptiveBannerRepresentable: UIViewRepresentable {
     let unitID: String
     let width: CGFloat
+    let maxHeight: CGFloat
     let canRequestAds: Bool
     let onAdLoaded: (CGFloat) -> Void
 
@@ -69,17 +77,6 @@ private struct AdaptiveBannerRepresentable: UIViewRepresentable {
     #else
     private var resolvedUnitID: String { unitID }
     #endif
-
-    /// Height budget for the adaptive size on the current device. A 50 pt strip earns the
-    /// least of any banner height, so the budget grows with the room the device has; small
-    /// phones keep 50 pt because the price screens are laid out to fill exactly one screen
-    /// and the chart must not be squeezed past its minimum.
-    static func maxHeight() -> CGFloat {
-        let screenHeight = UIScreen.main.bounds.height
-        if screenHeight >= 800 { return 110 }
-        if screenHeight >= 700 { return 90 }
-        return 50
-    }
 
     func makeCoordinator() -> Coordinator { Coordinator() }
 
@@ -100,7 +97,7 @@ private struct AdaptiveBannerRepresentable: UIViewRepresentable {
 
     /// Always take exactly the space SwiftUI offers, never the ad's intrinsic size.
     func sizeThatFits(_ proposal: ProposedViewSize, uiView: BannerView, context: Context) -> CGSize? {
-        CGSize(width: proposal.width ?? width, height: proposal.height ?? Self.maxHeight())
+        CGSize(width: proposal.width ?? width, height: proposal.height ?? maxHeight)
     }
 
     static func dismantleUIView(_ banner: BannerView, coordinator: Coordinator) {
@@ -111,6 +108,7 @@ private struct AdaptiveBannerRepresentable: UIViewRepresentable {
         let coordinator = context.coordinator
         coordinator.onAdLoaded = onAdLoaded
         coordinator.width = width
+        coordinator.maxHeight = maxHeight
         coordinator.canRequestAds = canRequestAds
         coordinator.refresh(banner, unit: resolvedUnitID)
     }
@@ -131,6 +129,8 @@ private struct AdaptiveBannerRepresentable: UIViewRepresentable {
 
         var onAdLoaded: ((CGFloat) -> Void)?
         var width: CGFloat = 0
+        /// Height ceiling for this placement, handed down by the view.
+        var maxHeight: CGFloat = 50
         var canRequestAds = false
 
         /// Reload cadence while this banner is on the visible tab and the app is active.
@@ -141,16 +141,13 @@ private struct AdaptiveBannerRepresentable: UIViewRepresentable {
         /// AdMob expects no more than roughly one request per 10 s per ad unit.
         private static let requestSpacing: TimeInterval = 10
 
-        /// Height budget for the ad currently being requested.
-        private var maxHeightBudget: CGFloat { AdaptiveBannerRepresentable.maxHeight() }
-
         func refresh(_ banner: BannerView, unit: String) {
             self.banner = banner
             unitID = unit
             armTimer()
             guard canRequestAds else { return }
 
-            let height = maxHeightBudget
+            let height = maxHeight
             let sizeChanged = abs(width - requestedWidth) >= 1 || abs(height - requestedMaxHeight) >= 1
             let stale = lastRequest.map { Date().timeIntervalSince($0) >= Self.refreshInterval } ?? true
             guard sizeChanged || stale else { return }
@@ -162,7 +159,7 @@ private struct AdaptiveBannerRepresentable: UIViewRepresentable {
                 armSpacingRetry(banner, after: Self.requestSpacing - since)
                 return
             }
-            request(banner, maxHeight: height)
+            request(banner, height: height)
         }
 
         /// Called when SwiftUI drops the banner (tab switched away): no refreshes without
@@ -175,17 +172,17 @@ private struct AdaptiveBannerRepresentable: UIViewRepresentable {
             banner?.delegate = nil
         }
 
-        private func request(_ banner: BannerView, maxHeight: CGFloat) {
+        private func request(_ banner: BannerView, height: CGFloat) {
             requestedWidth = width
-            requestedMaxHeight = maxHeight
+            requestedMaxHeight = height
             lastRequest = Date()
             if !unitID.isEmpty { Self.lastRequestByUnit[unitID] = Date() }
 
             // Use the returned AdSize as-is: its flags mark it as adaptive. Rebuilding it
             // from `.size` alone yields an invalid custom size ("Invalid ad width or height").
             // Inline adaptive keeps the full width but caps the height; the SDK picks the
-            // actual height (at most `maxHeight`) when the ad loads.
-            banner.adSize = inlineAdaptiveBanner(width: width, maxHeight: maxHeight)
+            // actual height (at most the cap) when the ad loads.
+            banner.adSize = inlineAdaptiveBanner(width: width, maxHeight: height)
             banner.load(Request())
         }
 
@@ -195,7 +192,7 @@ private struct AdaptiveBannerRepresentable: UIViewRepresentable {
             spacingTimer = Timer.scheduledTimer(withTimeInterval: delay, repeats: false) { [weak self] _ in
                 Task { @MainActor in
                     guard let self, self.canRequestAds, let banner = self.banner else { return }
-                    self.request(banner, maxHeight: self.maxHeightBudget)
+                    self.request(banner, height: self.maxHeight)
                 }
             }
         }
@@ -212,14 +209,13 @@ private struct AdaptiveBannerRepresentable: UIViewRepresentable {
             timer = Timer.scheduledTimer(withTimeInterval: Self.refreshInterval, repeats: true) { [weak self] _ in
                 Task { @MainActor in
                     guard let self, self.canRequestAds, let banner = self.banner else { return }
-                    self.request(banner, maxHeight: self.maxHeightBudget)
+                    self.request(banner, height: self.maxHeight)
                 }
             }
         }
 
         func bannerViewDidReceiveAd(_ bannerView: BannerView) {
             // For inline adaptive the SDK updates adSize to the served ad's real size.
-            let maxHeight = maxHeightBudget
             let reported = bannerView.adSize.size.height
             let height = reported > 0 ? min(reported, maxHeight) : maxHeight
             print("✅ Adaptive banner loaded (\(Int(height)) pt)")

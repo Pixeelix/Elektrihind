@@ -26,12 +26,13 @@ struct HistoryView: View {
     var body: some View {
         Group {
             if isWide {
-                wideLayout
+                // The phone layout scrolls on its own; wrapping both branches would nest
+                // two scroll views there at accessibility text sizes.
+                wideLayout.scrollsAtAccessibilitySizes()
             } else {
                 phoneLayout
             }
         }
-        .scrollsAtAccessibilitySizes()
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .onAppear {
             viewModel.configure(region: settings.region)
@@ -48,18 +49,28 @@ struct HistoryView: View {
         }
     }
 
+    /// Scrolls, because a 110 pt ad would otherwise take the height out of the chart. The
+    /// ad sits *outside* the scroll view, pinned under it: the chart keeps a real height
+    /// and scrolls up out of the way, while the banner stays on screen for as long as this
+    /// tab is selected — which is what keeps its impressions viewable.
     private var phoneLayout: some View {
-        VStack(alignment: .center) {
-            TitleView(title: settings.localizedString("TITLE_PRICE_HISTORY"))
-            HistoryAverageView(viewModel: viewModel)
-            HistoryMinMaxView(viewModel: viewModel)
-            HistoryPeriodPicker(viewModel: viewModel)
-                .cardWidth()
-                .padding(.vertical, 2)
-            HistoryChartView(viewModel: viewModel)
-                .padding(.bottom, 8)
+        VStack(alignment: .center, spacing: 0) {
+            ScrollView {
+                VStack(alignment: .center) {
+                    TitleView(title: settings.localizedString("TITLE_PRICE_HISTORY"))
+                    HistoryAverageView(viewModel: viewModel)
+                    HistoryMinMaxView(viewModel: viewModel)
+                    HistoryPeriodPicker(viewModel: viewModel)
+                        .cardWidth()
+                        .padding(.vertical, 2)
+                    HistoryChartView(viewModel: viewModel, fillsAvailableHeight: false)
+                        .padding(.bottom, 8)
+                }
+                .frame(maxWidth: .infinity)
+            }
+
             if !AppRuntimeConfiguration.hidesAdBanners {
-                AdaptiveBannerAd(unitID: AdUnit.historyBanner, tabs: [3])
+                AdaptiveBannerAd(unitID: AdUnit.historyBanner, tabs: [3], maxHeight: 110)
                     .padding(.bottom, 4)
             }
         }
@@ -81,7 +92,7 @@ struct HistoryView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
 
             if !AppRuntimeConfiguration.hidesAdBanners {
-                AdaptiveBannerAd(unitID: AdUnit.historyBanner, tabs: [3])
+                AdaptiveBannerAd(unitID: AdUnit.historyBanner, tabs: [3], maxHeight: 110)
             }
         }
         .environment(\.cardWidth, nil)
@@ -434,6 +445,9 @@ private struct HistoryChartView: View {
     @EnvironmentObject var settings: AppSettings
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @ObservedObject var viewModel: HistoryViewModel
+    /// The phone layout scrolls and wants a chart with a height of its own; the iPad layout
+    /// has room beside the cards and lets the chart fill whatever is offered.
+    var fillsAvailableHeight: Bool = true
 
     @State private var selectedIndex: Int? = nil
 
@@ -452,6 +466,13 @@ private struct HistoryChartView: View {
         dynamicTypeSize.isAccessibilitySize ? 380 : min(ChartForm.barChartHeight, 220)
     }
 
+    /// Height the chart is given when it cannot take the leftover space. `barChartHeight`
+    /// is the app's own chart height (40% of the screen), so the ad never squeezes the
+    /// graph below a readable size — the page scrolls instead.
+    private var chartHeight: CGFloat {
+        fillsAvailableHeight ? minChartHeight : ChartForm.barChartHeight
+    }
+
     var body: some View {
         Group {
             if viewModel.isLoading {
@@ -468,7 +489,7 @@ private struct HistoryChartView: View {
             }
         }
         .cardWidth()
-        .frame(minHeight: minChartHeight, maxHeight: .infinity)
+        .frame(minHeight: chartHeight, maxHeight: fillsAvailableHeight ? .infinity : chartHeight)
         .cardStyle(cornerRadius: 14)
         .onChange(of: viewModel.anchor) { _ in selectedIndex = nil }
         .onChange(of: viewModel.period) { _ in selectedIndex = nil }

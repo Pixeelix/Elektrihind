@@ -22,7 +22,9 @@ struct TodayView: View {
                 ChartView(day: Day.today, viewModel: chartViewModel)
                     .padding(.bottom, 8)
                 if !AppRuntimeConfiguration.hidesAdBanners {
-                    AdaptiveBannerAd(unitID: AdUnit.todayBanner, tabs: [0])
+                    // Today's chart is the hero of the screen and this layout does not
+                    // scroll, so the ad stays a strip.
+                    AdaptiveBannerAd(unitID: AdUnit.todayBanner, tabs: [0], maxHeight: 60)
                         .padding(.bottom, 4)
                 }
             }
