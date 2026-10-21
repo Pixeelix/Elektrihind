@@ -56,7 +56,7 @@ private enum ScreenshotPriceData {
         let nextDayStart = calendar.date(byAdding: .day, value: 1, to: dayStart) ?? dayStart.addingTimeInterval(24 * 3600)
         let intervalSeconds: TimeInterval = 15 * 60
         let intervalCount = max(1, Int(nextDayStart.timeIntervalSince(dayStart) / intervalSeconds))
-        let basePrices = hourlyPrices(for: day)
+        let basePrices = hourlyPrices(for: day, dayStart: dayStart)
         let quarterAdjustments = [-1.8, 0.7, 2.2, -0.6]
         let regionOffset = offset(for: region)
 
@@ -68,7 +68,12 @@ private enum ScreenshotPriceData {
         }
     }
 
-    private static func hourlyPrices(for day: Day) -> [Double] {
+    /// The rolled random curve when the debug button generated one, otherwise the fixed
+    /// table these screenshots were taken with.
+    private static func hourlyPrices(for day: Day, dayStart: Date) -> [Double] {
+        if let rolled = SamplePriceCurve.hourlyPrices(for: dayStart) {
+            return rolled
+        }
         switch day {
         case .today:
             return [

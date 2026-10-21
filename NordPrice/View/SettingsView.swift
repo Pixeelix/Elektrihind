@@ -13,6 +13,9 @@ struct SettingsView: View {
     let unitsArray = ["€/kWh", "€/MWh", "cent/kWh"]
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
     @State private var notifDenied: Bool = false
+    #if DEBUG
+    @State private var debugPushStatus: String?
+    #endif
     @State private var maxProxy = ThresholdFieldProxy()
     @State private var minProxy = ThresholdFieldProxy()
     @ObservedObject private var consent = ConsentManager.shared
@@ -135,9 +138,51 @@ struct SettingsView: View {
             Toggle(isOn: $settings.debugUseTestData) {
                 rowLabel("Näidisandmed", symbol: "testtube.2", tint: .pink)
             }
+            Toggle(isOn: $settings.debugHideAds) {
+                rowLabel("Peida reklaamid", symbol: "nosign.fill", tint: .secondary)
+            }
+            Button {
+                settings.rollRandomSampleData()
+            } label: {
+                Label("Genereeri juhuslikud andmed", systemImage: "die.face.5.fill")
+            }
+            // Only offered once there is a roll to throw away; without one the sample data
+            // is already the fixed curve the App Store screenshots use.
+            if SamplePriceCurve.seed != nil {
+                Button("Lähtesta fikseeritud kõver", role: .destructive) {
+                    settings.resetSampleDataToFixed()
+                }
+            }
+            Button {
+                sendDebugPush(.max)
+            } label: {
+                Label("Saada test: kõrge hind", systemImage: "arrow.up.circle.fill")
+            }
+            Button {
+                sendDebugPush(.min)
+            } label: {
+                Label("Saada test: madal hind", systemImage: "arrow.down.circle.fill")
+            }
+            if let status = debugPushStatus {
+                Text(status)
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
         } header: {
             Text("DEBUG")
                 .foregroundStyle(Color.textOnBackground.opacity(0.85))
+        }
+    }
+
+    /// Local mirror of the price-threshold push. The status it returns is shown under the
+    /// buttons, so a missing notification permission is visible instead of mysterious.
+    @MainActor
+    private func sendDebugPush(_ direction: NotificationService.DebugPushDirection) {
+        Task {
+            debugPushStatus = await NotificationService.shared.scheduleDebugPriceNotification(
+                direction: direction,
+                region: settings.region.rawValue
+            )
         }
     }
     #endif

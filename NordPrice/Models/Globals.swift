@@ -36,6 +36,18 @@ class AppSettings: ObservableObject {
         }
     }
 
+    /// Debug-only switch that silences every banner. The price screens read
+    /// `AppRuntimeConfiguration.hidesAdBanners` in their bodies, and flipping this publishes
+    /// a change through `AppSettings`, so the on-screen banners go away immediately.
+    @Published var debugHideAds: Bool = AppRuntimeConfiguration.hideAdsPreference {
+        didSet {
+            #if DEBUG
+            guard !isLoadingSavedSettings else { return }
+            saveDebugHideAds()
+            #endif
+        }
+    }
+
     var taxPercentage: String {
         TaxConfiguration.taxPercentage(for: region)
     }
@@ -144,6 +156,7 @@ class AppSettings: ObservableObject {
         includeTax = UserDefaults.standard.bool(forKey: "includeTax")
         #if DEBUG
         debugUseTestData = AppRuntimeConfiguration.usesSamplePriceData
+        debugHideAds = AppRuntimeConfiguration.hideAdsPreference
         #endif
         alwaysOnDisplay = UserDefaults.standard.bool(forKey: "alwaysOnDisplay")
         UIApplication.shared.isIdleTimerDisabled = alwaysOnDisplay
@@ -256,6 +269,37 @@ class AppSettings: ObservableObject {
         UserDefaults.standard.set(debugUseTestData, forKey: AppRuntimeConfiguration.debugUseTestDataKey)
         mirrorToAppGroup(key: AppRuntimeConfiguration.debugUseTestDataKey, value: debugUseTestData)
         WidgetCenter.shared.reloadAllTimelines()
+        #endif
+    }
+
+    func saveDebugHideAds() {
+        #if DEBUG
+        UserDefaults.standard.set(debugHideAds, forKey: AppRuntimeConfiguration.debugHideAdsKey)
+        mirrorToAppGroup(key: AppRuntimeConfiguration.debugHideAdsKey, value: debugHideAds)
+        #endif
+    }
+
+    /// Debug sample data: a new random trading day for the price screens, the history chart
+    /// and the widget, from one seed so they all describe the same day.
+    ///
+    /// The visible refresh happens the way it does for the sample-data toggle itself — on the
+    /// next tab appearance or foreground, when `todayDataUpdateMandatory` is consumed.
+    func rollRandomSampleData() {
+        #if DEBUG
+        SamplePriceCurve.roll()
+        debugUseTestData = true
+        todayDataUpdateMandatory = true
+        tomorrowDataUpdateMandatory = true
+        #endif
+    }
+
+    /// Back to the fixed screenshot curve the App Store material was taken from.
+    func resetSampleDataToFixed() {
+        #if DEBUG
+        SamplePriceCurve.clearRoll()
+        debugUseTestData = true
+        todayDataUpdateMandatory = true
+        tomorrowDataUpdateMandatory = true
         #endif
     }
 

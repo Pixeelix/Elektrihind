@@ -80,6 +80,72 @@ final class NotificationService {
         return await center.notificationSettings().authorizationStatus
     }
 
+    #if DEBUG
+    enum DebugPushDirection {
+        case max, min
+
+        /// The value the Cloud Function puts in `data.direction` / `data.type`.
+        var suffix: String { self == .max ? "max" : "min" }
+    }
+
+    /// Schedules a local notification that mirrors the production price-threshold push — same
+    /// copy, same `userInfo` — so the banner and the tap-through to the tomorrow tab can both
+    /// be exercised. A simulator cannot receive APNs at all, which makes this the only way to
+    /// reach `willPresent` and `didReceive` there.
+    ///
+    /// Returns what to tell the user; the caller always shows it, so the button can never look
+    /// inert when permission is missing.
+    func scheduleDebugPriceNotification(direction: DebugPushDirection, region: String) async -> String {
+        var status = await currentAuthorizationStatus()
+        if status == .notDetermined {
+            status = await requestAuthorization()
+        }
+        guard status == .authorized || status == .provisional else {
+            return status == .denied
+                ? "Teavitused on keelatud — lupa need seadme Seaded → NordPrice alt."
+                : "Teavituste luba pole veel antud (staatus \(status.rawValue))."
+        }
+
+        let isHigh = direction == .max
+        let content = UNMutableNotificationContent()
+        content.title = isHigh ? "Kõrge elektrihind" : "Madal elektrihind"
+        content.body = isHigh
+            ? "Homne kõrgeim hind 0,161 €/kWh kell 18:00 ületab sinu seatud piiri (0,150 €/kWh)."
+            : "Homne madalaim hind 0,021 €/kWh kell 03:00 on alla sinu seatud piiri (0,040 €/kWh)."
+        content.sound = .default
+        // FCM's data map arrives on iOS as top-level userInfo keys, and the AppDelegate routes
+        // on `type` — so these belong at the root, exactly as `functions/src/index.ts` sends
+        // them, not nested under another dictionary.
+        content.userInfo = [
+            "type": "price_threshold_\(direction.suffix)",
+            "direction": direction.suffix,
+            "region": region,
+            "date": Self.debugTomorrow(),
+        ]
+
+        // No trigger means "deliver now".
+        let request = UNNotificationRequest(identifier: UUID().uuidString,
+                                            content: content,
+                                            trigger: nil)
+        do {
+            try await center.add(request)
+            return "Testteavitus saadetud"
+        } catch {
+            return "Lisamine ebaõnnestus: \(error.localizedDescription)"
+        }
+    }
+
+    /// Tomorrow as `yyyy-MM-dd`, the format `checkTomorrowPrices` puts in `date`.
+    private static func debugTomorrow() -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.dateFormat = "yyyy-MM-dd"
+        let day = Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date()
+        return formatter.string(from: day)
+    }
+    #endif
+
     @MainActor
     func registerForRemoteNotificationsIfNeeded() async {
         let authStatus = await currentAuthorizationStatus()

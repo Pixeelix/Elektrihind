@@ -150,6 +150,13 @@ private enum SampleHistoryData {
         return range.compactMap { dayNumber -> DailyAveragePrice? in
             guard let day = calendar.date(byAdding: .day, value: dayNumber - 1, to: monthStart),
                   day <= today else { return nil }
+            // A rolled day comes from the same curve as the price screens, so a bar in the
+            // history chart and that day's own view describe the same invented market.
+            if let rolled = SamplePriceCurve.dailyAverage(for: day) {
+                return DailyAveragePrice(dayStart: day.timeIntervalSince1970,
+                                         price: max(4, rolled + regionOffset))
+            }
+
             let dayOfYear = Double(calendar.ordinality(of: .day, in: .year, for: day) ?? 1)
             let weekday = calendar.component(.weekday, from: day)
             // Winter is expensive, summer cheap, weekends a little cheaper.

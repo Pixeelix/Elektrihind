@@ -202,10 +202,13 @@ private enum ScreenshotWidgetPriceData {
         let quarterAdjustments = [-1.8, 0.7, 2.2, -0.6]
         let regionOffset = offset(for: region)
 
+        // Same roll as the app, so the widget does not show a different day to the screens.
+        let table = SamplePriceCurve.hourlyPrices(for: dayStart) ?? hourlyPrices
+
         return (0..<intervalCount).map { index in
-            let hourIndex = min(hourlyPrices.count - 1, index / 4)
+            let hourIndex = min(table.count - 1, index / 4)
             let timestamp = dayStart.addingTimeInterval(TimeInterval(index) * intervalSeconds).timeIntervalSince1970
-            let price = hourlyPrices[hourIndex] + quarterAdjustments[index % quarterAdjustments.count] + regionOffset
+            let price = table[hourIndex] + quarterAdjustments[index % quarterAdjustments.count] + regionOffset
             return PriceFetcher.Point(timestamp: timestamp, price: price)
         }
     }

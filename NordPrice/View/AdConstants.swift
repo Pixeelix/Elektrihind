@@ -49,7 +49,38 @@ enum AppRuntimeConfiguration {
         #endif
     }
 
-    static var hidesAdBanners: Bool { isScreenshotMode }
+    static let debugHideAdsKey = "debugHideAds"
+
+    /// Screenshots never show ads, and a debug build also honours the "no ads" switch in
+    /// Settings. The switch is compiled out of release builds, so a stray preference key can
+    /// never silence the app for a user.
+    static var hidesAdBanners: Bool {
+        if isScreenshotMode { return true }
+        #if DEBUG
+        return boolPreference(debugHideAdsKey)
+        #else
+        return false
+        #endif
+    }
+
+    /// Stored value of the debug switch, independent of whether ads are hidden right now
+    /// (screenshot mode hides them too).
+    static var hideAdsPreference: Bool {
+        #if DEBUG
+        return boolPreference(debugHideAdsKey)
+        #else
+        return false
+        #endif
+    }
+
+    #if DEBUG
+    private static func boolPreference(_ key: String) -> Bool {
+        if let value = UserDefaults.standard.object(forKey: key) as? Bool { return value }
+        if let value = UserDefaults(suiteName: appGroupID)?.object(forKey: key) as? Bool { return value }
+        return false
+    }
+    #endif
+
     static var skipsAdConsent: Bool { isScreenshotMode }
 }
 
